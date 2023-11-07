@@ -1,0 +1,22 @@
+xover:
+
+aritmetický crossover
+uniformní?
+výměna celého neuronu (i se všemi vahami)
+diferenciální evoluce
+
+mutace:
+
+biased/nebiased mutace - rozsah
+
+novelty:
+parametery sítě - hamming - pořadí neuronů!
+stav - souřadnice
+chování - akce
+
+logy:
+
+fitness v populaci (max)
+
+
+článek o novelty search, reinforcement learning
