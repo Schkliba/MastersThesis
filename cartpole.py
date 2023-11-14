@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import gymnasium as gym
-
+from typing import *
 def evalutation(individual: tf.keras.Model, seed:int, episodes:int, replay=False) -> float:
     """Evaluate the given model on CartPole-v1 environment.
 
@@ -50,7 +50,7 @@ class CartpolePlayer(tf.keras.Model):
 
 
 def switcheroo(ind1, ind2):
-    return ind2, ind1 #TODO: actual crossover 
+    return ind2, ind1 
 
 def cartover(ind1:CartpolePlayer, ind2:CartpolePlayer):
     u = ind1.mutable_layer.get_weights()
@@ -60,6 +60,24 @@ def cartover(ind1:CartpolePlayer, ind2:CartpolePlayer):
     ind2.mutable_layer.set_weights(f)
     return ind1, ind2
 
+def cartdiff(base:CartpolePlayer, diff1:CartpolePlayer, diff2:CartpolePlayer, alpha:float):
+    a = base.mutable_layer.get_weights()
+    b = diff1.mutable_layer.get_weights()
+    c = diff2.mutable_layer.get_weights()
+    n = [(a[i] + alpha * (b[i] - c[i])) for i in range(len(a))]
+    return n
+
+def cartrecomb(ind:CartpolePlayer, mats, prob_filter):
+    newind = []
+    og = ind.mutable_layer.get_weights()
+    for i, mat in enumerate(mats):
+        cpoints = np.random.random(mat.shape) < prob_filter
+        n = np.where(cpoints, mat, og[i])
+        newind.append(n)
+    ind.mutable_layer.set_weights(newind)
+    return ind
+
+   
 def mutIdentity(individual):
     return individual
 

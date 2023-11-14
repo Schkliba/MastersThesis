@@ -1,22 +1,30 @@
 import cartpole
+import random
 import numpy as np
 from deap import base
+from deap import tools
 
         
-def mutation(pop, toobox):
-    trials = []
+def mutation(pop, toolbox):
+    go_out = []
     for j in range(len(pop)):
-        candidates = [candidate for candidate in range(pop_size) if candidate != j]
-        a, b, c = pop[choice(candidates, 3, replace=False)]
+        candidates = [candidate for i,candidate in enumerate(pop) if i != j]
+        a, b, c = tools.selRoulette(candidates, 3)
         new_ind = toolbox.triOp(a, b, c)
-        trial = toobox.remobination(pop[j], new_ind)
-        trials.append(trial)
-    return trials
+        trial = toolbox.recombine(toolbox.clone(pop[j]), new_ind)
+        trial.fitness.values = toolbox.evaluate(trial)
+        outputed = tools.selBest([trial, pop[j]], 1)[0] 
+        go_out.append(outputed)
+    return go_out
 
 
-def differential_evolatuion(population, toolbox, recombination_c, ngen, stats, hof, verbose=True):
+def differential_evolatuion(population, toolbox, ngen, stats, hof, verbose=True):
+    logbook = tools.Logbook()
+    for ind in population:
+        ind.fitness.values = toolbox.evaluate(ind)
     for gen in range(ngen):
-        trials = mutation(population, toolbox)
-        population = toolbox.select(pop, trials)
+        population = mutation(population, toolbox)
         record = stats.compile(population)
-        if verbose: print(record)
+        logbook.record(gen=gen, **record)
+
+    return population, logbook

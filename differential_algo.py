@@ -3,12 +3,12 @@ import tensorflow as tf
 import numpy as np
 
 import cartpole
+import differential_evo as de
 
 from deap import base
 from deap import creator
 from deap import tools
 from deap import algorithms
-
 
 RANDOM_SEED = 42
 EVAL_EPISODES = 10
@@ -20,9 +20,8 @@ toolbox.register("evaluate", cartpole.evalutation, seed=RANDOM_SEED, episodes=EV
 
 def gen_pop(number):
     return [creator.Individual() for i in range(number)]
-toolbox.register("select", tools.selTournament, tournsize=3)
-toolbox.register("mate", cartpole.cartover)
-toolbox.register("mutate", cartpole.mutcartion, sigma=1)
+toolbox.register("triOp", cartpole.cartdiff, alpha=0.9)
+toolbox.register("recombine", cartpole.cartrecomb, prob_filter=0.6)
 
 
 hof = tools.HallOfFame(1)
@@ -32,5 +31,6 @@ stats.register("std", np.std)
 stats.register("min", np.min)
 stats.register("max", np.max)
 
-final_pop = algorithms.eaMuCommaLambda(gen_pop(30),toolbox,30, 50, 0.3, 0.01, 10, stats, hof, True)
-cartpole.evalutation(final_pop[0][0], RANDOM_SEED, 10, True)
+final_pop, logbook = de.differential_evolatuion(gen_pop(5),toolbox, 10, stats, hof, True)
+print(logbook)
+cartpole.evalutation((tools.selBest(final_pop, 1)[0]), RANDOM_SEED, 5, True)
