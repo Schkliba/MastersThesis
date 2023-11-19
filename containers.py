@@ -36,3 +36,15 @@ class LambdaAlgContainer:
         else:
             return False
         return True
+
+
+class LambdaNoveltyAlg(LambdaAlgContainer):
+    def __init__(self, individual,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, replay_f):
+        creator.register("FitnessNovelty", base.Fitness, weights=(1.0, 1.0))
+        creator.register("Individual", individual, fitness=creator.FitnessNovelty)
+        toolbox.register("VarOr", self.novelty_operator)
+        super().__init__(pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, replay_f) 
+
+    @staticmethod
+    def novelty_operator():
+        pass

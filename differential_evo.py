@@ -25,6 +25,7 @@ def differential_evolatuion(population, toolbox, ngen, stats, hof, verbose=True)
     for gen in range(ngen):
         population = mutation(population, toolbox)
         record = stats.compile(population)
+        if verbose: print(record)
         logbook.record(gen=gen, **record)
 
     return population, logbook
