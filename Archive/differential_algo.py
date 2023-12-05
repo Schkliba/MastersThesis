@@ -25,7 +25,7 @@ def gen_pop(number):
     return [creator.Individual() for i in range(number)]
 toolbox.register("triOp", cartpole.cartdiff, alpha=0.9)
 toolbox.register("recombine", cartpole.cartrecomb, prob_filter=0.6)
-
+toolbox.register("mutation", de.mutation)
 
 hof = tools.HallOfFame(1)
 stats = tools.Statistics(lambda ind: ind.fitness.values)

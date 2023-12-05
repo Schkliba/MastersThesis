@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import gymnasium as gym
 from typing import *
-def evalutation(individual: tf.keras.Model, seed:int, episodes:int, replay=False) -> float:
+def evalutation_b(individual: tf.keras.Model, seed:int, episodes:int, replay=False) -> float:
     """Evaluate the given model on CartPole-v1 environment.
 
     Returns the average score achieved on the given number of episodes.
@@ -29,8 +29,12 @@ def evalutation(individual: tf.keras.Model, seed:int, episodes:int, replay=False
             done = terminated or truncated
 
         total_score += score
-    return total_score / episodes, 
+    return total_score / episodes, [observation[0], observation[2]]
 
+def evalutation(individual: tf.keras.Model, seed:int, episodes:int, replay=False) -> float:
+    fit, b = evalutation_b(individual, seed, episodes, replay)
+    return fit
+    
 NEURON_COUNT = 4
 
 class CartpolePlayer(tf.keras.Model):

@@ -17,13 +17,14 @@ def mutation(pop, toolbox):
         go_out.append(outputed)
     return go_out
 
+    
 
 def differential_evolatuion(population, toolbox, ngen, stats, hof, verbose=True):
     logbook = tools.Logbook()
     for ind in population:
         ind.fitness.values = toolbox.evaluate(ind)
     for gen in range(ngen):
-        population = mutation(population, toolbox)
+        population = toolbox.mutation(population, toolbox)
         record = stats.compile(population)
         if verbose: print(record)
         logbook.record(gen=gen, **record)

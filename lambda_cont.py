@@ -31,9 +31,8 @@ toolbox = base.Toolbox()
 toolbox.register("evaluate", cartpole.evalutation, seed=seed, episodes=EVAL_EPISODES)
 toolbox.register("mate", cartpole.cartover)
 toolbox.register("mutate", cartpole.mutcartion, sigma=1)
-stats = statconf.get_statistics()
 
-alg = containers.LambdaAlgContainer(l, m, mr, cr, seed, ng,toolbox,creator,stats)
+alg = containers.LambdaAlgContainer(l, m, mr, cr, seed, ng,toolbox,creator)
 alg.replay_f = rp
 alg.run()
 df = visualisation.logbook2pandas(alg.logbook)

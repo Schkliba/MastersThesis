@@ -10,8 +10,8 @@ STAT_DEF = {
     "std": np.std
 }
 
-def get_statistics():
-    stat_obj = tools.Statistics(lambda ind: ind.fitness.values)
+def get_statistics(f):
+    stat_obj = tools.Statistics(f)
     for stat in STAT_DEF:
         stat_obj.register(stat, STAT_DEF[stat])
     return stat_obj
