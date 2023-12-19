@@ -20,21 +20,23 @@ parser.add_argument("-s", "--seed", help="Seed of the random generator", type=in
 
 args = parser.parse_args()
 
-creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessMax)
+creator.create("FitnessNovelty", base.Fitness, weights=(1.0, ))
+#creator.create("Behavior", base.Fitness, weights=(1.0, 1.0)) #end position & angle
+creator.create("FitnessTrue", base.Fitness, weights=(1.0, )) 
 
+creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessNovelty , fitness2=creator.FitnessTrue)#, behaviour=creator.Behavior)
 ng, l, cr, mr, seed = args.generations, args.pop, args.cross_rate, args.mutation_rate, args.seed
 rp = lambda x: cartpole.evalutation(x, seed, 1, True)
 
 toolbox = base.Toolbox()
-toolbox.register("evaluate", cartpole.evalutation, seed=seed, episodes=EVAL_EPISODES)
+toolbox.register("evaluate", cartpole.evalutation_b, seed=seed, episodes=EVAL_EPISODES)
 toolbox.register("triOp", cartpole.cartdiff, alpha=mr)
 toolbox.register("recombine", cartpole.cartrecomb, prob_filter=cr)
 
 
-alg = containers.DiffAlgContainer(l,toolbox, seed, ng,creator)
+alg = containers.DiffNoveltyContainer(l,toolbox, seed, ng,creator)
 alg.replay_f = rp
 alg.run()
-df = visualisation.logbook2pandas(alg.logbook)
-df.to_csv("./Data/diff_fit_"+str(datetime.datetime.utcnow())+".out")
-visualisation.single_run_chart(df)
+df = visualisation.novelty_logbook2pandas(alg.logbook)
+df.to_csv("./Data/diff_nov_"+str(datetime.datetime.utcnow())+".out")
+visualisation.single_novelty_run_chart(df)

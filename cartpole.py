@@ -29,12 +29,12 @@ def evalutation_b(individual: tf.keras.Model, seed:int, episodes:int, replay=Fal
             done = terminated or truncated
 
         total_score += score
-    return total_score / episodes, [observation[0], observation[2]]
+    return total_score / episodes, [observation[0]/4.8, observation[2]/0.418]
 
 def evalutation(individual: tf.keras.Model, seed:int, episodes:int, replay=False) -> float:
     fit, b = evalutation_b(individual, seed, episodes, replay)
-    return fit
-    
+    return fit,
+
 NEURON_COUNT = 4
 
 class CartpolePlayer(tf.keras.Model):
@@ -52,11 +52,11 @@ class CartpolePlayer(tf.keras.Model):
         return self.d_out(x)
     
 
-
+#Cross overs
 def switcheroo(ind1, ind2):
     return ind2, ind1 
 
-def cartover(ind1:CartpolePlayer, ind2:CartpolePlayer):
+def cart_mean(ind1:CartpolePlayer, ind2:CartpolePlayer):
     u = ind1.mutable_layer.get_weights()
     v = ind2.mutable_layer.get_weights()
     f = [(u[i] + v[i])/2 for i in range(len(u)) ]
@@ -64,6 +64,33 @@ def cartover(ind1:CartpolePlayer, ind2:CartpolePlayer):
     ind2.mutable_layer.set_weights(f)
     return ind1, ind2
 
+def cart_uniform(ind1:CartpolePlayer, ind2:CartpolePlayer, prob_filter):
+    u = ind1.mutable_layer.get_weights()
+    v = ind2.mutable_layer.get_weights()
+    newind1 = []
+    newind2 = []
+    for i, mat in enumerate(u):
+        cpoints = np.random.random(mat.shape) < prob_filter
+        n = np.where(cpoints, mat, v[i])
+        newind1.append(n)
+        n = np.where(cpoints, v[i], mat)
+        newind2.append(n)
+    ind1.mutable_layer.set_weights(newind1)
+    ind2.mutable_layer.set_weights(newind2)
+    return ind1, ind2
+
+
+# Mutations
+def mutIdentity(individual):
+    return individual
+
+def mutcartion(individual, sigma):
+    ws = individual.mutable_layer.get_weights()
+    rand = [w + np.random.normal(0, sigma, w.shape) for w in ws]
+    individual.mutable_layer.set_weights(rand)
+    return individual,
+
+# Defferentials
 def cartdiff(base:CartpolePlayer, diff1:CartpolePlayer, diff2:CartpolePlayer, alpha:float):
     a = base.mutable_layer.get_weights()
     b = diff1.mutable_layer.get_weights()
@@ -81,12 +108,3 @@ def cartrecomb(ind:CartpolePlayer, mats, prob_filter):
     ind.mutable_layer.set_weights(newind)
     return ind
 
-   
-def mutIdentity(individual):
-    return individual
-
-def mutcartion(individual, sigma):
-    ws = individual.mutable_layer.get_weights()
-    rand = [w + np.random.normal(0, sigma, w.shape) for w in ws]
-    individual.mutable_layer.set_weights(rand)
-    return individual,

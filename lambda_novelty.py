@@ -13,8 +13,11 @@ EVAL_EPISODES = 10
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-g", "--generations", help="Number of generations", type=int, default=10)
+parser.add_argument("-cm", "--cross_method", help="Method of crossing individuals", type=str, default="mean")
 parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", type=float, default=0.5)
+parser.add_argument("-cru", "--cross_uni", help="Method of crossing individuals", type=float, default=0.4)
 parser.add_argument("-mr", "--mutation_rate", help="Rate of mutation", type=float, default=0.01)
+parser.add_argument("-ms", "--mutation_sigma", help="Sigma of mutation", type=float, default=1)
 parser.add_argument("-l", "--lambdan", help="Base population", type=int, default=30)
 parser.add_argument("-m", "--mu", help="Offspring pool", type=int, default=30)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
@@ -32,12 +35,16 @@ creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessNov
 
 toolbox = base.Toolbox()
 toolbox.register("evaluate", cartpole.evalutation_b, seed=seed, episodes=EVAL_EPISODES)
-toolbox.register("mate", cartpole.cartover)
-toolbox.register("mutate", cartpole.mutcartion, sigma=1)
+if args.cross_method == "mean":
+    toolbox.register("mate", cartpole.cart_mean)
+else:
+    toolbox.register("mate", cartpole.cart_uniform, prob_filter=args.cross_uni)
+
+toolbox.register("mutate", cartpole.mutcartion, sigma=args.mutation_sigma)
 
 alg = con.LambdaNoveltyAlg(l,m,mr,cr,seed,ng, toolbox, creator)
 alg.replay_f = rp
 alg.run()
 df = visualisation.logbook2pandas(alg.logbook)
-df.to_csv("./Data/lambda_nov_"+str(datetime.datetime.utcnow())+".out")
+df.to_json("./Data/lambda_nov_"+str(datetime.datetime.utcnow())+".out")
 visualisation.single_run_chart(df)
