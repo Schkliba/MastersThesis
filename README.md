@@ -1,2 +1,4 @@
-# Diploma theses
+# Fitness vs. Novelty
+## Master theses
+
 
