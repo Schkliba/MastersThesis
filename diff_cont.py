@@ -17,6 +17,7 @@ parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", 
 parser.add_argument("-mr", "--mutation_rate", help="Rate of mutation", type=float, default=0.9)
 parser.add_argument("-p", "--pop", help="Base population", type=int, default=7)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
+parser.add_argument("-p", "--out_path", help="Path to store output data", type=str, default="./Data/Junk/")
 
 args = parser.parse_args()
 
@@ -36,5 +37,5 @@ alg = containers.DiffAlgContainer(l,toolbox, seed, ng,creator)
 alg.replay_f = rp
 alg.run()
 df = visualisation.logbook2pandas(alg.logbook)
-df.to_csv("./Data/diff_fit_"+str(datetime.datetime.utcnow())+".out")
+df.to_csv(args.out_path + "diff_fit_"+str(datetime.datetime.utcnow())+".out")
 visualisation.single_run_chart(df)

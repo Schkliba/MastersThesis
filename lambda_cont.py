@@ -21,6 +21,8 @@ parser.add_argument("-ms", "--mutation_sigma", help="Sigma of mutation", type=fl
 parser.add_argument("-l", "--lambdan", help="Base population", type=int, default=30)
 parser.add_argument("-m", "--mu", help="Offspring pool", type=int, default=30)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
+parser.add_argument("-p", "--out_path", help="Path to store output data", type=str, default="./Data/Junk/")
+
 
 args = parser.parse_args()
 
@@ -43,5 +45,5 @@ alg = containers.LambdaAlgContainer(l, m, mr, cr, seed, ng,toolbox,creator)
 alg.replay_f = rp
 alg.run()
 df = visualisation.logbook2pandas(alg.logbook)
-df.to_csv("./Data/lambda_fit_"+args.cross_method+"_"+"sigma="+str(args.mutation_sigma)+"_"+str(datetime.datetime.utcnow())+".out")
+df.to_csv(args.out_path + "lambda_fit_"+args.cross_method+"_"+"sigma="+str(args.mutation_sigma)+"_"+str(datetime.datetime.utcnow())+".out")
 visualisation.single_run_chart(df)

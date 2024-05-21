@@ -1,5 +1,6 @@
 import cartpole
 import random
+import archiving
 import numpy as np
 from deap import base
 from deap import tools
@@ -55,6 +56,22 @@ def differential_evolatuion(population, toolbox, ngen, stats, hof, verbose=True)
 
     for gen in range(ngen):
         population = toolbox.mutation(toolbox.clone(population), toolbox)
+        record = stats.compile(population)
+        logbook.record(gen=gen, **record)
+        if verbose: print(logbook.stream)
+
+    return population, logbook
+
+def archiving_differential_evolatuion(population, toolbox, ngen, stats, hof, archive:archiving.Archive, verbose=True):
+    logbook = tools.Logbook()
+    pop_size = len(population)
+    fitnesses = toolbox.map(toolbox.evaluate, population)
+    for ind, fit in zip(population, fitnesses):
+        ind.fitness.values = fit
+
+    for gen in range(ngen):
+        population = tools.selBest(toolbox.mutation(toolbox.clone(population+archive.get_stored), toolbox), pop_size)
+        archive.store_individuals(population)
         record = stats.compile(population)
         logbook.record(gen=gen, **record)
         if verbose: print(logbook.stream)

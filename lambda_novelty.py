@@ -21,6 +21,8 @@ parser.add_argument("-ms", "--mutation_sigma", help="Sigma of mutation", type=fl
 parser.add_argument("-l", "--lambdan", help="Base population", type=int, default=30)
 parser.add_argument("-m", "--mu", help="Offspring pool", type=int, default=30)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
+parser.add_argument("-p", "--out_path", help="Path to store output data", type=str, default="./Data/Junk/")
+
 
 args = parser.parse_args()
 
@@ -45,6 +47,6 @@ toolbox.register("mutate", cartpole.mutcartion, sigma=args.mutation_sigma)
 alg = con.LambdaNoveltyAlg(l,m,mr,cr,seed,ng, toolbox, creator)
 alg.replay_f = rp
 alg.run()
-df = visualisation.logbook2pandas(alg.logbook)
-df.to_json("./Data/lambda_nov_"+str(datetime.datetime.utcnow())+".out")
-visualisation.single_run_chart(df)
+df = visualisation.novelty_logbook2pandas(alg.logbook)
+df.to_json(args.out_path + "lambda_nov_"+str(datetime.datetime.utcnow())+".out")
+visualisation.single_novelty_run_chart(df)

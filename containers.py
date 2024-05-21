@@ -2,6 +2,7 @@ import numpy as np
 import differential_evo as de
 import tensorflow as tf
 import statconf
+import archiving
 
 from deap import algorithms
 from deap import base
@@ -92,9 +93,7 @@ class LambdaNoveltyAlg(LambdaAlgContainer, PureNovelty):
     def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator):
         LambdaAlgContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
         PureNovelty.__init__(self)
-        toolbox.register("map", self.novelty_operator)
-
-        
+        toolbox.register("map", self.novelty_operator)        
 
 class DiffNoveltyContainer(DiffAlgContainer, PureNovelty):
 
@@ -103,6 +102,17 @@ class DiffNoveltyContainer(DiffAlgContainer, PureNovelty):
         PureNovelty.__init__(self)
         toolbox.register("map", self.novelty_operator)
         toolbox.register("mutation", de.novelty_mutation)
+
+class DiffArchivingContainer(DiffAlgContainer):
+    def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2):
+        super().__init__(self, pop, toolbox, seed, ngen, creator)
+        self.archive = archiving.Archive(archiving_period)
+
+    def run(self):
+        tf.keras.utils.set_random_seed(self.seed)
+        self.final_pop, self.logbook = de.archiving_differential_evolatuion(self.gen_pop(),\
+            self.toolbox, self.ngen, self.stats, self.hof, self.archive, True)
+        return self.final_pop, self.logbook 
 
 
     
