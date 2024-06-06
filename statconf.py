@@ -14,7 +14,7 @@ STAT_DEF = {
 def get_statistics(f):
     stat_obj = tools.Statistics(f)
     for stat in STAT_DEF:
-        stat_obj.register(stat, STAT_DEF[stat], axis=0)
+        stat_obj.register(stat, STAT_DEF[stat])
     return stat_obj
 
 def get_novelty_stats(novelty_f, fitness_f):
@@ -22,5 +22,5 @@ def get_novelty_stats(novelty_f, fitness_f):
     novelty_stats = tools.Statistics(novelty_f)
     multi_stats = tools.MultiStatistics(fitness=fit_stats, novelty=novelty_stats)
     for stat in STAT_DEF:
-        multi_stats.register(stat, STAT_DEF[stat], axis=0)
+        multi_stats.register(stat, STAT_DEF[stat])
     return multi_stats

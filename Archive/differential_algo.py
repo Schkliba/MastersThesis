@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import tensorflow as tf
+import keras
 import numpy as np
 
 import cartpole
@@ -15,9 +15,9 @@ from deap import algorithms
 RANDOM_SEED = 42
 EVAL_EPISODES = 10
 
-tf.keras.utils.set_random_seed(RANDOM_SEED)
+keras.utils.set_random_seed(RANDOM_SEED)
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessMax, mutable_layer = tf.keras.layers.Dense(9, kernel_initializer="glorot_normal"))
+creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessMax, mutable_layer = keras.layers.Dense(9, kernel_initializer="glorot_normal"))
 toolbox = base.Toolbox()
 toolbox.register("evaluate", cartpole.evalutation, seed=RANDOM_SEED, episodes=EVAL_EPISODES)
 
@@ -34,7 +34,7 @@ stats.register("std", np.std)
 stats.register("min", np.min)
 stats.register("max", np.max)
 
-final_pop, logbook = de.differential_evolatuion(gen_pop(5),toolbox, 10, stats, hof, True)
+final_pop, logbook = de.differential_evolution(gen_pop(5),toolbox, 10, stats, hof, True)
 stats = ["avg", "std", "min", "max"]
 df = vis.logbook2pandas(logbook, stats)
 sns.lineplot(df["avg"])

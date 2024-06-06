@@ -1,0 +1,19 @@
+\contentsline {chapter}{Introduction}{2}{chapter*.2}%
+\contentsline {chapter}{\numberline {1}Evolutionary algorithms}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Fitness based algorithms}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Evolutionary Strategies}{3}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Differential Evolution}{3}{subsection.1.1.2}%
+\contentsline {section}{\numberline {1.2}Novelty}{3}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Pure Novelty}{3}{subsection.1.2.1}%
+\contentsline {chapter}{\numberline {2}Enviroments}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Gymnasium}{4}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}CartPole}{4}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Moon Landing}{4}{subsection.2.1.2}%
+\contentsline {chapter}{\numberline {3}Comparison criteria}{5}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Experiments}{6}{chapter.4}%
+\contentsline {chapter}{Conclusion}{7}{chapter*.3}%
+\contentsline {chapter}{List of Figures}{8}{chapter*.4}%
+\contentsline {chapter}{List of Tables}{9}{chapter*.5}%
+\contentsline {chapter}{List of Abbreviations}{10}{chapter*.6}%
+\contentsline {chapter}{\numberline {A}Attachments}{11}{appendix.A}%
+\contentsline {section}{\numberline {A.1}First Attachment}{11}{section.A.1}%

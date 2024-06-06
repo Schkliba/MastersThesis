@@ -8,7 +8,7 @@ import statconf
 def logbook2pandas(logbook:tools.Logbook):
     df = pd.DataFrame()
     for stat in statconf.STAT_LIST:
-        df[stat] = np.array(logbook.select(stat))
+        df[stat] = logbook.select(stat)
     return df
 
 def novelty_logbook2pandas(logbook:tools.Logbook):
@@ -22,10 +22,12 @@ def novelty_logbook2pandas(logbook:tools.Logbook):
 
 def single_novelty_run_chart(df:pd.DataFrame):
     fig, axs = plt.subplots(2,1)
+    df.index.name = "gen"
     sns.lineplot(data=df, x="gen", y='fit_avg', ax=axs[0])
     sns.lineplot(data=df, x="gen", y='nov_avg', ax=axs[1])
     plt.show()
 
 def single_run_chart(df:pd.DataFrame):
+    df.index.name = "gen"
     sns.lineplot(data=df,x="gen", y="avg")
     plt.show()

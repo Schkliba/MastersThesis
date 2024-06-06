@@ -6,7 +6,7 @@ from deap import base
 from deap import tools
 
         
-def mutation(pop, toolbox):
+def mutation(pop, toolbox:base.Toolbox):
     go_out = []
     for j in range(len(pop)):
         candidates = [candidate for i,candidate in enumerate(pop) if i != j]
@@ -19,7 +19,7 @@ def mutation(pop, toolbox):
     return go_out
 
 
-def novelty_mutation(pop, toolbox):
+def novelty_mutation(pop, toolbox:base.Toolbox):
 
     new_ids = []
     for j in range(len(pop)):
@@ -47,31 +47,34 @@ def novelty_mutation(pop, toolbox):
     """
     
 
-def differential_evolatuion(population, toolbox, ngen, stats, hof, verbose=True):
+def differential_evolution(population, toolbox, ngen, stats, hof, verbose=True):
     logbook = tools.Logbook()
+    logbook.header = ['gen'] + (stats.fields if stats else [])
 
     fitnesses = toolbox.map(toolbox.evaluate, population)
     for ind, fit in zip(population, fitnesses):
         ind.fitness.values = fit
 
     for gen in range(ngen):
-        population = toolbox.mutation(toolbox.clone(population), toolbox)
+        population = toolbox.mutation(population, toolbox)
         record = stats.compile(population)
         logbook.record(gen=gen, **record)
         if verbose: print(logbook.stream)
-
+        
     return population, logbook
 
-def archiving_differential_evolatuion(population, toolbox, ngen, stats, hof, archive:archiving.Archive, verbose=True):
+def archiving_differential_evolution(population, toolbox, ngen, stats, hof, archive:archiving.Archive, verbose=True):
     logbook = tools.Logbook()
+    logbook.header = ['gen'] + (stats.fields if stats else [])
     pop_size = len(population)
     fitnesses = toolbox.map(toolbox.evaluate, population)
+
     for ind, fit in zip(population, fitnesses):
         ind.fitness.values = fit
 
     for gen in range(ngen):
-        population = tools.selBest(toolbox.mutation(toolbox.clone(population+archive.get_stored), toolbox), pop_size)
-        archive.store_individuals(population)
+        population = tools.selBest(toolbox.mutation(population+archive.get_stored(), toolbox), pop_size)
+        archive.store_individuals(gen, population)
         record = stats.compile(population)
         logbook.record(gen=gen, **record)
         if verbose: print(logbook.stream)
