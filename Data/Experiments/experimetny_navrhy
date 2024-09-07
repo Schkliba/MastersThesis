@@ -1,0 +1,23 @@
+1.  
+    veličina: počet evaluačních epizod
+    testujeme: míru generalizace na výsledné populaci
+    výsledek: "optimální" počet epizod
+
+2.
+    veličina: hyperparametry algoritmů
+    testujeme: efekt hyperparametrů na průběh evoluce
+    výsledek: volba hyperparametrů
+
+3.
+    
+
+4. 
+    heatmapa behaviorálního prostoru?
+
+5. míchaní fitness - vážený součet fitness novelty
+                   - podselekce na fitness
+                   
+Waterworld - rozhodit populaci
+
+schůzka pátek 28.6. 
+kdyžtak po 8.7.

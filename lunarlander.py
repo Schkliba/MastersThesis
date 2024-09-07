@@ -1,104 +1,36 @@
 import keras
 import numpy as np
 import gymnasium as gym
+import libs.agent_infra as ai
 from typing import *
-def evalutation_b(individual: keras.Model, seed:int, episodes:int, replay=False) -> float:
-    """
-    Returns the average score achieved on the given number of episodes and normalised behaviour.
-    """
-    # Create the environment
-    env = gym.make("LunarLander-v2", render_mode=None if not replay else "human")
-    env.reset(seed=seed)
 
-    # Evaluate the episodes
-    total_score = 0
-    for episode in range(episodes):
-        observation, score, done = env.reset()[0], 0, False
-        while not done:
-            prediction = individual(observation[np.newaxis])[0].numpy()
-            action = np.argmax(prediction)
+class LunarLanderEvaluator(ai.Evaluator):
 
-            observation, reward, terminated, truncated, info = env.step(action)
-            score += reward
-            done = terminated or truncated
-
-        total_score += score
-    return total_score / episodes, [observation[0]/4.8, observation[2]/0.418]
-
-def evalutation(individual: keras.Model, seed:int, episodes:int, replay=False) -> float:
-    fit, b = evalutation_b(individual, seed, episodes, replay)
-    return fit,
-
-NEURON_COUNT = 4
-
-class CartpolePlayer(keras.Model):
-    def __init__(self, mut_l=None):
+    def __init__(self, replay=False, hidden_dim=None):
         super().__init__()
-        self.d1 = keras.layers.Dense(4)
-        self.mutable_layer = keras.layers.Dense(NEURON_COUNT, activation="tanh")
-        if mut_l is not None:
-            self.mutable_layer.set_weights(mut_l)
-        self.d_out = keras.layers.Dense(2)
+        self.enviroment = gym.make("LunarLander-v1", render_mode=None if not replay else "human")
 
-    def call(self, input):
-        x = self.d1(input)
-        x = self.mutable_layer(x)
-        return self.d_out(x)
+        self.in_dim = self.enviroment.observation_space.shape
+        if hidden_dim is not None:
+            self.hidden_dim = hidden_dim
+        self.out_dim = self.enviroment.action_space.shape
+
+    class LunarLanderAgent(ai.Player):
+        def __init__(self, hidden_dim=5, mut_l=None):
+            super().__init__()
+            self.d1 = keras.layers.Dense(in_dim)
+            self.mutable_layer = keras.layers.Dense(hidden_dim, activation="tanh")
+            if mut_l is not None:
+                self.mutable_layer.set_weights(mut_l)
+            self.d_out = keras.layers.Dense(out_dim)
     
+    @classmethod
+    def get_individual_base(cls):
+        return cls.LunarLanderAgent
 
-#Cross overs
-def switcheroo(ind1, ind2):
-    return ind2, ind1 
-
-def cart_mean(ind1:CartpolePlayer, ind2:CartpolePlayer):
-    u = ind1.mutable_layer.get_weights()
-    v = ind2.mutable_layer.get_weights()
-    f = [(u[i] + v[i])/2 for i in range(len(u)) ]
-    ind1.mutable_layer.set_weights(f)
-    ind2.mutable_layer.set_weights(f)
-    return ind1, ind2
-
-def cart_uniform(ind1:CartpolePlayer, ind2:CartpolePlayer, prob_filter):
-    u = ind1.mutable_layer.get_weights()
-    v = ind2.mutable_layer.get_weights()
-    newind1 = []
-    newind2 = []
-    for i, mat in enumerate(u):
-        cpoints = np.random.random(mat.shape) < prob_filter
-        n = np.where(cpoints, mat, v[i])
-        newind1.append(n)
-        n = np.where(cpoints, v[i], mat)
-        newind2.append(n)
-    ind1.mutable_layer.set_weights(newind1)
-    ind2.mutable_layer.set_weights(newind2)
-    return ind1, ind2
+    def get_individual(self):
+        return self.LunarLanderAgent(self.in_dim, self.out_dim, self.hidden_dim)
 
 
-# Mutations
-def mutIdentity(individual):
-    return individual
 
-def mutcartion(individual, sigma):
-    ws = individual.mutable_layer.get_weights()
-    rand = [w + np.random.normal(0, sigma, w.shape) for w in ws]
-    individual.mutable_layer.set_weights(rand)
-    return individual,
-
-# Defferentials
-def cartdiff(base:CartpolePlayer, diff1:CartpolePlayer, diff2:CartpolePlayer, alpha:float):
-    a = base.mutable_layer.get_weights()
-    b = diff1.mutable_layer.get_weights()
-    c = diff2.mutable_layer.get_weights()
-    n = [(a[i] + alpha * (b[i] - c[i])) for i in range(len(a))]
-    return n
-
-def cartrecomb(ind:CartpolePlayer, mats, prob_filter):
-    newind = []
-    og = ind.mutable_layer.get_weights()
-    for i, mat in enumerate(mats):
-        cpoints = np.random.random(mat.shape) < prob_filter
-        n = np.where(cpoints, mat, og[i])
-        newind.append(n)
-    ind.mutable_layer.set_weights(newind)
-    return ind
 

@@ -2,7 +2,7 @@ import numpy as np
 import differential_evo as de
 import keras
 import statconf
-import archiving
+import libs.archiving as archiving
 
 from deap import algorithms
 from deap import base
@@ -15,9 +15,6 @@ class Replayble:
     """
     def __init__(self):
         self.fit_attr = "fitness"
-
-    def gen_pop(self):
-        return [self.creator.Individual() for i in range(self.pop_size)]
 
     def replayBest(self):
         if self.final_pop is not None:
@@ -41,9 +38,9 @@ class PureNovelty:
         self.fit_attr = "fitness2"
 
     @staticmethod
-    def novelty_operator(novelty_evaluation, evaluated_pop):
+    def novelty_operator(novelty_evaluation_f, evaluated_pop, eval_map=map):
         fitness_novelty=[]
-        behaviours = list(map(novelty_evaluation, evaluated_pop))
+        behaviours = list(eval_map(novelty_evaluation_f, evaluated_pop))
         for b, ind in zip(behaviours, evaluated_pop):
             fitness, beh = b
             ind.behaviour = beh
@@ -79,7 +76,7 @@ class LambdaAlgContainer(Replayble):
     def run(self):
         keras.utils.set_random_seed(self.seed)
         self.final_pop, self.logbook = algorithms.eaMuPlusLambda(
-            self.gen_pop(),self.toolbox, self.pop_size, self.mun,
+            self.toolbox.gen_pop(self.pop_size),self.toolbox, self.pop_size, self.mun,
             self.cross_r, self.mut_r, self.ngen, self.stats, self.hof, True
         )
         return self.final_pop, self.logbook 
@@ -104,7 +101,7 @@ class DiffAlgContainer(Replayble):
        
     def run(self):
         keras.utils.set_random_seed(self.seed)
-        self.final_pop, self.logbook = de.differential_evolution(self.gen_pop(),self.toolbox, self.ngen, self.stats, self.hof, True)
+        self.final_pop, self.logbook = de.differential_evolution(self.toolbox.gen_pop(self.pop_size),self.toolbox, self.ngen, self.stats, self.hof, True)
         return self.final_pop, self.logbook 
 
 
@@ -137,38 +134,70 @@ class DiffArchivingContainer(DiffAlgContainer):
 
     def run(self):
         keras.utils.set_random_seed(self.seed)
-        self.final_pop, self.logbook = de.archiving_differential_evolution(self.gen_pop(),\
-            self.toolbox, self.ngen, self.stats, self.hof, self.archive, True)
+        self.final_pop, self.logbook = de.archiving_differential_evolution(
+            self.toolbox.gen_pop(self.pop_size),
+            self.toolbox, 
+            self.ngen, 
+            self.stats, 
+            self.hof, 
+            self.archive, 
+            True
+        )
         return self.final_pop, self.logbook 
 
 class DiffArchivingNoveltyContainer(DiffAlgContainer, PureNovelty):
     """
-    Implements diffential evolution with basic archiving
+    Implements diffential novelty evolution with basic archiving, pure novelty
     """
     def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2):
-        super().__init__(pop, toolbox, seed, ngen, creator)
+        DiffAlgContainer.__init__(self,pop, toolbox, seed, ngen, creator)
+        PureNovelty.__init__(self)
+        toolbox.register("map", self.novelty_operator)
+        toolbox.register("mutation", de.novelty_mutation)
         self.archive = archiving.NoveltyArchive(archiving_period, pop)
 
     def run(self):
         keras.utils.set_random_seed(self.seed)
-        self.final_pop, self.logbook = de.archiving_differential_evolution(self.gen_pop(),\
-            self.toolbox, self.ngen, self.stats, self.hof, self.archive, True)
+        self.final_pop, self.logbook = de.archiving_differential_evolution(
+            self.toolbox.gen_pop(self.pop_size),
+            self.toolbox, 
+            self.ngen, 
+            self.stats, 
+            self.hof, 
+            self.archive, 
+            True
+        )
         return self.final_pop, self.logbook 
 
 class LambdaArchivingContainer(LambdaAlgContainer):
     """
-    Implements diffential evolution with basic archiving
+    Implements L+M strategy with basic archiving
     """
-    def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2):
-        super().__init__(pop, toolbox, seed, ngen, creator)
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, archiving_period=2):
+        super().__init__(pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
         self.archive = archiving.Archive(archiving_period, pop)
+        toolbox.decorate("select", self.archiveOp)
 
-    def archiveOp():
-        def decorator(varOr):
-            def wrapper(population, toolbox, lambda_, cxpb, mutpb):
-                
-                offspring = varOr(population, toolbox, lambda_, cxpb, mutpb)
+    @property
+    def archiveOp(self):
+        def decorator(select):
+            def wrapper(population, number, tournsize):
+                population = select(population + self.archive.get_stored(), number, tournsize=tournsize)
+                self.archive.store_individuals(population)
+                return population
+            return wrapper
         return decorator
 
 
-    
+class LambdaArchivingNoveltyContainer(LambdaArchivingContainer, PureNovelty):
+    """
+    Implements diffential evolution with basic archiving, pure novelty
+    """
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, archiving_period=2):
+        LambdaArchivingContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
+        PureNovelty.__init__(self)
+        toolbox.register("map", self.novelty_operator)        
+        self.archive = archiving.NoveltyArchive(archiving_period, pop)
+        toolbox.decorate("select", self.archiveOp)
+
+

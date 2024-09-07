@@ -13,7 +13,8 @@ class CartpoleTorch:
         return self._model(inputs)
     
     def get_agent_weights(self):
-        return self.mutable_layer.get_weights()
+        return self._model.parameters()
 
     def set_agent_weights(self, weights):
-        self.mutable_layer.set_weights(weights)
+        for i, w in enum(weights):
+            self._model[i].weights = w
