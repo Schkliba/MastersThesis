@@ -34,7 +34,8 @@ class WaterworldEvaluator:
     def evalutation(individual: keras.Model, seed:int, episodes:int, replay=False) -> float:
         fit, b = evalutation_b(individual, seed, episodes, replay)
         return fit,
-    class LunarLanderAgent(keras.Model):
+
+    class WaterWorldAgent(keras.Model):
         def __init__(self, mut_l=None):
             super().__init__()
             self.d1 = keras.layers.Dense(4)

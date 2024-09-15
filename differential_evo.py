@@ -9,10 +9,10 @@ def mutation(pop, toolbox:base.Toolbox):
     go_out = []
     for j in range(len(pop)):
         candidates = [candidate for i,candidate in enumerate(pop) if i != j]
-        a, b, c = tools.selRoulette(candidates, 3)
+        #print(list(map(lambda x: x.fitness, candidates)))
+        a, b, c = tools.selRandom(candidates, 3)
         new_ind = toolbox.triOp(a, b, c)
         cloned = toolbox.clone(pop[j])
-        #print(pop[j].get_agent_weights())
         trial = toolbox.recombine(cloned, new_ind)
         trial.fitness.values = toolbox.evaluate(trial)
         outputed = tools.selBest([trial, pop[j]], 1)[0] 
@@ -25,7 +25,7 @@ def novelty_mutation(pop, toolbox:base.Toolbox):
     new_ids = []
     for j in range(len(pop)):
         candidates = [candidate for i,candidate in enumerate(pop) if i != j]
-        a, b, c = tools.selRoulette(candidates, 3)
+        a, b, c = tools.selRandom(candidates, 3)
         new_ind = toolbox.triOp(a, b, c)
         new_ids.append(new_ind)
     trials = list(map(lambda x: toolbox.recombine(x[0], x[1]), zip(pop, new_ids)))

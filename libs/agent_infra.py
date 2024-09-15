@@ -1,8 +1,11 @@
 import keras
 import numpy as np
+import copy 
+
 class Evaluator:
     def __init__(self):
         self.enviroment = None
+        self.behavior_space_f = lambda x: x
 
     @staticmethod
     def gen_pop(pop_size, ind_f):

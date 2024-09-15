@@ -12,14 +12,9 @@ class CartpoleEvaluator(ai.Evaluator):
     def __init__(self, replay=False, hidden_dim=None):
         super().__init__()
         self.enviroment = gym.make("CartPole-v1", render_mode=None if not replay else "human")
-  
-
+        self.behavior_space_f = lambda observation: [observation[0]/4.8, observation[2]/0.418]
 
     class CartpoleAgent(ai.Player):
-        def __deepcopy__(self, memo):
-            new = self.__class__(self)
-            new.mutable_layer = copy.deepcopy(self.mutable_layer, memo)
-            return new
 
         def __init__(self, hidden_dim=4, mut_l=None, trainable=False, dtype="float32"):
             super().__init__(trainable=False, dtype=dtype)

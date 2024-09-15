@@ -1,6 +1,8 @@
 import cartpole
 import lunarlander
 import containers
+import diff_cont
+import lambda_cont
 
 ENIVROMENTS = {
     "cartpole": cartpole.CartpoleEvaluator,
@@ -19,4 +21,9 @@ DIFF_CONTS = {
     "fit_archiving": containers.DiffArchivingContainer,
     "archiving": containers.DiffArchivingNoveltyContainer,
     "novelty": containers.LambdaNoveltyAlg
+}
+
+ALG_MAPPING = {
+    "diff": diff_cont, 
+    "lambda": lambda_cont,
 }

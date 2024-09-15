@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-g", "--generations", help="Number of generations", type=int, default=10)
 parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", type=float, default=0.6)
 parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "archiving", "fit_archiving"], default="fitness")
-parser.add_argument("-ev", "--enviroment", help="Enviroment type", choices=["cartpole, lunarlander, waterworld"], default="cartpole")
+parser.add_argument("-ev", "--enviroment", help="Enviroment type", choices=["cartpole", "lunarlander", "waterworld"], default="cartpole")
 
 parser.add_argument("-mr", "--mutation_rate", help="Rate of mutation", type=float, default=0.9)
 parser.add_argument("-p", "--pop", help="Base population", type=int, default=7)
@@ -78,6 +78,7 @@ def main(args:argparse.Namespace):
     df.to_csv(path)
     if not args.experiment:
         visual_chart(df)
+
     return df, alg.final_pop
 
 if __name__ == "__main__":

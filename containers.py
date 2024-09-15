@@ -58,7 +58,7 @@ class LambdaAlgContainer(Replayble):
     """
     Implements classical evo strategy L+M
     """
-    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator):
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, tournsize=3):
         super().__init__()
         self.pop_size = pop
         self.mun = offs
@@ -67,17 +67,25 @@ class LambdaAlgContainer(Replayble):
         self.seed = seed
         self.ngen = ngen
         self.toolbox = toolbox
-        self.toolbox.register("select", tools.selTournament, tournsize=3)
+        self.toolbox.register("select", tools.selTournament, tournsize=tournsize)
         self.hof = tools.HallOfFame(1)
         self.stats = statconf.get_statistics(lambda ind: ind.fitness.values)
         self.replay_f = self.replayBest
         self.creator = creator
 
-    def run(self):
+    def run(self, verbose=True):
         keras.utils.set_random_seed(self.seed)
         self.final_pop, self.logbook = algorithms.eaMuPlusLambda(
-            self.toolbox.gen_pop(self.pop_size),self.toolbox, self.pop_size, self.mun,
-            self.cross_r, self.mut_r, self.ngen, self.stats, self.hof, True
+            self.toolbox.gen_pop(self.pop_size),
+            self.toolbox, 
+            self.pop_size, 
+            self.mun,
+            self.cross_r, 
+            self.mut_r, 
+            self.ngen, 
+            self.stats, 
+            self.hof, 
+            verbose
         )
         return self.final_pop, self.logbook 
 
@@ -99,9 +107,16 @@ class DiffAlgContainer(Replayble):
         self.toolbox.register("mutation", de.mutation)
 
        
-    def run(self):
+    def run(self, verbose=True):
         keras.utils.set_random_seed(self.seed)
-        self.final_pop, self.logbook = de.differential_evolution(self.toolbox.gen_pop(self.pop_size),self.toolbox, self.ngen, self.stats, self.hof, True)
+        self.final_pop, self.logbook = de.differential_evolution(
+            self.toolbox.gen_pop(self.pop_size),
+            self.toolbox, 
+            self.ngen, 
+            self.stats, 
+            self.hof, 
+            verbose
+        )
         return self.final_pop, self.logbook 
 
 
@@ -132,7 +147,7 @@ class DiffArchivingContainer(DiffAlgContainer):
         super().__init__(pop, toolbox, seed, ngen, creator)
         self.archive = archiving.Archive(archiving_period, pop)
 
-    def run(self):
+    def run(self,verbose=True):
         keras.utils.set_random_seed(self.seed)
         self.final_pop, self.logbook = de.archiving_differential_evolution(
             self.toolbox.gen_pop(self.pop_size),
@@ -141,7 +156,7 @@ class DiffArchivingContainer(DiffAlgContainer):
             self.stats, 
             self.hof, 
             self.archive, 
-            True
+            verbose
         )
         return self.final_pop, self.logbook 
 
@@ -156,7 +171,7 @@ class DiffArchivingNoveltyContainer(DiffAlgContainer, PureNovelty):
         toolbox.register("mutation", de.novelty_mutation)
         self.archive = archiving.NoveltyArchive(archiving_period, pop)
 
-    def run(self):
+    def run(self, verbose=True):
         keras.utils.set_random_seed(self.seed)
         self.final_pop, self.logbook = de.archiving_differential_evolution(
             self.toolbox.gen_pop(self.pop_size),
@@ -165,7 +180,7 @@ class DiffArchivingNoveltyContainer(DiffAlgContainer, PureNovelty):
             self.stats, 
             self.hof, 
             self.archive, 
-            True
+            verbose
         )
         return self.final_pop, self.logbook 
 

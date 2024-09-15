@@ -74,7 +74,6 @@ def main(args: argparse.Namespace):
     alg.replay_f = rp
     alg.run()
     df = visual_conv(alg.logbook)
-
     dirpath = os.path.join(os.path.realpath(args.out_path), args.container,"lambda/"+args.cross_method)
     filepath = "%s,g%i,e%i,m%i,l%i,s%i.out" % (
                                                 str(datetime.datetime.utcnow()), 
@@ -90,6 +89,7 @@ def main(args: argparse.Namespace):
     df.to_csv(path)
     if not args.experiment:
         visual_chart(df)
+
     return df, alg.final_pop
 
 if __name__ == "__main__":
