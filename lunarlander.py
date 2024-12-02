@@ -18,7 +18,7 @@ class LunarLanderEvaluator(ai.Evaluator):
         self.out_dim = self.enviroment.action_space.shape
 
     class LunarLanderAgent(ai.Player):
-        def __init__(self, hidden_dim=5, mut_l=None):
+        def __init__(self, hidden_dim=7, mut_l=None):
             super().__init__()
             self.d1 = keras.layers.Dense(self.in_dim)
             self.mutable_layer = keras.layers.Dense(hidden_dim, activation="tanh")

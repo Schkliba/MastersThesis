@@ -21,7 +21,6 @@ def mutation(pop, toolbox:base.Toolbox):
 
 
 def novelty_mutation(pop, toolbox:base.Toolbox):
-
     new_ids = []
     for j in range(len(pop)):
         candidates = [candidate for i,candidate in enumerate(pop) if i != j]

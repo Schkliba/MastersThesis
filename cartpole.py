@@ -6,6 +6,8 @@ import libs.agent_infra as ai
 import gymnasium as gym
 from typing import *
 
+# Defining behavior and starting conditions of the Carpole task
+
 class CartpoleEvaluator(ai.Evaluator):
     hidden_dim = 4
 

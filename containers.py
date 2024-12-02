@@ -53,6 +53,22 @@ class PureNovelty:
             fitness_novelty.append([novelty])
         return fitness_novelty
 
+class AddedNovelty(PureNovelty):
+    @staticmethod
+    def addnovelty_operator(novelty_evaluation_f, evaluated_pop, eval_map=map, weight_n=1, weight_f=1):
+        fitness_novelty=[]
+        behaviours = list(eval_map(novelty_evaluation_f, evaluated_pop))
+        for b, ind in zip(behaviours, evaluated_pop):
+            fitness, beh = b
+            ind.behaviour = beh
+            ind.fitness2.values=(fitness,)
+            beh_distances = map(
+                lambda x: np.linalg.norm(np.array(x[1])-np.array(beh)), 
+                behavioursfit_attr
+            )
+            novelty = np.mean(np.array(list(beh_distances)))
+            fitness_novelty.append([weight_n * novelty + weight_f *fitness])
+        return fitness_novelty
 
 class LambdaAlgContainer(Replayble):
     """
@@ -139,6 +155,16 @@ class DiffNoveltyContainer(DiffAlgContainer, PureNovelty):
         toolbox.register("map", self.novelty_operator)
         toolbox.register("mutation", de.novelty_mutation)
 
+class DiffAdditionNoveltyContainer(DiffAlgContainer, AddedNovelty):
+    """
+    Implements differential evolution with additive mix of novelty and fitness
+    """
+    def __init__(self, pop, toolbox, seed, ngen, creator):
+        DiffAlgContainer.__init__(self,pop, toolbox, seed, ngen, creator)
+        PureNovelty.__init__(self)
+        toolbox.register("map", self.addnovelty_operator)
+        toolbox.register("mutation", de.novelty_mutation)
+
 class DiffArchivingContainer(DiffAlgContainer):
     """
     Implements diffential evolution with basic archiving
@@ -214,5 +240,8 @@ class LambdaArchivingNoveltyContainer(LambdaArchivingContainer, PureNovelty):
         toolbox.register("map", self.novelty_operator)        
         self.archive = archiving.NoveltyArchive(archiving_period, pop)
         toolbox.decorate("select", self.archiveOp)
+
+
+
 
 

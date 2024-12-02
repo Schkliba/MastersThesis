@@ -6,10 +6,14 @@ class Evaluator:
     def __init__(self):
         self.enviroment = None
         self.behavior_space_f = lambda x: x
-
+        self.behavior_transform = lambda x,eps:x
+        self.fitness_transform = lambda x,eps: (x/eps, )
     @staticmethod
     def gen_pop(pop_size, ind_f):
         return [ind_f() for i in range(pop_size)]
+
+    def reset(self):
+        self.enviroment.reset()
 
     def evalutation_b(self, individual: keras.Model, seed:int, episodes:int) -> float:
         """
@@ -27,15 +31,16 @@ class Evaluator:
                 action = np.argmax(prediction)
 
                 observation, reward, terminated, truncated, info = self.enviroment.step(action)
+                behavior = self.behavior_space_f(observation)
                 score += reward
                 done = terminated or truncated
-
             total_score += score
-        return total_score / episodes, [observation[0]/4.8, observation[2]/0.418]
+
+        return self.fitness_transform(total_score, episodes), self.behavior_transform(behavior, episodes)  
 
     def evalutation(self, individual: keras.Model, seed:int, episodes:int) -> float:
         fit, b = self.evalutation_b(individual, seed, episodes)
-        return fit,
+        return fit
 
 class Player(keras.Model):
     def __deepcopy__(self, memo):

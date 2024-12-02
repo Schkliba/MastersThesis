@@ -1,8 +1,9 @@
 .idea/
-__pycache__/
+**/__pycache__/
 poznamky
 /Data/*
 !/Data/Experiments
+/Data/Experiments/.ipynb_checkpoints
 /Docs/papers
 /.metals
 .vscode
