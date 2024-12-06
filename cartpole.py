@@ -43,3 +43,8 @@ class CartpoleEvaluator(ai.Evaluator):
         toolbox.register("gen_pop", self.gen_pop ,ind_f=toolbox.gen_individual)
 
 
+if __name__ == "__main__":
+    eva = CartpoleEvaluator()
+    ind = eva.get_individual_base()()
+    print(ind.get_agent_weights())
+

@@ -20,7 +20,7 @@ DIFF_CONTS = {
     "fitness": containers.DiffAlgContainer,
     "fit_archiving": containers.DiffArchivingContainer,
     "archiving": containers.DiffArchivingNoveltyContainer,
-    "novelty": containers.LambdaNoveltyAlg
+    "novelty": containers.DiffNoveltyContainer
 }
 
 ALG_MAPPING = {

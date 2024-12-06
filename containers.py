@@ -44,8 +44,8 @@ class PureNovelty:
         for b, ind in zip(behaviours, evaluated_pop):
             fitness, beh = b
             ind.behaviour = beh
-            ind.fitness2.values=(fitness,)
-            beh_distances = map(
+            ind.fitness2.values = fitness
+            beh_distances = map( 
                 lambda x: np.linalg.norm(np.array(x[1])-np.array(beh)), 
                 behaviours
             )
@@ -61,7 +61,7 @@ class AddedNovelty(PureNovelty):
         for b, ind in zip(behaviours, evaluated_pop):
             fitness, beh = b
             ind.behaviour = beh
-            ind.fitness2.values=(fitness,)
+            ind.fitness2.values=fitness
             beh_distances = map(
                 lambda x: np.linalg.norm(np.array(x[1])-np.array(beh)), 
                 behavioursfit_attr

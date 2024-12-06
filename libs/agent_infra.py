@@ -8,6 +8,7 @@ class Evaluator:
         self.behavior_space_f = lambda x: x
         self.behavior_transform = lambda x,eps:x
         self.fitness_transform = lambda x,eps: (x/eps, )
+
     @staticmethod
     def gen_pop(pop_size, ind_f):
         return [ind_f() for i in range(pop_size)]
@@ -101,7 +102,6 @@ def tri_op(base:Player, diff1:Player, diff2:Player, alpha:float):
     b = diff1.get_agent_weights()
     c = diff2.get_agent_weights()
     n = [(a[i] + alpha * (b[i] - c[i])) for i in range(len(a))]
-    #print(n)
     return n
 
 def recombine(ind:Player, mats, prob_filter):

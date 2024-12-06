@@ -1,4 +1,14 @@
 \chapter{Enviroments}
+ 
+Since computer vision tasks are its own research domain, not yet fully explored, we conclude that tackling 
+difficulties that would reliance on coputer vision model bring is not within the scope of this thesis. 
+Consequently we focus mainly on enviroments with more semantically rich output.
 \section{Gymnasium}
-\subsection{CartPole}
-\subsection{Moon Landing}
+
+\subsection{Cartpole}
+Cartpole is one of the most known benchmark enviroments in the Gymnasium library. It's a simple enviroment where the agent controls a cart rolling on flat surface with a pole on top.
+The goal is to keep the pole balanced on top of the cart. The reward is calculated every step dpending on the angle 
+\subsection{Lunar Lander}
+Lunar Lander is somewhat more complex domain to optimise for than the Cartpole.  
+Every step the reward is calculated based on several criteria, as oposed to only an angle of a stick, controling the landers descend and additional points are awarded for completing certain tasks.
+Additionally there are several variables determining the enviroments behaviour during evaluations such as the strenght of wind Unlike in cartpole where  

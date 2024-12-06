@@ -21,10 +21,10 @@ parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", 
 parser.add_argument("-cru", "--cross_uni", help="Method of crossing individuals", type=float, default=0.4)
 parser.add_argument("-mr", "--mutation_rate", help="Rate of mutation", type=float, default=0.01)
 parser.add_argument("-ms", "--mutation_sigma", help="Sigma of mutation", type=float, default=1)
-parser.add_argument("-l", "--lambdan", help="Base population", type=int, default=30)
+parser.add_argument("-p", "--lambdan", help="Base population", type=int, default=30)
 parser.add_argument("-m", "--mu", help="Offspring pool", type=int, default=30)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
-parser.add_argument("-p", "--out_path", help="Path to store output data", type=str, default="./Data/Junk/")
+parser.add_argument("-pa", "--out_path", help="Path to store output data", type=str, default="./Data/Junk/")
 parser.add_argument("-exp", "--experiment", help="insication if it's experiment", action="store_true", default=False)
 parser.add_argument("-e", "--episodes", help="Seed of the random generator", type=int, default=5)
 
@@ -63,7 +63,7 @@ def main(args: argparse.Namespace):
             fitness2=creator.FitnessTrue,
             behavior=None
         )
-        toolbox.register("evaluate", cartpole.evalutation_b, seed=seed, episodes=args.episodes)
+        toolbox.register("evaluate", enviroment.evalutation_b, seed=seed, episodes=args.episodes)
         visual_conv = visualisation.novelty_logbook2pandas
         visual_chart = visualisation.single_novelty_run_chart
 
