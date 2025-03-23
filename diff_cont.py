@@ -22,7 +22,7 @@ parser.add_argument("-p", "--pop", help="Base population", type=int, default=7)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
 parser.add_argument("-e", "--episodes", help="Seed of the random generator", type=int, default=5)
 parser.add_argument("-pt", "--out_path", help="Path to store output data", type=str, default="./Data/Junk/")
-parser.add_argument("-exp", "--experiment", help="insication if it's experiment", action="store_true", default=False)
+parser.add_argument("-exp", "--experiment", help="indication if it's experiment", action="store_true", default=False)
 
 
 def main(args:argparse.Namespace):
@@ -64,8 +64,9 @@ def main(args:argparse.Namespace):
     alg.run()
     df = visual_conv(alg.logbook)
     dirpath = os.path.join(os.path.realpath(args.out_path), args.container,"diff")
-    filepath = "%s,g%i,e%i,pop%i,mr%.4f,s%i.out" % (
-                                                str(datetime.datetime.utcnow()), 
+    filepath = "%s,%s,g%i,e%i,pop%i,mr%.4f,s%i.out" % (
+                                                str(datetime.datetime.utcnow()),
+                                                args.enviroment, 
                                                 args.generations,
                                                 args.episodes,
                                                 args.pop,

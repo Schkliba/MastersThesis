@@ -1,34 +1,65 @@
 \chapter{Introduction to Artificial Agents}
-To understand the reasoning guiding this work we have to first look at the fundamental subject of our efforts - the artificial agents.
+To understand the reasoning guiding this work we have to first look at the fundamental subject of our efforts - the artificial agents.\\
+We will look at their structure, guiding principles, practical implementation and nor last nor least, their use.
+\section{Agents and enviroment}
+All agents exists in enviroments that provide context to their agency. An agent gets information about the \textbf{enviroment} it find itself in (e.i. \textbf{percepts}) through \textbf{sensors} and acts on the enviroment through \textbf{actuators}. Both actuators and sensors are usually characteristics of the agent. Another characteristic of an agent would be setup of its internal machinations.
 \begin{defn}\citep{russell2021}
-A rational agent is one that acts so as to achieve
-best outcome or, when there is uncertainty, the best expected outcome.
+Let E be enviroment where agent G is located. G is equiped with actuators A and sensors P and so we can identify $ obss_P(E) $, a space of all possible sequences of percepts available to G within E and $ A(E) $ space of available actions in E.
+Then function $ G: obss_P(E)\rightarrow A(E) $ is called an agent function, defining behavior of the agent G in enviroment E.
 \end{defn}
-\section{Reactive agents}
+We ilustrate relationship of these concepts in the diagram \ref{fig:generalagent}.
+\begin{figure}
+\label{fig:generalagent}
+	\begin{tikzpicture}
+		   % Define nodes
+    \node[rectangle, draw=blue, fill=blue!20, line width=1.5pt, right=1cm, minimum width=2.5cm, minimum height=1.5cm] (agent) {\Large Agent}; 
+    \node[rectangle, draw=gray, fill=gray!20, line width=2.5pt, right=2cm of agent, minimum width=3cm, minimum height=2cm, text width=4cm] (enviroment) {\Huge Enviroment}; % Node name: step2
+    % Connect nodes with arrows
+    \draw[->, line width=1.2pt] ([yshift=0.8cm]agent) -- ([yshift=0.8cm]enviroment);
+    \draw[->, line width=1.2pt] (enviroment) -- (agent);
 
+	\end{tikzpicture}
+  \caption{Agent and enviroment realtionship}
+\end{figure}
+Because we want our agents to solve some tasks in their respective enviroments with certain efficiency i.e. we want them to be intelligent, we need to define a notion of rationality that can help us better capture what we mean by intelligence. First however we need to measure how usefull or detrimental a situation can be for our agent.
+\begin{defn}\citep{russell2021}
+Be that E is an enviroment and  $ seq(E) $ is a space of all possible sequences of states within E.
+Then function $ f: seq(E)\rightarrow \textbf{R} $ is a performance measure of some agent operating in E.
+\end{defn}
+\begin{defn}\citep{russell2021}
+For each possible percept sequence, a rational agent should select an action that is expected to maximize its performance measure, given the evidence provided by the percept sequence and whatever built-in knowledge the agent has.
+\end{defn}
+We should note that in the real-world applications the rationality of an agents can often be limited by their capacity to store the evidence gathered from percepts, by the lack of their built-in knowledge or the computational capacity to estimate action sequence that can be expected to achieve global maximum of the agent's performance measure. \\
+Since our focus is mainly on the evulationary algorithms in the scope of this thesis we will only encounter the most simple of agents subject to the most severe of such limitations.
+\begin{defn}\citep{russell2021}
+An agent is called simple reflex agent if it takes into account only the current percepts, never keeping any history or state information during it's run.
+\end{defn}
 
-
-\section{Reinforcement learning}
+\section{Neural Network Agent}
+The concept of neural networks (NN) comes from an area of machine learning called deep learning that was concieved to attempt to model biological neuron activity. Since it has become one of the most successful branches of machine learning. \citep{russell2021}  
+The neural networks consist of neurons organised in layers.
 \begin{defn}
-A reward is a numerical evaluation of agent's behavior within a given enviroment. A reward function then is a function which assigns pair of state and action a real numerical value.
+Let $ W \in R^{m x n} $ and $ b\in R^{n}$ and let $ f:R^{n} \rightarrow R$.Then we call W the weights of a neuron layer with $ n $ neurons, b the bias of the layer and f the activation function of the layer when given an input vector $ x \in R^{m} $ we calculate the output of the layer as $ f(W^{T}x+b)$. Two layers have directional connection when the output of first layer is used as input of the subsequent layer.
 \end{defn}
-\chapter{Evolutionary algorithms}
+We recognise several typical activation functions:
+\begin{itemize}
+\item sigmoid
+$$ \sigma (x) = \frac{1}{1+e^{-x}} $$
+\item tanh
+$$ \tanh(x) = \frac{e^{2x}-1}{e^{2x}+1} $$
+\item ReLU
+$$ ReLU (x) = max(0,x) $$
+\end{itemize}
+\begin{defn}\citep{russell2021}  
+A neural network where the connections between layers of neural network form an acyclic graph is called a feed-forward neural network.
+\end{defn}
+Because the feed-forward NN doesn't hold any state or holds onto any previously acquired results, only produces output for a given input, they are ideal for implementation of simple reflex agents.
 
-\section{•}
-
-\section{Numerical Algorithms}
-In this section we will be reviewing different aproaches to implementation of evolutionary algoAlgorithmsrithms which were considered
-for the purpose of this thesis.
-Because we are optimising
-The algorithms were selected based on usefulness for the purposes of numerical optimalisation but also for their representativness of certain aspects of the field.
-Since the aim of this work is to compare aproaches of formulating utility function optimised by the evolution rather than the algorithms as such, 
-we will consider them in their simplest form still expedient for satisfactory optimalisation of selected tasks.
-\subsection{Evolutionary Strategies}
-Evolutionary strategies are 
-\subsection{Differential Evolution}
 
 
-\section{Utility functions}
-\subsection{Fitness}
-\subsection{Pure Novelty}
-\subsection{Combinations of Novelty}
+
+
+
+
+
+

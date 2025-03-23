@@ -1,1 +1,12 @@
-\chapter{Comparison criteria}
+\chapter{Comparison criteria and conditions}
+To compare different types of guiding functions well, we have to select criteria by which we compare them and establish conditions under which will this comparison take place so that our conlusions are fair but not misleading.
+\section{Criteria}
+Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective enviroments, getting more comprehensive picture then from a single run. This will be mainly reflected in the seed for random numbers generator of the enviroment. Since the promise of the novelty aproach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced by the algortihm runs\\
+However we also have to take into account the hyperparameters with which these populations have been achieved. This is especially (but not limited to) population size and number of generations, hyperparameters responsible for most of the computational complexity of a evolutionary algorithm run. 
+\section{Conditions}
+The conditions are defined by the hyperparameters of the algorithms and the hyperparameters of the individuals.
+\subsection{Individual hyperparameter selection}
+The hyperparameters characterising individuals are number of layers and the number of neurons in their layers.  
+\subsection{Algorithm hyperparameter selection}
+The algorithm hyperparameters will be selected in a series of grid searches, tailored to each enviroment and algorithm type. While it is theoretically possible to setup one large comprehensive gridsearch for each algorithm, lacking specialised hardware, the exponential dependence on number of hyperparameters would make it higly impractical in reality.\\
+Therefore we setup multiple grid searches in logical sequence and groupings so that hyperparameters 

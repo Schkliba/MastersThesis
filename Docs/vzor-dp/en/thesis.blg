@@ -5,52 +5,53 @@ A level-1 auxiliary file: title.aux
 A level-1 auxiliary file: preface.aux
 A level-1 auxiliary file: theory.aux
 A level-1 auxiliary file: enviroment.aux
+A level-1 auxiliary file: evolution.aux
 A level-1 auxiliary file: criteria.aux
 A level-1 auxiliary file: experiment.aux
 A level-1 auxiliary file: epilog.aux
 A level-1 auxiliary file: bibliography.aux
 The style file: plainnat.bst
 Database file #1: bibliography.bib
-Warning--I didn't find a database entry for "AI_modern_app"
-You've used 1 entry,
+Warning--I didn't find a database entry for "noveltyarticle"
+You've used 3 entries,
             2773 wiz_defined-function locations,
-            610 strings with 5157 characters,
-and the built_in function-call counts, 417 in all, are:
-= -- 34
-> -- 21
-< -- 1
-+ -- 7
-- -- 6
-* -- 28
-:= -- 73
-add.period$ -- 5
-call.type$ -- 1
-change.case$ -- 4
-chr.to.int$ -- 1
-cite$ -- 2
-duplicate$ -- 20
-empty$ -- 33
-format.name$ -- 9
-if$ -- 82
+            629 strings with 5612 characters,
+and the built_in function-call counts, 1473 in all, are:
+= -- 138
+> -- 72
+< -- 3
++ -- 24
+- -- 21
+* -- 114
+:= -- 230
+add.period$ -- 15
+call.type$ -- 3
+change.case$ -- 15
+chr.to.int$ -- 3
+cite$ -- 6
+duplicate$ -- 71
+empty$ -- 119
+format.name$ -- 28
+if$ -- 317
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 2
-newline$ -- 15
-num.names$ -- 4
-pop$ -- 11
+missing$ -- 4
+newline$ -- 28
+num.names$ -- 12
+pop$ -- 30
 preamble$ -- 1
-purify$ -- 4
+purify$ -- 13
 quote$ -- 0
-skip$ -- 16
+skip$ -- 53
 stack$ -- 0
-substring$ -- 2
-swap$ -- 1
-text.length$ -- 0
+substring$ -- 41
+swap$ -- 12
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 6
+type$ -- 28
 warning$ -- 0
-while$ -- 3
+while$ -- 12
 width$ -- 0
-write$ -- 23
+write$ -- 57
 (There was 1 warning)

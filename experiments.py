@@ -22,7 +22,7 @@ def task_job(env, alg, args, s):
 #generalised blueprint for exparimentations
 def experiment_template(name, algorithms, grid_variables, grid_attr_f, filename_f):
     BASE = ["--out_path", "./Data/Experiments/"+str(name), "--experiment"]
-    TEST_EVAL_EPS = 15
+    TEST_EVAL_EPS = 10
     for en, alg, *grid_v in itertools.product(enviroments, algorithms,*grid_variables):
         stat_futures = {}
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
@@ -76,10 +76,10 @@ Grid Search over evolution relevant parameters to find most represenative ones
         
 mutation_rate = [0.1, 0.3, 0.5, 0.8,] #diff & lambda
 cross_rate = [0.3, 0.5, 0.7, 0.9] #diff & lambda
-mutation_sigma = [0.1, 0.5, 1, 2] #lambda
+mutation_sigma = [ 0.5, 1, 2, 3] #lambda
 mutation_method = ["uniform", "mean"] #lambda
 
-def fit_grid_search(eps, gens):
+def cartpole_grid_search(eps, gens):
 
     def diff_argument_f(en, grid_v, seed ):
         mr, cr = grid_v
@@ -92,6 +92,31 @@ def fit_grid_search(eps, gens):
                 "--seed", str(seed),         
         ]
     
+    def lambda_argument_f(en, grid_v, seed):
+        mr, cr, method, sigma = grid_v
+        return [
+                "--enviroment", str(en),
+                "--mutation_rate", str(mr),
+                "--mutation_sigma", str(sigma),
+                "--cross_method", str(method),
+                "--cross_rate", str(cr),
+                "--episodes", str(eps), 
+                "--generations", str(gens), 
+                "--seed", str(seed),         
+        ]
+    
+    def lambda_filename_f(en, alg, grid_v):
+        mr, cr, method, sigma = grid_v
+
+        return "%s,%s,%s,cr%.2f,mr%.2f,ms%.2f.json" %  (
+                                        alg + "_" + str(datetime.datetime.utcnow()),
+                                        method, 
+                                        en, 
+                                        cr,
+                                        mr,
+                                        sigma
+                                    )
+
     def diff_filename_f(en, alg, grid_v):
         mr, cr = grid_v
         return "%s,%s,cr%.2f,mr%.2f.json" %  (
@@ -100,15 +125,22 @@ def fit_grid_search(eps, gens):
                                         cr,
                                         mr,
                                     )
-
-    experiment_template("fit_grid", ["diff"], [mutation_rate, cross_rate], diff_argument_f, diff_filename_f)
-
-
-
-
-
+    experiment_template(
+        "fit_grid", 
+        ["lambda"], 
+        [mutation_rate, cross_rate, mutation_method, mutation_sigma], 
+        lambda_argument_f, 
+        lambda_filename_f
+    )
+    experiment_template(
+        "fit_grid", 
+        ["diff"], 
+        [mutation_rate, cross_rate], 
+        diff_argument_f, 
+        diff_filename_f
+    )
 
 
 if __name__ == "__main__":
-    ep_vs_gen_experiment()
-    fit_grid_search(3, 20)
+    #ep_vs_gen_experiment()
+    cartpole_grid_search(3, 25)

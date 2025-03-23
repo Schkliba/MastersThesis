@@ -13,20 +13,19 @@ class Evaluator:
     def gen_pop(pop_size, ind_f):
         return [ind_f() for i in range(pop_size)]
 
-    def reset(self):
-        self.enviroment.reset()
+    def reset(self,seed=None):
+        return self.enviroment.reset(seed=seed)
 
     def evalutation_b(self, individual: keras.Model, seed:int, episodes:int) -> float:
         """
         Returns the average score achieved on the given number of episodes and normalised behaviour.
         """
         # Create the environment
-        self.enviroment.reset(seed=seed)
-
+        self.reset(seed=seed)
         # Evaluate the episodes
         total_score = 0
         for episode in range(episodes):
-            observation, score, done = self.enviroment.reset()[0], 0, False
+            observation, score, done = self.reset()[0], 0, False
             while not done:
                 prediction = individual(observation[np.newaxis])[0].numpy()
                 action = np.argmax(prediction)

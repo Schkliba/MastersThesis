@@ -1,0 +1,39 @@
+\chapter{Evolutionary algorithms}
+While reinforcement learning is a useful method of developing expert agents, it has certain drawbacks. Since it only iterates on handful of agents (usually a single agent) with the feedback directly recieved, it does not search the agent space very thoroughly and the resulting adapted agent can be ill-prepared for conditions arising from its good performance in the previous stages of more structured enviroments. 
+If this might be a concern, more suitable way of producing expert agents, might be an evolutionary algorithm. There the agent is typically evaluated on the complex of its behavior within the enviroment.
+\begin{defn}
+An objective function is a mathematical expression that defines the goal of an optimization problem, representing the quantity that needs to be maximized or minimized.
+\end{defn}
+The evolutionary algorithms are a class of optimalisation methods modeled after our idea of biological process of evolution. Subjects of these optimalisation algorithms are called individuals, often representing feasible solutions of the optimalisation problem. The evolutionary algorithms are specific in that they search the space of individuals semi-randomly using folowing operations:
+\begin{itemize}
+	\item recombination (or cross-over)
+	\item mutation
+	\item selection 
+\end{itemize}
+The selection process usually utilises some kind of value assigned to an individual. Because the purpose of this thesis is to compare performance of different ways to assign such value, some newer than others, we have to sidestep the established terminology in vast majority of the literature a little bit.
+\begin{defn}
+Let $ A $ be an evolutionary algorithm with objective function $ g: I\rightarrow R $ searching over space of individuals $ I $. Then any function $ f: I\rightarrow R $ used to guide selection in A would be called utility function. Only in the special case where $ g=f $ we will call it fitness function.
+\end{defn}
+\section{Utility functions}
+
+\subsection{Fitness}
+Using objective function as the utility function of the algorithm is the most direct way of establishing relationship between the solution we want and the individuals in the evolving population.\\
+Though this aproach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can easily get stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyperparameters to favor random exploration, it may come to point where the benefits of evolutionary aproach are made void.
+\subsection{Pure Novelty}
+In the paper \cite{noveltyarticle} a new aproach to utility functions has been proposed, called novelty, designed to help avoid traps of local optima. 
+\begin{defn}\citep{doncieux:hal-02561846}
+Let E be enviroment and S be a space of all possible states of the enviroment and let $ d(x,y) $ be some metric. Then (B, d) is a behavioral space and a function $ o_B: S^{T}\rightarrow B $ is called observer function. 
+\end{defn}
+\begin{defn}\citep{noveltyarticle}
+Let P be a population of individuals within EA and (Img(B), d) be a behavioral space. Then for each individual $ a $ we define novelty as such:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d(a,b)}{|P|-1} $$ 
+\end{defn}
+With novelty as utility function the selection process incentivises behaviours inversely to their representation in the current population, in other words according to how "novel" they are. This allows the evolutionary search to retain variety within the population across generations, leveraging the recombination as well as mutations to leave local optima.\\
+Downside of this aproach is in the ambiguity in the choice of behavioral space. Incorporating too many enviroment variables will lead to the curse of dimensionality. Leaving out an important variable means the algorithm will not retain diversity where it matters, making novelty pointless. This means the behavioral function and space have to be selected empirically for given problem.
+\subsection{Combinations of Novelty}
+The novelty does not take into account the individual's performce with objective function. Therefore when two invidials with similair behavioral characteristics appear but one of them performs significantly better than the other, pure novelty algorithm can easily select the less performant individual, losing the more performant genom to further generations. To prevent this we want to meaningfully combine novlety with fitness.\\
+
+\section{Continuous Optimalisation}
+\subsection{Evolutionary Strategies \citep{evoStrategy}}
+Evolutionary strategies are 
+\subsection{Differential Evolution}
+
