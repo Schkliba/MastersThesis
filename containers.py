@@ -3,6 +3,7 @@ import differential_evo as de
 import keras
 import statconf
 import libs.archiving as archiving
+import evolutionary_strategy as es
 
 from deap import algorithms
 from deap import base
@@ -67,6 +68,7 @@ class AddedNovelty(PureNovelty):
                 behavioursfit_attr
             )
             novelty = np.mean(np.array(list(beh_distances)))
+            ind.fitness3 = novelty
             fitness_novelty.append([weight_n * novelty + weight_f *fitness])
         return fitness_novelty
 
@@ -91,7 +93,7 @@ class LambdaAlgContainer(Replayble):
 
     def run(self, verbose=True):
         keras.utils.set_random_seed(self.seed)
-        self.final_pop, self.logbook = algorithms.eaMuPlusLambda(
+        self.final_pop, self.logbook = es.eaMuPlusLambda(
             self.toolbox.gen_pop(self.pop_size),
             self.toolbox, 
             self.pop_size, 
@@ -143,7 +145,16 @@ class LambdaNoveltyAlg(LambdaAlgContainer, PureNovelty):
     def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator):
         LambdaAlgContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
         PureNovelty.__init__(self)
-        toolbox.register("map", self.novelty_operator)        
+        toolbox.register("map", self.novelty_operator)   
+
+class LambdaAddNoveltyContainer(LambdaAlgContainer, AddedNovelty):
+    """
+    Implements evolutionary strategy L+M with mixed novelty
+    """
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator):
+        LambdaAlgContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
+        PureNovelty.__init__(self)
+        toolbox.register("map", self.addnovelty_operator)     
 
 class DiffNoveltyContainer(DiffAlgContainer, PureNovelty):
     """

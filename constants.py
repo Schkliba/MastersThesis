@@ -27,3 +27,4 @@ ALG_MAPPING = {
     "diff": diff_cont, 
     "lambda": lambda_cont,
 }
+

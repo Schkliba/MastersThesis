@@ -1,12 +1,39 @@
 \chapter{Enviroments}
 
-\section{Markovov Decision Problem}
-\section{Reinforcement learning problem}
-\section{Open AI Gymnasium}
+\section{Reinforcement learning}
+Reinforcement learning might be best introduced by description of the problem it aims to solve.
+\begin{defn}[Markovov's decision problem]
+We define Markovov's decision problem (MDP) by a fourtuple (S, A, P, R) where:
+\begin{itemize}
+	\item S is a set of all possible states of the system
+	\item A is a set of all possible actions available in the system
+	\item P is a transition function,$ P(s, a,  s')$ being probability of transition from s to s' give action a is exectuted.
+	\item R is reward function, $ R(s, a, s') $ being the reward recieved when the execution of action a in state s leads to state s'.
+\end{itemize}
+\end{defn}
+To tie this into the information from chapter \ref{ch:agents} $ A=A(E)$, $ R $ is performance measure of an agent solving the MDP and the percepts correspond to real states of the enviroment. This would not be the case for partially observable MDP.
+\begin{defn}
+POMDP
+\end{defn}
+\begin{defn}
+Best policy
+\end{defn}
+The goal of reinforcement learning is then to aproximate best policy by trial and error, based on the recieved reward, as accuratelly as possible. 
+This can be done utilising various methods such as Q-learning, but imporatantly for this thesis it could be  
+
+
+\section{Gymnasium}
+In this thesis we will set our agents into enviroments provided by Gymnasium project which emerged from it's predecessor OpenAI Gym project. Both of them Python libraries, trying to provide researches with benchmark reinfroment learning problems in form of simple games, sometimes even recreating old console games such as Air Raid or Backgammon.
+
+While Gymnasium provides wide range of enviroments, quite a number of them if not most do not provide their outputs in structured form. Instead the resulting screen has to be processed by user defined visual processor to extract infromation crucial for completing the task. 
+
+This introduces a layer of complexity that is outside of the scope of this thesis. Therefore we have decided to narrow our selection only to enviroments which do provide structured output. 
 
 \subsection{Cartpole}
+
 Cartpole is one of the most known benchmark enviroments in the Gymnasium library. It's a simple enviroment where the agent controls a cart rolling on flat surface with a pole on top.
-The goal is to keep the pole balanced on top of the cart. The reward is calculated every step dpending on the angle 
+The goal is to keep the pole balanced on top of the cart. The reward is calculated every step depending on the angle.
+
 \subsection{Lunar Lander}
 Lunar Lander is somewhat more complex domain to optimise for than the Cartpole.  
 Every step the reward is calculated based on several criteria, as oposed to only an angle of a stick, controling the landers descend and additional points are awarded for completing certain tasks.

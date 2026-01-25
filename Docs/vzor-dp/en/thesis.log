@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.14)  8 JAN 2025 07:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.14)  29 OCT 2025 00:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -766,64 +766,114 @@ File: tikzlibraryarrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 tex
 File: pgflibraryarrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \arrowsize=\dimen275
-))
-Package hyperref Info: Option `unicode' set `true' on input line 104.
-Package hyperref Info: Option `breaklinks' set `true' on input line 105.
+)) (/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2017/07/18 v5.2 algorithms environments
+\c@AlgoLine=\count312
+\algocf@hangindent=\skip64
+
+(/usr/share/texlive/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count313
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+\skiptotal=\skip65
+\skiplinenumber=\skip66
+\skiprule=\skip67
+\skiphlne=\skip68
+\skiptext=\skip69
+\skiplength=\skip70
+\algomargin=\skip71
+\skipalgocfslide=\skip72
+\algowidth=\dimen276
+\inoutsize=\dimen277
+\inoutindent=\dimen278
+\interspacetitleruled=\dimen279
+\interspacealgoruled=\dimen280
+\interspacetitleboxruled=\dimen281
+\algocf@ruledwidth=\skip73
+\algocf@inoutbox=\box66
+\algocf@inputbox=\box67
+\AlCapSkip=\skip74
+\AlCapHSkip=\skip75
+\algoskipindent=\skip76
+\algocf@nlbox=\box68
+\algocf@hangingbox=\box69
+\algocf@untilbox=\box70
+\algocf@skipuntil=\skip77
+\algocf@capbox=\box71
+\algocf@lcaptionbox=\skip78
+\algoheightruledefault=\skip79
+\algoheightrule=\skip80
+\algotitleheightruledefault=\skip81
+\algotitleheightrule=\skip82
+\c@algocfline=\count314
+\c@algocfproc=\count315
+\c@algocf=\count316
+\algocf@algoframe=\box72
+\algocf@algobox=\box73
+)
+Package hyperref Info: Option `unicode' set `true' on input line 105.
+Package hyperref Info: Option `breaklinks' set `true' on input line 106.
 
 
 LaTeX Warning: \include should only be used after \begin{document} on input lin
-e 108.
+e 109.
 
 (./macros.tex
-\c@thm=\count312
-\c@defn=\count313
+\c@thm=\count317
+\c@defn=\count318
 )
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-11.
+12.
  (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count314
-\l__pdf_internal_box=\box66
+\l__color_backend_stack_int=\count319
+\l__pdf_internal_box=\box74
 )
 (./thesis.aux (./title.aux) (./preface.aux) (./theory.aux) (./enviroment.aux)
 (./evolution.aux) (./criteria.aux) (./experiment.aux) (./epilog.aux)
 (./bibliography.aux))
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 112.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count315
-\scratchdimen=\dimen276
-\scratchbox=\box67
-\nofMPsegments=\count316
-\nofMParguments=\count317
+\scratchcounter=\count320
+\scratchdimen=\dimen282
+\scratchbox=\box75
+\nofMPsegments=\count321
+\nofMParguments=\count322
 \everyMPshowfont=\toks46
-\MPscratchCnt=\count318
-\MPscratchDim=\dimen277
-\MPnumerator=\count319
-\makeMPintoPDFobject=\count320
+\MPscratchCnt=\count323
+\MPscratchDim=\dimen283
+\MPnumerator=\count324
+\makeMPintoPDFobject=\count325
 \everyMPtoPDFconversion=\toks47
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -834,7 +884,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 111.
+Package hyperref Info: Link coloring OFF on input line 112.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -845,11 +895,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count321
+\c@section@level=\count326
 )
-LaTeX Info: Redefining \ref on input line 111.
-LaTeX Info: Redefining \pageref on input line 111.
-LaTeX Info: Redefining \nameref on input line 111.
+LaTeX Info: Redefining \ref on input line 112.
+LaTeX Info: Redefining \pageref on input line 112.
+LaTeX Info: Redefining \nameref on input line 112.
 
 (./thesis.out) (./thesis.out)
 \@outlinefile=\write6
@@ -859,7 +909,7 @@ LaTeX Info: Redefining \nameref on input line 111.
 
  (./title.tex
 Package hyperref Info: Option `pageanchor' set `false' on input line 6.
-<../img/logo-en.pdf, id=134, 506.4591pt x 156.49065pt>
+<../img/logo-en.pdf, id=154, 506.4591pt x 156.49065pt>
 File: ../img/logo-en.pdf Graphic file (type pdf)
 <use ../img/logo-en.pdf>
 Package pdftex.def Info: ../img/logo-en.pdf  used on input line 9.
@@ -930,7 +980,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  (./theory.tex
 Chapter 1.
 
-Overfull \hbox (2.56374pt too wide) in paragraph at lines 16--16
+Overfull \hbox (2.56374pt too wide) in paragraph at lines 17--17
 [][]\OT1/lmr/m/n/24.88 Enviroment  |
  []
 
@@ -941,7 +991,7 @@ Overfull \hbox (2.56374pt too wide) in paragraph at lines 16--16
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
-6.
+7.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )) [4]
@@ -949,79 +999,102 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
  (./enviroment.tex
 Chapter 2.
-) [5
+[5
 
 
 
 
-]
+]) [6]
 \openout2 = `evolution.aux'.
 
  (./evolution.tex
 Chapter 3.
 
-Package natbib Warning: Citation `noveltyarticle' on page 6 undefined on input 
-line 23.
+Underfull \hbox (badness 10000) in paragraph at lines 12--15
 
-[6
+ []
+
+[7
 
 
 
 
 ]
 
-Package natbib Warning: Citation `noveltyarticle' on page 7 undefined on input 
-line 27.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\begingroup' on input line 51.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--34
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\let' on input line 51.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\<let>-command' on input line 51.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\NAT@ctype' on input line 51.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 51.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\let' on input line 51.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\new@ifnextchar' on input line 51.
+
+[8]
+
+Package natbib Warning: Citation `noveltyarticle' on page 9 undefined on input 
+line 100.
+
+
+Package natbib Warning: Citation `noveltyarticle' on page 9 undefined on input 
+line 104.
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
 
  []
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 36.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\let' on input line 36.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<let>-command' on input line 36.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\NAT@ctype' on input line 36.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 36.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\let' on input line 36.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\new@ifnextchar' on input line 36.
-
-) [7]
+) [10]
 \openout2 = `criteria.aux'.
 
  (./criteria.tex
 Chapter 4.
-) [8
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <17.28> on input line 10.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 10.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 10.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 10.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--12
+
+ []
+
+[11
 
 
 
 
-]
+] [12]) [13]
 \openout2 = `experiment.aux'.
 
  (./experiment.tex
 Chapter 5.
-) [9
+) [14
 
 
 
@@ -1029,7 +1102,7 @@ Chapter 5.
 ]
 \openout2 = `epilog.aux'.
 
- (./epilog.tex) [10
+ (./epilog.tex) [15
 
 
 
@@ -1043,7 +1116,7 @@ LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line
 
 (/usr/share/texmf/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-))) [11
+))) [16
 
 
 
@@ -1052,7 +1125,7 @@ File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 \tf@lof=\write8
 \openout8 = `thesis.lof'.
 
- [12
+ [17
 
 
 
@@ -1061,13 +1134,13 @@ File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 \tf@lot=\write9
 \openout9 = `thesis.lot'.
 
- [13
+ [18
 
-] [14
+] [19
 
 ]
 Appendix A.
-[15
+[20
 
 ]
 
@@ -1077,16 +1150,16 @@ Package natbib Warning: There were undefined citations.
 (./evolution.aux) (./criteria.aux) (./experiment.aux) (./epilog.aux)
 (./bibliography.aux))
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: FE15DA053ABD3F87F432AF61D994A08A;4666.
+(rerunfilecheck)             Checksum: 1355E49CC849452F2E1D546F6D4C222A;5427.
  ) 
 Here is how much of TeX's memory you used:
- 25734 strings out of 478287
- 469405 string characters out of 5849289
- 700119 words of memory out of 5000000
- 43302 multiletter control sequences out of 15000+600000
- 542263 words of font info for 70 fonts, out of 8000000 for 9000
+ 26793 strings out of 478287
+ 487388 string characters out of 5849289
+ 727860 words of memory out of 5000000
+ 44318 multiletter control sequences out of 15000+600000
+ 551609 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,9n,80p,671b,2377s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,11n,80p,671b,2377s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/share/texmf/fonts/enc/
 dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/sha
 re/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/
@@ -1099,10 +1172,10 @@ ts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb
 are/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public
 /lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/te
 xmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on thesis.pdf (19 pages, 534308 bytes).
+Output written on thesis.pdf (24 pages, 549196 bytes).
 PDF statistics:
- 388 PDF objects out of 1000 (max. 8388607)
- 330 compressed objects within 4 object streams
- 65 named destinations out of 1000 (max. 500000)
- 278 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 458 PDF objects out of 1000 (max. 8388607)
+ 395 compressed objects within 4 object streams
+ 92 named destinations out of 1000 (max. 500000)
+ 318 words of extra memory for PDF output out of 10000 (max. 10000000)
 

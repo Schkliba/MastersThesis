@@ -9,7 +9,7 @@ import os
 
 from deap import base
 from deap import creator
-
+from deap import algorithms
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-en", "--enviroment", help="Enviroment that is being tested", choices=["cartpole", "lunarlander", "waterworld"], default="cartpole")
@@ -42,7 +42,7 @@ def main(args: argparse.Namespace):
 
     toolbox = base.Toolbox()
     if args.cross_method == "mean":
-            toolbox.register("mate", ai.center_cross)
+        toolbox.register("mate", ai.center_cross)
     else:
         toolbox.register("mate", ai.uniform_cross, prob_filter=args.cross_uni)
     toolbox.register("mutate", ai.mutation_func, sigma=args.mutation_sigma)

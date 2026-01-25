@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-g", "--generations", help="Number of generations", type=int, default=10)
 parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", type=float, default=0.6)
-parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "archiving", "fit_archiving"], default="fitness")
+parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "add_novelty", "archiving", "fit_archiving"], default="fitness")
 parser.add_argument("-en", "--enviroment", help="Enviroment type", choices=["cartpole", "lunarlander", "waterworld"], default="cartpole")
 
 parser.add_argument("-mr", "--mutation_rate", help="Rate of mutation", type=float, default=0.9)
@@ -42,6 +42,21 @@ def main(args:argparse.Namespace):
         toolbox.register("evaluate", enviroment.evalutation, seed=seed, episodes=args.episodes)
         visual_conv = visualisation.logbook2pandas
         visual_chart = visualisation.single_run_chart
+    elif args.container == "add_novelty":
+        creator.create("FitnessMixNovelty", base.Fitness, weights=(1.0, ))
+        creator.create("FitnessNovelty", base.Fitness, weights=(1.0, )) 
+        creator.create("FitnessTrue", base.Fitness, weights=(1.0, )) 
+        creator.create(
+                        "Individual", 
+                        enviroment.get_individual_base(), 
+                        fitness=creator.FitnessMixNovelty, 
+                        fitness2=creator.FitnessTrue,
+                        fitness3=creator.FitnessNovelty,  
+                        behaviour=None
+        )
+        toolbox.register("evaluate", enviroment.evalutation_b, seed=seed, episodes=args.episodes)
+        visual_conv = visualisation.novelty_logbook2pandas
+        visual_chart = visualisation.single_novelty_run_chart
     else:
         creator.create("FitnessNovelty", base.Fitness, weights=(1.0, ))
         creator.create("FitnessTrue", base.Fitness, weights=(1.0, )) 
