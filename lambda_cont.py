@@ -33,26 +33,64 @@ parser.add_argument("-e", "--episodes", help="Seed of the random generator", typ
 
 def main(args: argparse.Namespace):
     ng, l, m, cr, mr, seed = args.generations, args.lambdan, args.mu, args.cross_rate, args.mutation_rate, args.seed
-    enviroment = consts.ENIVROMENTS[args.enviroment](False)
-    replay_env = consts.ENIVROMENTS[args.enviroment](True)
+    container = args.container
+    cross_method = args.cross_method
+    environment = args.environment
+    episodes = args.episodes
+    cross_uni = args.cross_uni
+    mutation_sigma = args.mutation_sigma
+    out_path = args.out_path
 
-    cont_cls = consts.LAMBDA_CONTS[args.container]
+    df, pop= argumented_function(
+        enviroment=environment,
+        cross_method=cross_method,
+        container=container,
+        ng=ng, l=l, m=m, cr=cr, mr=mr, episodes=episodes, cross_uni=cross_uni, mutation_sigma=mutation_sigma,
+        seed=seed,
+        out_path=out_path
+    )
+    if args.container == "fitness" or args.container == "fit_archiving":
+        visual_chart = visualisation.single_run_chart
+    else:
+        visual_chart = visualisation.single_novelty_run_chart
 
+    if not args.experiment:
+        visual_chart(df)
+    return df, pop
+
+def argumented_function(
+        env:str, 
+        cross_method:str, 
+        container:str,  
+        ng:int, 
+        l:int, 
+        m:int, 
+        mr:float, 
+        cr:float, 
+        mutation_sigma:float = 1.0, 
+        cross_uni=0.5, 
+        episodes:int = 3, 
+        seed:int = 42,
+        archiving_period = 2,
+        archive_batch = 1,
+        out_path = "./Data/Junk/"
+    ):
+    replay_env = consts.ENIVROMENTS[env](True)
+    enviroment = consts.ENIVROMENTS[env](False)
     rp = lambda x: replay_env.evalutation(x, seed, 1)
 
     toolbox = base.Toolbox()
-    if args.cross_method == "mean":
+    if cross_method == "mean":
         toolbox.register("mate", ai.center_cross)
     else:
-        toolbox.register("mate", ai.uniform_cross, prob_filter=args.cross_uni)
-    toolbox.register("mutate", ai.mutation_func, sigma=args.mutation_sigma)
+        toolbox.register("mate", ai.uniform_cross, prob_filter=cross_uni)
+    toolbox.register("mutate", ai.mutation_func, sigma=mutation_sigma)
 
-    if args.container == "fitness" or args.container == "fit_archiving":
+    if container == "fitness" or container == "fit_archiving":
         creator.create("FitnessMax", base.Fitness, weights=(1.0,))
         creator.create("Individual",  enviroment.get_individual_base(), fitness=creator.FitnessMax)
-        toolbox.register("evaluate", enviroment.evalutation, seed=seed, episodes=args.episodes)
+        toolbox.register("evaluate", enviroment.evalutation, seed=seed, episodes=episodes)
         visual_conv = visualisation.logbook2pandas
-        visual_chart = visualisation.single_run_chart
     else:
         creator.create("FitnessNovelty", base.Fitness, weights=(1.0, ))
         creator.create("FitnessTrue", base.Fitness, weights=(1.0, )) 
@@ -63,34 +101,46 @@ def main(args: argparse.Namespace):
             fitness2=creator.FitnessTrue,
             behavior=None
         )
-        toolbox.register("evaluate", enviroment.evalutation_b, seed=seed, episodes=args.episodes)
+        toolbox.register("evaluate", enviroment.evalutation_b, seed=seed, episodes=episodes)
         visual_conv = visualisation.novelty_logbook2pandas
-        visual_chart = visualisation.single_novelty_run_chart
 
     enviroment.prepare_toolbox(toolbox, creator.Individual)
-
-    alg = cont_cls(l, m, mr, cr, seed, ng,toolbox,creator)
+    cont_cls = consts.LAMBDA_CONTS[container]
+    if container == "fit_archiving":
+        cont_cls :consts.containers.LambdaArchivingContainer
+        alg = cont_cls(
+            l, 
+            m, 
+            mr, 
+            cr, 
+            seed, 
+            ng,
+            toolbox,
+            creator, 
+            archiving_period=archiving_period, 
+            store_batch=archive_batch
+        )
+    else:
+        alg = cont_cls(l, m, mr, cr, seed, ng,toolbox,creator)
 
     alg.replay_f = rp
     alg.run()
     df = visual_conv(alg.logbook)
-    dirpath = os.path.join(os.path.realpath(args.out_path), args.container,"lambda/"+args.cross_method)
+    dirpath = os.path.join(os.path.realpath(out_path), container,"lambda/"+cross_method)
     filepath = "%s,%s,g%i,e%i,m%i,l%i,s%i.out" % (
                                                 str(datetime.datetime.utcnow()),
-                                                args.enviroment, 
-                                                args.generations,
-                                                args.episodes,
-                                                args.mu,
-                                                args.lambdan,
-                                                args.seed
+                                                env, 
+                                                ng,
+                                                episodes,
+                                                m,
+                                                l,
+                                                seed
                                             )
     path = os.path.join(dirpath,filepath)
     if not os.path.exists(dirpath):
         os.makedirs(dirpath)
     df.to_csv(path)
-    if not args.experiment:
-        visual_chart(df)
-
+    
     return df, alg.final_pop
 
 if __name__ == "__main__":

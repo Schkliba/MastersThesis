@@ -1,6 +1,7 @@
+% !TeX spellcheck = en_GB
 \chapter{Evolutionary algorithms}
 
-The evolutionary algorithms (EA) are a class of optimalisation methods modeled after our ideas of biological process of evolution. 
+The evolutionary algorithms (EA) are a class of optimisation methods modelled after our ideas of biological process of evolution. 
 \begin{defn}
 General optimisation problem takes the form:
 \[
@@ -14,9 +15,9 @@ where   is the solution vector, f is objective function,\\
 and $g_i, h_j $ are constraints imposed on $ x $ \\ 
 \end{defn}
 
-Often in literature on EA we might find confluence of the term objective function and another term borrowed from biology - fitness. For reasons that will become apparent in the course of this chapter we will make sharp distinction between them for he purposes of this thesis. By objective function we will understand function for which the algortihm directly optimises while fitness will be used to describe semantic quality of an individual in the context of its use.
-Because of this biological connection solution vectors are in the literature often refered to as individuals and we will refer to them this way henceforth as well. Alternatively when emphasising either the numerical form of the vector or the semantical interpretation of this form beyond the optimisation algorithm the individual may be refer to as either a genotype or phenotype respectively.\\  
-Group of individuals representing candidate solutions at a given time is refered to as a population.Evolutionary agorithms then evolve the population by applying three operations (operators) to it in a loop until either the population converges to optimum or the limit on number of steps is reached.  
+Often in literature on EA we might find confluence of the term objective function and another term borrowed from biology - fitness. For reasons that will become apparent in the course of this chapter we will make sharp distinction between them for he purposes of this thesis. By objective function we will understand function for which the algorithm directly optimises while fitness will be used to describe semantic quality of an individual in the context of its use.
+Because of this biological connection solution vectors are in the literature often referred to as individuals and we will refer to them this way henceforth as well. Alternatively when emphasising either the numerical form of the vector or  semantic interpretation of this form beyond the optimisation algorithm the individual may be refer to as either a genotype or phenotype respectively.\\  
+Group of individuals representing candidate solutions at a given time is referred to as a population. Evolutionary algorithms then evolve the population by applying three operations (operators) to it in a loop until either the population converges to optimum or the limit on number of steps is reached.  
 \begin{algorithm}
 
 \caption{Generalised Evolutionary Algortihm \label{generalEvo}}
@@ -31,12 +32,12 @@ $pop \gets Select(m)$\;
 \Return{pop}
 \end{algorithm}
 \\
-Crossover usualy involves recombination of features from two or more individuals from the population. It's purpose is to provide means of exploitation of features benefitial to the population already developed by some individual.\\
+Crossover usually involves recombination of features from two or more individuals from the population. It's purpose is to provide means of exploitation of features beneficial to the population already developed by some individual.\\
 On the other hand mutation provides means of exploration by introducing randomness into the individuals.\\
 EA without crossover would be more akin to a random walk algorithm.
-Selection then is about filtering the resulting individuals based on the objective function of the algorithm. It might be perfomed deterministically or with varying degree of stochasticity as elaborated in section \ref{continuousOpt}.
+Selection then is about filtering the resulting individuals based on the objective function of the algorithm. It might be performed deterministically or with varying degree of stochasticity as elaborated in section \ref{continuousOpt}.
 
-\section{Continuous Optimalisation}
+\section{Continuous Optimisation}
 \label{continuousOpt}
 Historically the individuals optimised by EA used be primarily concieved as vectors over binary domain - $\lbrace 0, 1 \rbrace$ . However this aproach was due to practical concerns later expanded into the domain of vectors over real numbers - in litarature refered to as continuous optimisation. For this purpose the operators of EAs had to be adapted to the domain. The literature shows many aproaches without any obvious limit to their variety. In this thesis we have will explore only two most widespread evolutionary aproaches to continuous optimisation.
 \subsection{Evolutionary Strategies \citep{evoStrategy}}
@@ -80,26 +81,26 @@ $ pop \gets Select(off, \lambda)$\;
 
 
 \subsection{Differential Evolution}
-While evolutionary strategies follow quite closely the general blueprint of EAs across domains, differential evolution is on the hand quite unique for the domain of continous optimisation.  
+While evolutionary strategies follow quite closely the general blueprint of EAs across domains, differential evolution is on the hand quite unique for the domain of continuos optimisation.  
 While the nomenclature of differential evolution is somewhat different from other EA we ask the reader to be mindful of analogy between recombination and mutation when we talk about evolutionary algorithms broadly while we will use the proper terms when talking about the differential evolution specifically. 
 \section{Objective functions}
 As foreshadowed at the start of this chapter it might be desirable to divorce the utility (fitness) of an individual from the objective the algorithm follows in it's search. In this thesis we are interested in objective function of novelty \cite{noveltyarticle} and it's combinations with fitness.
 
 \subsection{Pure Novelty}
-In its intoductory paper novelty \cite{noveltyarticle} is concieved as a guide of the evolutionary search to help avoid traps of local optima. 
+In its introductory paper novelty \cite{noveltyarticle} is conceived as a guide of the evolutionary search to help avoid traps of local optima. 
 \begin{defn}\citep{doncieux:hal-02561846}
-Let E be enviroment and S be a space of all possible states of the enviroment and let $ d(x,y) $ be some metric. Then (B, d) is a behavioral space and a function $ o_B: S^{T}\rightarrow B $ is called observer function. 
+Let E be environment and S be a space of all possible states of the environment and let $ d(x,y) $ be some metric. Then (B, d) is a behavioural space and a function $ o_B: S^{T}\rightarrow B $ is called observer function. 
 \end{defn}
 \begin{defn}\citep{noveltyarticle}
-Let P be a population of individuals within EA and (Img(B), d) be a behavioral space. Then for each individual $ a $ we define novelty as such:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d(a,b)}{|P|-1} $$ 
+Let P be a population of individuals within EA and (Img(B), d) be a behavioural space. Then for each individual $ a $ we define novelty as such:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d(a,b)}{|P|-1} $$ 
 \end{defn}
 With novelty as objective function the selection process incentivises diversification of behaviour among the population. This allows the evolutionary search to retain variety within the population across generations, leveraging the crossover as well as mutations to leave local optima.\\
-Downside of this aproach might be in the ambiguity in the choice of behavioral space. Incorporating too many enviroment variables will lead to faux-exploration in variables completely orthogonal to fitness. On the other hand leaving out an important variable means the algorithm will not retain diversity where it matters, making novelty pointless. This means the behavioral function and space have to be selected empirically for given problem.
+Downside of this approach might be in the ambiguity in the choice of behavioural space. Incorporating too many environment variables will lead to faux-exploration in variables completely orthogonal to fitness. On the other hand leaving out an important variable means the algorithm will not retain diversity where it matters, making novelty pointless. This means the behavioural function and space have to be selected empirically for given problem.
 \subsection{Fitness}
 Using objective function as the utility function of the algorithm is the most direct way of establishing relationship between the solution we want and the individuals in the evolving population.\\
-Though this aproach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can easily get stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyperparameters to favor random exploration, it may come to point where the benefits of evolutionary aproach are made void.
+Though this approach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can easily get stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyper-parameters to favour random exploration, it may come to point where the benefits of evolutionary approach are made void.
 
 \subsection{Combinations of Novelty}
-The novelty does not take into account the individual's performce with objective function. Therefore when two invidials with similair behavioral characteristics appear but one of them performs significantly better than the other, pure novelty algorithm can easily select the less performant individual, losing the more performant genom to further generations. To prevent this we want to meaningfully combine novlety with fitness.\\
-
+The novelty does not take into account the individual's performance with objective function. Therefore when two individuals with similar behavioural characteristics appear but one of them performs significantly better than the other, pure novelty algorithm can easily select the less performant individual, losing the more performant genome for further generations. To prevent this we want to meaningfully combine novelty with fitness.\\
+One obvious way of doing this is 
 

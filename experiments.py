@@ -23,6 +23,7 @@ def task_job(env, alg, args, s):
 #generalised blueprint for exparimentations
 def experiment_template(name, en, container,algorithms, grid_variables, grid_attr_f, filename_f):
     BASE = ["--out_path", "./Data/Experiments/"+str(name), "--experiment", "--container", str(container)]
+    return_data = {}
     for alg, *grid_v in itertools.product( algorithms,*grid_variables):
         stat_futures = {}
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
@@ -43,8 +44,10 @@ def experiment_template(name, en, container,algorithms, grid_variables, grid_att
         json_path = os.path.join(dirpath, filename)
         with open(json_path, "w") as json_file:
             json.dump(stats,json_file)
-        print("Finished "+ filename)
+            print("Finished "+ filename)
 
+        return_data[(alg, *grid_v)] = stats
+    return return_data
 
 """
 Grid search for the most representative evo lenght and fitness trial episodes
@@ -70,7 +73,7 @@ def ep_vs_gen_experiment():
                                         eps,
                                     )
 
-    experiment_template("ep_gen", ["diff", "lambda"], [episodes, generations], argument_f, filename_f)
+    return experiment_template("ep_gen", ["diff", "lambda"], [episodes, generations], argument_f, filename_f)
 
 """
 Grid Search over evolution relevant parameters to find most represenative ones
@@ -112,7 +115,7 @@ def lambda_mutation_search(eps, gens, en):
                                         sigma
                                     )
 
-    experiment_template(
+    fit = experiment_template(
         "fit_grid",
         en,
         "fitness", 
@@ -122,7 +125,7 @@ def lambda_mutation_search(eps, gens, en):
         lambda_filename_f
     )
     
-    experiment_template(
+    nov = experiment_template(
         "nov_grid",
         en,
         "novelty", 
@@ -131,6 +134,7 @@ def lambda_mutation_search(eps, gens, en):
         diff_argument_f, 
         diff_filename_f
     )
+    return (fit, nov)
 
 def diff_mutation_search(eps, gens, en):
 
@@ -153,7 +157,7 @@ def diff_mutation_search(eps, gens, en):
                                         cr,
                                         mr,
                                     )
-    experiment_template(
+    return experiment_template(
         "fit_grid",
         en,
         "fitness", 
@@ -486,7 +490,12 @@ def final_showdown():
     pass
 
 
+
+    
+
 if __name__ == "__main__":
+    lambda_default = {}
+    diff_default = {}
     #ep_vs_gen_experiment()
     #enviroments_grid_searches(3, 25)
     #fit_diff(3, 25)
@@ -494,4 +503,5 @@ if __name__ == "__main__":
     #lambda_l_cross_search("cartpole", 3, 15, 10)
     #lambda_mu_mut_search("cartpole", 3, 15, 10)
     #lambda_fit_cross_param_search("cartpole", 3, 15)
-    lambda_novelty_cross_param_search("cartpole", 3, 15)
+    x = lambda_novelty_cross_param_search("cartpole", 3, 15)
+    print(x)

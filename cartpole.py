@@ -11,27 +11,35 @@ from typing import *
 class CartpoleEvaluator(ai.Evaluator):
     hidden_dim = 4
 
-    def __init__(self, replay=False, hidden_dim=None):
+    def __new__(cls, replay=False, hidden_dim=None, behavioral_space_f=None):
+        cls.enviroment = gym.make("CartPole-v1", render_mode=None if not replay else "human")
+        cls.in_dim = (cls.enviroment.observation_space.shape)[0]
+        cls.out_dim = cls.enviroment.action_space.n
+        return super(CartpoleEvaluator, cls).__new__(cls)
+
+    def __init__(self, replay=False, hidden_dim=None, behavioral_space_f=None):
         super().__init__()
         self.enviroment = gym.make("CartPole-v1", render_mode=None if not replay else "human")
-        self.behavior_space_f = lambda observation: [observation[0]/4.8, observation[2]/0.418]
+        if behavioral_space_f is None:
+            self.behavior_space_f = lambda observation: [observation[0]/4.8, observation[2]/0.418]
+        else:
+            self.behavior_space_f = behavioral_space_f
 
     class CartpoleAgent(ai.Player):
 
+        
         def __init__(self, hidden_dim=4, mut_l=None, trainable=False, dtype="float32"):
             super().__init__(trainable=False, dtype=dtype)
-            self.d1 = keras.layers.Dense(self.in_dim)
+            self.d1 = keras.layers.Dense(CartpoleEvaluator.in_dim)
 
             self.mutable_layer = keras.layers.Dense(hidden_dim, activation="tanh")
             if mut_l is not None:
                 self.mutable_layer.set_weights(mut_l)
           
-            self.d_out = keras.layers.Dense(self.out_dim)
+            self.d_out = keras.layers.Dense(CartpoleEvaluator.out_dim)
 
 
     def get_individual_base(self):
-        self.CartpoleAgent.in_dim = (self.enviroment.observation_space.shape)[0]
-        self.CartpoleAgent.out_dim = self.enviroment.action_space.n
         return self.CartpoleAgent
 
     def prepare_toolbox(self, toolbox, ind_f):

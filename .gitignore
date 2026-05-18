@@ -3,6 +3,7 @@
 poznamky
 /Data/*
 !/Data/Experiments
+!/Data/optuna
 /Data/Experiments/.ipynb_checkpoints
 /Docs/papers
 /.metals

@@ -65,7 +65,7 @@ class AddedNovelty(PureNovelty):
             ind.fitness2.values=fitness
             beh_distances = map(
                 lambda x: np.linalg.norm(np.array(x[1])-np.array(beh)), 
-                behavioursfit_attr
+                behaviours_fit_attr
             )
             novelty = np.mean(np.array(list(beh_distances)))
             ind.fitness3 = novelty
@@ -180,9 +180,9 @@ class DiffArchivingContainer(DiffAlgContainer):
     """
     Implements diffential evolution with basic archiving
     """
-    def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2):
+    def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2, store_batch=1):
         super().__init__(pop, toolbox, seed, ngen, creator)
-        self.archive = archiving.Archive(archiving_period, pop)
+        self.archive = archiving.Archive(archiving_period, pop, store_batch=store_batch)
 
     def run(self,verbose=True):
         keras.utils.set_random_seed(self.seed)
@@ -201,12 +201,12 @@ class DiffArchivingNoveltyContainer(DiffAlgContainer, PureNovelty):
     """
     Implements diffential novelty evolution with basic archiving, pure novelty
     """
-    def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2):
+    def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2, store_batch=1):
         DiffAlgContainer.__init__(self,pop, toolbox, seed, ngen, creator)
         PureNovelty.__init__(self)
         toolbox.register("map", self.novelty_operator)
         toolbox.register("mutation", de.novelty_mutation)
-        self.archive = archiving.NoveltyArchive(archiving_period, pop)
+        self.archive = archiving.NoveltyArchive(archiving_period, pop, store_batch=store_batch)
 
     def run(self, verbose=True):
         keras.utils.set_random_seed(self.seed)
@@ -225,9 +225,9 @@ class LambdaArchivingContainer(LambdaAlgContainer):
     """
     Implements L+M strategy with basic archiving
     """
-    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, archiving_period=2):
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, archiving_period=2, store_batch=1):
         super().__init__(pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
-        self.archive = archiving.Archive(archiving_period, pop)
+        self.archive = archiving.Archive(archiving_period, pop, store_batch=store_batch)
         toolbox.decorate("select", self.archiveOp)
 
     @property
@@ -245,11 +245,11 @@ class LambdaArchivingNoveltyContainer(LambdaArchivingContainer, PureNovelty):
     """
     Implements diffential evolution with basic archiving, pure novelty
     """
-    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, archiving_period=2):
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, archiving_period=2, store_batch=1):
         LambdaArchivingContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
         PureNovelty.__init__(self)
         toolbox.register("map", self.novelty_operator)        
-        self.archive = archiving.NoveltyArchive(archiving_period, pop)
+        self.archive = archiving.NoveltyArchive(archiving_period, pop, store_batch)
         toolbox.decorate("select", self.archiveOp)
 
 

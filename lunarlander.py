@@ -16,13 +16,13 @@ class LunarLanderBehaviorModel:
     def __init__(self):
         self.reset()
 
-    def reset():
+    def reset(self):
         self.sum_x_v = 0
 
-    def inter_call(observation):
+    def inter_call(self,observation):
         pass
     
-    def transform(behavior, n):
+    def transform(self,behavior, n):
         pass
 
         
@@ -30,20 +30,30 @@ class LunarLanderEvaluator(ai.Evaluator):
 
     hidden_dim = 8
 
-    def __init__(self, replay=False, hidden_dim=None):
+    def __new__(cls, replay=False, hidden_dim=None, behavioral_space_f=None):
+        cls.enviroment = gym.make("LunarLander-v2", render_mode=None if not replay else "human")
+        cls.in_dim = (cls.enviroment.observation_space.shape)[0]
+        cls.out_dim = cls.enviroment.action_space.n
+        return super(LunarLanderEvaluator, cls).__new__(cls)
+    
+    def __init__(self, replay=False, hidden_dim=None, behavioral_space_f=None):
         super().__init__()
         self.enviroment = gym.make("LunarLander-v2", render_mode=None if not replay else "human")
-        self.behavior_space_f = lambda observation: [observation[0]/2.5, observation[4]/6.2831855]
-
-        self.in_dim = self.enviroment.observation_space.shape
+        if behavioral_space_f is None:
+            self.behavior_space_f = lambda observation: [observation[0]/2.5, observation[4]/6.2831855]
+        else:
+            self.behavior_space_f = behavioral_space_f
+        #self.in_dim = self.enviroment.observation_space.shape
         if hidden_dim is not None:
             self.hidden_dim = hidden_dim
-        self.out_dim = self.enviroment.action_space.shape
+        #self.out_dim = self.enviroment.action_space.shape
 
     
     class LunarLanderAgent:
         def __init__(self, hidden_dim=7, mut_l=None):
             super().__init__()
+            self.in_dim = LunarLanderEvaluator.in_dim
+            self.out_dim = LunarLanderEvaluator.out_dim
             self.d1 = keras.layers.Dense(self.in_dim)
             self.mutable_layer1 = keras.layers.Dense(hidden_dim, activation="tanh")
             self.mutable_layer2 = keras.layers.Dense(hidden_dim, activation="tanh")
@@ -71,8 +81,7 @@ class LunarLanderEvaluator(ai.Evaluator):
             return self.d_out(x)
 
     def get_individual_base(self):
-        self.LunarLanderAgent.in_dim = (self.enviroment.observation_space.shape)[0]
-        self.LunarLanderAgent.out_dim = self.enviroment.action_space.n
+        
         return self.LunarLanderAgent
 
     def prepare_toolbox(self, toolbox, ind_f):

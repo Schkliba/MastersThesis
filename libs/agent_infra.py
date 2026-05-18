@@ -3,8 +3,11 @@ import numpy as np
 import copy 
 
 class Evaluator:
+    def __new__(cls):
+        cls.enviroment = None
+        return super(Evaluator, cls).__new__(cls)
+    
     def __init__(self):
-        self.enviroment = None
         self.behavior_space_f = lambda x: x
         self.behavior_transform = lambda x,eps:x
         self.fitness_transform = lambda x,eps: (x/eps, )

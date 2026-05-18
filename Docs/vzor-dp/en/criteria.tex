@@ -1,33 +1,34 @@
+% !TeX spellcheck = en_GB
 \chapter{Comparison criteria and conditions}
-To compare different types of guiding functions well, we have to select criteria by which we compare them and establish conditions under which will this comparison take place so that our conlusions are fair but not misleading.
+To compare different types of guiding functions well, we have to select criteria by which we compare them and establish conditions under which will this comparison take place so that our conclusions are fair but not misleading.
 \section{General criteria}
-Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective enviroments, getting more comprehensive picture then from a single run. This will be mainly reflected in the seed for random numbers generator of the enviroment. Since the promise of the novelty aproach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced by the algortihm runs\\
-However we also have to take into account the hyperparameters with which these populations have been achieved. This is especially (but not limited to) population size and number of generations, hyperparameters responsible for most of the computational complexity of a evolutionary algorithm run. 
+Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective environments, getting more comprehensive picture then from a single run. This will be mainly reflected in the seed for random numbers generator of the environment. Since the promise of the novelty approach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced by the algorithm runs\\
+However we also have to take into account the hyper-parameters with which these populations have been achieved. This is especially (but not limited to) population size and number of generations, hyper-parameters responsible for most of the computational complexity of a evolutionary algorithm run. 
 \section{Conditions}
-The conditions are defined by the hyperparameters of the algorithms and the hyperparameters of the individuals.
-\section{Individual hyperparameter selection}
-The hyperparameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. We determine these parameter based on empirical experience with the tasks as optimising this choice is beyond the scope of this thesis. 
-\section{$ \mu + \lambda $ hyperparameter selection}
-The algorithm hyperparameters will be selected in a series of grid searches, tailored to each enviroment and algorithm type. While it is theoretically possible to setup one large comprehensive gridsearch for each algorithm, lacking specialised hardware, the exponential dependence on number of hyperparameters would make it higly impractical in reality.\\
+The conditions are defined by the hyper-parameters of the algorithms and the hyper-parameters of the individuals.
+\section{Individual hyper-parameter selection}
+The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. We determine these parameter based on empirical experience with the tasks as optimising this choice is beyond the scope of this thesis. 
+\section{$ \mu + \lambda $ hyper-parameter selection}
+The algorithm hyper-parameters will be selected in a series of grid searches, tailored to each environment and algorithm type. While it is theoretically possible to setup one large comprehensive grid search for each algorithm, lacking specialised hardware, the exponential dependence on number of hyper-parameters would make it highly impractical in reality.\\
 \subsubsection{evaluation episodes vs. generations}
-Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run during these experiments. This parameter directly influences how much infomration the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up nontrivial part of the computation we want to limit them as much as we can.
+Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run during these experiments. This parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to limit them as much as we can.
 \subsection{mutation sigma vs. generations}
-This experiment will help us narrow our choice of sigma used for the continuous mutation distribution. Because the mutations are commutative we can infere that many small mutations will add up to fewer larger mutations and vice versa the larger mutation can be emulated by several smaller mutations. The number of mutations applied on individual is limited by number of generations the algorithm runs. Therefore we need to balance our choice of sigma so that the mutations do not disturb progression of our population and but also achieve benefitial change during as few generations as possible. 
+This experiment will help us narrow our choice of sigma used for the continuous mutation distribution. Because the mutations are commutative we can infer that many small mutations will add up to fewer larger mutations and vice versa the larger mutation can be emulated by several smaller mutations. The number of mutations applied on individual is limited by number of generations the algorithm runs. Therefore we need to balance our choice of sigma so that the mutations do not disturb progression of our population and but also achieve beneficial change during as few generations as possible. 
 
 \subsubsection{offsprings vs. mutation-rate}
-This experminet should help us find meaningful mapping between values of mutation rate and size of the offspring pool. The mutation rate determines how much random information is being introduced to the population while larger offspring pool allows for more effective harnessing of this random fluctuations. During the experiment the population pool is static and cross-over is eliminated. 
+This experiment should help us find meaningful mapping between values of mutation rate and size of the offspring pool. The mutation rate determines how much random information is being introduced to the population while larger offspring pool allows for more effective harnessing of this random fluctuations. During the experiment the population pool is static and cross-over is eliminated. 
 \subsubsection{population vs. cross-rate} 
 This experiment should help us find meaningful mapping between values of cross-over rate and the size of the population pool 
 \subsubsection{definitive parameter search}
-In this experiment we use previosuly aquired mappings to search for the most performative combination of the hyperparameters. 
+In this experiment we use previously acquired mappings to search for the most performative combination of the hyper-parameters. 
 
 
-\section{differential hyperparameter selection}
+\section{differential hyper-parameter selection}
 
 \subsubsection{population vs. gamma learning rate}
-We can interprete the learning rate as probabilistic constant, a measure of belief in the direction calculated from the differantial mutation. We should consider this parameter in contrast with the size of the population as the increasing size might provide better opportunities but also drown them out in less optimal alternatives.
+We can interpret the learning rate as probabilistic constant, a measure of belief in the direction calculated from the differential mutation. We should consider this parameter in contrast with the size of the population as the increasing size might provide better opportunities but also drown them out in less optimal alternatives.
 \subsubsection{population vs. alpha recombination}
-We can interprete alpha as a measure of our belief in suitability of the current population even more directly than the learning rate. Therefore we have to also consider it against the size of this population as the increasing population might provide more optimal individuals out of pocket but their influence on the population direction may ultimately dissolve in the amount of combinations.
+We can interpret alpha as a measure of our belief in suitability of the current population even more directly than the learning rate. Therefore we have to also consider it against the size of this population as the increasing population might provide more optimal individuals out of pocket but their influence on the population direction may ultimately dissolve in the amount of combinations.
 
 \subsubsection{population vs. generations}
 Having learned the best parameter for each population we should consider them in contrast to how many generations are required for the evolution to find good enough solutions.
