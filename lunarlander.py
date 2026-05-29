@@ -6,12 +6,13 @@ from typing import *
 
 class LunarLanderBehaviorModel:
     norm_cnst = {
-            "x": 2.5,
-            "y": 2.5,
-            "x_v": 10,
-            "y_v": 10,
-            "angular_v": 10,
-            "angle": 6.2831855
+            "x": 1.5,
+            "y": 1.5,
+            "x_v": 5,
+            "y_v": 5,
+            "angle": 3.142,
+            "angular_v": 5,
+
     }
     def __init__(self):
         self.reset()
@@ -38,11 +39,12 @@ class LunarLanderEvaluator(ai.Evaluator):
     
     def __init__(self, replay=False, hidden_dim=None, behavioral_space_f=None):
         super().__init__()
-        self.enviroment = gym.make("LunarLander-v2", render_mode=None if not replay else "human")
+        self.enviroment = gym.make("LunarLander-v2", render_mode=None if not replay else "human", max_episode_steps=100)
         if behavioral_space_f is None:
-            self.behavior_space_f = lambda observation: [observation[0]/2.5, observation[4]/6.2831855]
+            self.behavior_space_f = lambda observation, b: [(observation[0]/2.5), (observation[3]/10) + b[1]]#lambda observation: [observation[0]/2.5, observation[4]/6.2831855]
         else:
             self.behavior_space_f = behavioral_space_f
+        self.behavior_transform = lambda x, eps: [x[0], x[1]/eps]
         #self.in_dim = self.enviroment.observation_space.shape
         if hidden_dim is not None:
             self.hidden_dim = hidden_dim

@@ -13,14 +13,16 @@ LAMBDA_CONTS = {
     "fitness": containers.LambdaAlgContainer,
     "fit_archiving": containers.LambdaArchivingContainer,
     "archiving": containers.LambdaArchivingNoveltyContainer,
-    "novelty": containers.LambdaNoveltyAlg
+    "novelty": containers.LambdaNoveltyAlg,
+    "add_novelty": containers.LambdaAddNoveltyContainer
 }
     
 DIFF_CONTS = {
     "fitness": containers.DiffAlgContainer,
     "fit_archiving": containers.DiffArchivingContainer,
     "archiving": containers.DiffArchivingNoveltyContainer,
-    "novelty": containers.DiffNoveltyContainer
+    "novelty": containers.DiffNoveltyContainer,
+    "add_novelty": containers.DiffAdditionNoveltyContainer
 }
 
 ALG_MAPPING = {

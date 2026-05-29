@@ -21,7 +21,7 @@ class CartpoleEvaluator(ai.Evaluator):
         super().__init__()
         self.enviroment = gym.make("CartPole-v1", render_mode=None if not replay else "human")
         if behavioral_space_f is None:
-            self.behavior_space_f = lambda observation: [observation[0]/4.8, observation[2]/0.418]
+            self.behavior_space_f = lambda observation, b: [observation[0]/4.8, observation[2]/0.418]
         else:
             self.behavior_space_f = behavioral_space_f
 

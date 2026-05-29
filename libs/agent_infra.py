@@ -29,12 +29,12 @@ class Evaluator:
         total_score = 0
         for episode in range(episodes):
             observation, score, done = self.reset()[0], 0, False
+            behavior = self.behavior_space_f(observation, [0,0])
             while not done:
                 prediction = individual(observation[np.newaxis])[0].numpy()
                 action = np.argmax(prediction)
-
                 observation, reward, terminated, truncated, info = self.enviroment.step(action)
-                behavior = self.behavior_space_f(observation)
+                behavior = self.behavior_space_f(observation, behavior)
                 score += reward
                 done = terminated or truncated
             total_score += score

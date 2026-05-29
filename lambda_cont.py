@@ -27,6 +27,7 @@ parser.add_argument("-s", "--seed", help="Seed of the random generator", type=in
 parser.add_argument("-pa", "--out_path", help="Path to store output data", type=str, default="./Data/Junk/")
 parser.add_argument("-exp", "--experiment", help="insication if it's experiment", action="store_true", default=False)
 parser.add_argument("-e", "--episodes", help="Seed of the random generator", type=int, default=5)
+parser.add_argument("-fw", "--fit_weight", help="Initial weight given to the fitnes", type=float, default=0.2)
 
 
 
@@ -73,6 +74,7 @@ def argumented_function(
         seed:int = 42,
         archiving_period = 2,
         archive_batch = 1,
+        fitness_weight = 0.2,
         out_path = "./Data/Junk/"
     ):
     replay_env = consts.ENIVROMENTS[env](True)
@@ -91,6 +93,21 @@ def argumented_function(
         creator.create("Individual",  enviroment.get_individual_base(), fitness=creator.FitnessMax)
         toolbox.register("evaluate", enviroment.evalutation, seed=seed, episodes=episodes)
         visual_conv = visualisation.logbook2pandas
+    elif container == "add_novelty":
+        creator.create("FitnessNovelty", base.Fitness, weights=(1.0, ))
+        creator.create("FitnessTrue", base.Fitness, weights=(1.0, ))
+ 
+        creator.create(
+            "Individual", 
+            enviroment.get_individual_base(), 
+            fitness=creator.FitnessNovelty, 
+            fitness2=creator.FitnessTrue,
+            behavior=None
+        )
+        
+        toolbox.register("evaluate", enviroment.evalutation_b, seed=seed, episodes=episodes)
+        visual_conv = visualisation.novelty_logbook2pandas
+
     else:
         creator.create("FitnessNovelty", base.Fitness, weights=(1.0, ))
         creator.create("FitnessTrue", base.Fitness, weights=(1.0, )) 
@@ -119,6 +136,18 @@ def argumented_function(
             creator, 
             archiving_period=archiving_period, 
             store_batch=archive_batch
+        )
+    elif container == "add_novelty":
+        alg = cont_cls(
+            l, 
+            m, 
+            mr, 
+            cr, 
+            seed, 
+            ng,
+            toolbox,
+            creator,  
+            fit_w = fitness_weight
         )
     else:
         alg = cont_cls(l, m, mr, cr, seed, ng,toolbox,creator)

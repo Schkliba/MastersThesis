@@ -17,6 +17,7 @@ parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", 
 parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "add_novelty", "archiving", "fit_archiving"], default="fitness")
 parser.add_argument("-en", "--enviroment", help="Enviroment type", choices=["cartpole", "lunarlander", "waterworld"], default="cartpole")
 
+parser.add_argument("-fw", "--fit_weight", help="Initial weight given to the fitnes", type=float, default=0.2)
 parser.add_argument("-mr", "--mutation_rate", help="Rate of mutation", type=float, default=0.9)
 parser.add_argument("-p", "--pop", help="Base population", type=int, default=7)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
@@ -34,12 +35,16 @@ def main(args:argparse.Namespace):
     cross_uni = args.cross_uni
     mutation_sigma = args.mutation_sigma
     out_path = args.out_path
-
+    if container == "add_novelty":
+        fit_weight = args.fit_weight
+    else:
+        fit_weight=None
     df, pop = argumented_function(
         env=environment,
         cross_method=cross_method,
         container=container,
         ng=ng, l=l, cr=cr, mr=mr, episodes=episodes, cross_uni=cross_uni, mutation_sigma=mutation_sigma,
+        fitness_weight=fit_weight,
         seed=seed,
         out_path=out_path
     )
@@ -63,6 +68,7 @@ def argumented_function(
         seed:int = 42,
         archiving_period = 2,
         archive_batch = 1,
+        fitness_weight=0.2,
         out_path = "./Data/Junk/"):
     
     cont_cls = consts.DIFF_CONTS[container]
@@ -81,16 +87,14 @@ def argumented_function(
         visual_conv = visualisation.logbook2pandas
         #visual_chart = visualisation.single_run_chart
     elif container == "add_novelty":
-        creator.create("FitnessMixNovelty", base.Fitness, weights=(1.0, ))
-        creator.create("FitnessNovelty", base.Fitness, weights=(1.0, )) 
+        creator.create("FitnessNovelty", base.Fitness, weights=(1.0, ))
         creator.create("FitnessTrue", base.Fitness, weights=(1.0, )) 
         creator.create(
-                        "Individual", 
-                        enviroment.get_individual_base(), 
-                        fitness=creator.FitnessMixNovelty, 
-                        fitness2=creator.FitnessTrue,
-                        fitness3=creator.FitnessNovelty,  
-                        behaviour=None
+                    "Individual", 
+                    enviroment.get_individual_base(), 
+                    fitness=creator.FitnessNovelty, 
+                    fitness2=creator.FitnessTrue,
+                    behaviour=None
         )
         toolbox.register("evaluate", enviroment.evalutation_b, seed=seed, episodes=episodes)
         visual_conv = visualisation.novelty_logbook2pandas
@@ -115,6 +119,11 @@ def argumented_function(
             l,toolbox, seed, ng, creator, 
             archiving_period=archiving_period, 
             store_batch=archive_batch
+        )
+    elif container == "add_novelty":
+        alg = cont_cls(
+            l,toolbox, seed, ng, creator, 
+            fit_w = fitness_weight
         )
     else:
         alg = cont_cls(
