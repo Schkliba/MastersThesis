@@ -1,17 +1,27 @@
 % !TeX spellcheck = en_GB
 \chapter{Comparison criteria and conditions}
-To compare different types of guiding functions well, we have to select criteria by which we compare them and establish conditions under which will this comparison take place so that our conclusions are fair but not misleading.
+To compare different types of objective functions fairly, we have to select criteria by which we compare them and establish conditions under which will this comparison take place so that our conclusions are fair.
 \section{General criteria}
 Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective environments, getting more comprehensive picture then from a single run. This will be mainly reflected in the seed for random numbers generator of the environment. Since the promise of the novelty approach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced by the algorithm runs\\
 However we also have to take into account the hyper-parameters with which these populations have been achieved. This is especially (but not limited to) population size and number of generations, hyper-parameters responsible for most of the computational complexity of a evolutionary algorithm run. 
 \section{Conditions}
 The conditions are defined by the hyper-parameters of the algorithms and the hyper-parameters of the individuals.
 \section{Individual hyper-parameter selection}
-The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. We determine these parameter based on empirical experience with the tasks as optimising this choice is beyond the scope of this thesis. 
-\section{$ \mu + \lambda $ hyper-parameter selection}
-The algorithm hyper-parameters will be selected in a series of grid searches, tailored to each environment and algorithm type. While it is theoretically possible to setup one large comprehensive grid search for each algorithm, lacking specialised hardware, the exponential dependence on number of hyper-parameters would make it highly impractical in reality.\\
+The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. We determine these parameter based on empirical experience with the tasks as optimising this choice is beyond the scope of this thesis
+
+\section{Algorithm hyperparameter selection}
+We have reviewed hyperparamets of each algorithm in the chapter \ref{chap:evolution}. Now we will review the process of their selection. The diffulty of the task lies mainly in the complexity of evaluation. As we will discuss later some of the experiments maybe evaluated over day or even several days on the available hardware even for a 100 limited algorithm runs. For this reason we need to utilise bayesian search which is able to prune a lot of the redundant space out so that we may not waste time with it. This however has a considerable downside for our purposes as we would like to compare the algorithms on their best footing. Therefore we refine the bayesian search results with local grid search attempting to deviate from the supposed hyperparameter equilibria.
+
+\subsection{General Gridsearches}
+Some of the paramters are common for all    
 \subsubsection{evaluation episodes vs. generations}
-Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run during these experiments. This parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to limit them as much as we can.
+Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run in these experiments. The parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to select the lowest possible number. For this purpose we will run a grid search comparing algorithm's performance over different number of generations. Since the Gymnasium environments discussed in chapter \ref{chap:environment}. are based on similair principles we can be confident about generation of this result to conserve time for more meaningful experiment.
+
+\subsubsection{population vs. generations}
+Having refining the best parameter for each population we should consider them in contrast to how many generations are required for the evolution to find good enough solutions.
+
+\subsection{$\lambda + \mu$ hyperparameter selection}
+
 \subsection{mutation sigma vs. generations}
 This experiment will help us narrow our choice of sigma used for the continuous mutation distribution. Because the mutations are commutative we can infer that many small mutations will add up to fewer larger mutations and vice versa the larger mutation can be emulated by several smaller mutations. The number of mutations applied on individual is limited by number of generations the algorithm runs. Therefore we need to balance our choice of sigma so that the mutations do not disturb progression of our population and but also achieve beneficial change during as few generations as possible. 
 
@@ -23,12 +33,11 @@ This experiment should help us find meaningful mapping between values of cross-o
 In this experiment we use previously acquired mappings to search for the most performative combination of the hyper-parameters. 
 
 
-\section{differential hyper-parameter selection}
+\subsection{differential hyper-parameter selection}
 
 \subsubsection{population vs. gamma learning rate}
 We can interpret the learning rate as probabilistic constant, a measure of belief in the direction calculated from the differential mutation. We should consider this parameter in contrast with the size of the population as the increasing size might provide better opportunities but also drown them out in less optimal alternatives.
 \subsubsection{population vs. alpha recombination}
 We can interpret alpha as a measure of our belief in suitability of the current population even more directly than the learning rate. Therefore we have to also consider it against the size of this population as the increasing population might provide more optimal individuals out of pocket but their influence on the population direction may ultimately dissolve in the amount of combinations.
 
-\subsubsection{population vs. generations}
-Having learned the best parameter for each population we should consider them in contrast to how many generations are required for the evolution to find good enough solutions.
+

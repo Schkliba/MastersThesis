@@ -34,7 +34,7 @@ def experiment_template(name, en, container,algorithms, grid_variables, grid_att
                 args = Cs.ALG_MAPPING[alg].parser.parse_args(arguments)
                 future = executor.submit(task_job, alg=alg, env=env, args=args, s=s)
                 stat_futures[future] = s
-
+        
         stats = {}
         for future in concurrent.futures.as_completed(stat_futures):
             s = stat_futures[future]

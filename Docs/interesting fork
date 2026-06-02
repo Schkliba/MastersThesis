@@ -1,0 +1,30 @@
+\section{Choice of behavioural vector}
+ Since we have an advantage of knowing our choices will only ever be applied in the aforementioned computer environments we can without loss of generality assume each state of the environment to be fully representable by a finite numerical vector as the contemporary computer programs still have to contend with the burden of limited memory space. Basis of this vector space represents the variables that express state of the environment and vector components are values assigned to these variables. This definition respects variability in representations of environments with the same effective properties. Note that the actually possible states of the game are only a subset of the vector space without guaranteed closures.
+ 
+ We can then classify the vector components based on their interactivity with the optimised agent: subjective and objective. Subjective variables or descriptors are subject to agent's action, determined by them fully or in part. Objective variables do not depend on agent's actions. For example in the game of Lunar Lander the direction and force of the wind is determined independently of in-game events and so no player's action may alter it. On the other hand the position of the shuttle is partially determined by the objective wind vector but also by the accelerating actuators the player has in their control and therefore is subjective. Rotation of the shuttle is only affected by player choice while in the air but close to the ground may be only limited by the shape of the landscape, again we may recognise a subjective variable. Note that not all descriptors of the environment must be objective and not all agents' descriptors are necessarily subjective. In CP the pole is part of the environment but influencing of it's state is the whole point of the game, on the other hand we may not alter size of the shuttle in LL despite it's impact on the results of the play, it is objective constraint of the game.
+ \begin{defn}
+ 	Let Z be a space of all subjective descriptors and $\Omega$ be the space of all objective descriptors.
+ 	Then $S = (Z, \Omega)$ is a space of representable states.
+ \end{defn}
+ \begin{lemma}
+ Let (B, $||\dot||$) be  vector space of behaviours with a norm, $S = (Z, \Omega)$ a complete space of representable states, 
+ $V: Z\rightarrow B$ be a projection taking into account only subjective descriptors,
+ $U: S\rightarrow B$ be a projection taking into account also objective descriptions and
+ $W: \Omega\rightarrow B$ be a projection taking into account only objective descriptions.
+ Then $\forall x  \in Z \forall\omega \in  \forall U \forall V \exists W: U(x, \omega) = V(x) + W(\omega)$
+ \end{lemma}
+ \begin{proof}
+ 	Define $W(\omega) = U(x, \omega) - V(x)$. It is well-defined for all $(x, \omega)$  as long as U and V are defined for all $(x, \omega)$. By commutativity we get $U(x, \omega) = V(x) + W(x, \omega)$. 
+ \end{proof}
+ 
+ \begin{thm}
+ Let (B, $||\dot||$) be  vector space of behaviours with a norm, S a  space of representable states, 
+ $V: S\rightarrow B$ be a projection taking into account only subjective descriptors and 
+ $U: S\rightarrow B$ be a projection taking into account also objective descriptions. 
+ Then $\forall x,y \in S \forall V \forall U: E(||V(x) - V(y)||) = E(||U(x) - U(y)||)$
+ \end{thm}   
+ \begin{proof}
+	\( 
+	E(||U(x) - U(y)||) = E(||(V(x) + W(x)) - (V(y) + W(y))||) = E(||(V(x) - V(y)) + (W(x) - W(y))||)
+	 \)
+ \end{proof}

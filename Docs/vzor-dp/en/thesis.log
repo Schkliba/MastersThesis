@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.6.1)  1 JUN 2026 21:51
+=======
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.5.29)  31 MAY 2026 23:01
+>>>>>>> Stashed changes
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -909,7 +913,7 @@ LaTeX Info: Redefining \nameref on input line 113.
 
  (./title.tex
 Package hyperref Info: Option `pageanchor' set `false' on input line 6.
-<../img/logo-en.pdf, id=158, 506.4591pt x 156.49065pt>
+<../img/logo-en.pdf, id=162, 506.4591pt x 156.49065pt>
 File: ../img/logo-en.pdf Graphic file (type pdf)
 <use ../img/logo-en.pdf>
 Package pdftex.def Info: ../img/logo-en.pdf  used on input line 9.
@@ -959,16 +963,32 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+<<<<<<< Updated upstream
 ))
 \tf@toc=\write7
 \openout7 = `thesis.toc'.
 
  [1
+=======
+)
+
+[1
+>>>>>>> Stashed changes
 
 
 
 
+<<<<<<< Updated upstream
 ] [2]
+=======
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}])
+\tf@toc=\write7
+\openout7 = `thesis.toc'.
+
+
+
+[2]
+>>>>>>> Stashed changes
 \openout2 = `preface.aux'.
 
 
@@ -1005,7 +1025,13 @@ Chapter 2.
 
 
 
+<<<<<<< Updated upstream
 ] [8]) [9]
+=======
+])
+
+[7]
+>>>>>>> Stashed changes
 \openout2 = `evolution.aux'.
 
  (./evolution.tex
@@ -1015,7 +1041,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--16
 
  []
 
+<<<<<<< Updated upstream
 [10
+=======
+
+
+[8
+>>>>>>> Stashed changes
 
 
 
@@ -1051,6 +1083,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 [11]
 
+<<<<<<< Updated upstream
 Package natbib Warning: Citation `noveltyarticle' on page 12 undefined on input
  line 87.
 
@@ -1060,6 +1093,20 @@ Package natbib Warning: Citation `noveltyarticle' on page 12 undefined on input
 
 
 Package natbib Warning: Citation `noveltyarticle' on page 12 undefined on input
+=======
+
+[9]
+
+Package natbib Warning: Citation `noveltyarticle' on page 10 undefined on input
+ line 87.
+
+
+Package natbib Warning: Citation `noveltyarticle' on page 10 undefined on input
+ line 90.
+
+
+Package natbib Warning: Citation `noveltyarticle' on page 10 undefined on input
+>>>>>>> Stashed changes
  line 94.
 
 
@@ -1068,20 +1115,22 @@ Overfull \hbox (0.33578pt too wide) in paragraph at lines 97--99
 l lead to faux-exploration|
  []
 
+<<<<<<< Updated upstream
 [12]) [13]
+=======
+
+
+[10{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}])
+
+[11]
+>>>>>>> Stashed changes
 \openout2 = `criteria.aux'.
 
  (./criteria.tex
 Chapter 4.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <17.28> on input line 11.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 11.
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 11.
 
 
+<<<<<<< Updated upstream
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 11.
 
@@ -1091,16 +1140,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 12--13
  []
 
 [14
+=======
+[12
+>>>>>>> Stashed changes
 
 
 
 
+<<<<<<< Updated upstream
 ] [15]) [16]
+=======
+]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 23.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 23.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 23.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 23.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 23.
+
+
+
+[13])
+
+[14]
+>>>>>>> Stashed changes
 \openout2 = `experiment.aux'.
 
  (./experiment.tex
 Chapter 5.
+<<<<<<< Updated upstream
 ) [17
+=======
+)
+
+[15
+>>>>>>> Stashed changes
 
 
 
@@ -1108,7 +1190,13 @@ Chapter 5.
 ]
 \openout2 = `epilog.aux'.
 
+<<<<<<< Updated upstream
  (./epilog.tex) [18
+=======
+ (./epilog.tex)
+
+[16
+>>>>>>> Stashed changes
 
 
 
@@ -1121,8 +1209,15 @@ LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line
 21.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmtt.fd
+<<<<<<< Updated upstream
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ))) [19
+=======
+File: ot1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)))
+
+[17
+>>>>>>> Stashed changes
 
 
 
@@ -1131,7 +1226,13 @@ File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 \tf@lof=\write8
 \openout8 = `thesis.lof'.
 
+<<<<<<< Updated upstream
  [20
+=======
+
+
+[18
+>>>>>>> Stashed changes
 
 
 
@@ -1142,11 +1243,26 @@ File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
  [21
 
+<<<<<<< Updated upstream
 ] [22
 
 ]
 Appendix A.
 [23
+=======
+
+[19
+
+]
+
+[20
+
+]
+Appendix A.
+
+
+[21
+>>>>>>> Stashed changes
 
 ]
 
@@ -1156,9 +1272,10 @@ Package natbib Warning: There were undefined citations.
 (./evolution.aux) (./criteria.aux) (./experiment.aux) (./epilog.aux)
 (./bibliography.aux))
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 88628BCA82160DC6AE14DFA976B7519B;5656.
+(rerunfilecheck)             Checksum: 2187668E04D66461638840E9BA2A90E7;5849.
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< Updated upstream
  26800 strings out of 478287
  487451 string characters out of 5849290
  727874 words of memory out of 5000000
@@ -1184,4 +1301,27 @@ PDF statistics:
  413 compressed objects within 5 object streams
  97 named destinations out of 1000 (max. 500000)
  326 words of extra memory for PDF output out of 10000 (max. 10000000)
+=======
+ 26800 strings out of 475102
+ 482515 string characters out of 5764877
+ 837358 words of memory out of 5000000
+ 49129 multiletter control sequences out of 15000+600000
+ 648804 words of font info for 100 fonts, out of 8000000 for 9000
+ 59 hyphenation exceptions out of 8191
+ 92i,11n,95p,1104b,2320s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/ty
+pe1/public/lm/lmbxi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></
+usr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/
+public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/sha
+re/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/l
+m/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8
+.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
+Output written on thesis.pdf (25 pages, 552428 bytes).
+PDF statistics:
+ 483 PDF objects out of 1000 (max. 8388607)
+ 418 compressed objects within 5 object streams
+ 98 named destinations out of 1000 (max. 500000)
+ 334 words of extra memory for PDF output out of 10000 (max. 10000000)
+>>>>>>> Stashed changes
 

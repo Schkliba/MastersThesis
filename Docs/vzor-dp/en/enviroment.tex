@@ -1,5 +1,6 @@
 % !TeX spellcheck = en_GB
 \chapter{Environments}
+\label{chap:environment}
 
 \section{Reinforcement learning}
 Reinforcement learning might be best introduced by description of the problem it aims to solve.
@@ -29,49 +30,34 @@ In this thesis we will set our agents into environments provided by Gymnasium pr
 
 While Gymnasium provides wide range of environments, quite a number of them if not most do not provide their outputs in structured form. Instead the resulting screen has to be processed by user defined visual processor to extract information crucial for completing the task. 
 
-This introduces a layer of complexity that is outside of the scope of this thesis. Therefore we have decided to narrow our selection only to environments which do provide structured output. 
+This introduces a layer of complexity that is outside of the scope of this thesis. Therefore we have decided to narrow our selection only to environments which do provide structured output. This is the two environments we have eventually selected for our study:
 
 \subsection{Cartpole}
+\label{env:cartpole}
 
-Cartpole is one of the most known benchmark environments in the Gymnasium library. It's a simple environment where the agent controls a cart rolling on flat surface with a pole on top.
-The goal is to keep the pole balanced on top of the cart. The reward is calculated every step depending on the angle.
-
+Cartpole is one of the most used benchmark environments in the Gymnasium library. It's a simple environment where the agent controls a cart rolling on flat surface with a pole on top.
+The goal is to keep the pole balanced on top of the cart. The reward is calculated every step depending on the angle of the stick. This means we have bounded 
+\begin{defn}
+	An agent that achieves score 500 in Cartpole is called solution or solving individual.
+\end{defn}
+\subsubsection{Observation space}
+\subsubsection{Action space}
 \subsection{Lunar Lander}
-Lunar Lander is somewhat more complex domain to optimise for than the Cartpole.  
-Every step the reward is calculated based on several criteria, as opposed to only an angle of a stick, controlling the landers descend and additional points are awarded for completing certain tasks.
-Additionally there are several variables determining the environments behaviour during evaluations such as the strength of wind Unlike in cartpole where 
+The other environment we have selected is Lunar Lander where the agent controls descend of a landing shuttle on rugged planetary (or the Moon's) surface with the help of strangely placed rockets. The points are subtracted for staying in the air or for getting the shuttle into a spin. Bonus points awarded for landing in the center of the  The shuttle has infinite fuel so the game ends only when the shuttle lands safely or crushes into the ground. Luckily we can at least limit the number of steps for which the environment is allowed to go on. For a neural network training this however poses a specific kind of problem. Firstly very narrow behavioral window that can achieve positive fitness. But mainly as opposed to the Cartpole environment (\ref{env:cartpole}), now the unsuccesful runs may take significantly longer time than the successful ones. This means experiments are particularly costly for slowly converging algorithms. The upper limit of fitness is 200, the lower would possibly be $-\inf$, depending on the lenght limitation imposed.
+We therefore differntiate between two stages of obtaining successful solution.
+\begin{defn}
+	An agent that achieves score 200 in Lunar lander is called solution or solving individual.
+\end{defn}
+\begin{defn}
+	\label{def:wellbehaved}
+	An agent that achieves positive score  in Lunar lander is called well-behaved.
+\end{defn}
+ Definition \ref{def:wellbehaved} stems from the fact that it can only be achieved if the agent does not crash the shuttle as doing so yields a penalisation of -100 points while not obtaining a boost of +100 points for safe landing, driving even a possible solution with score 200 to 0.
+\subsubsection{Observation space}
+\subsubsection{Action space}
 
 
 
 
- \section{Choice of behavioural vector}
- Since we have an advantage of knowing our choices will only ever be applied in the aforementioned computer environments we can without loss of generality assume each state of the environment to be fully representable by a finite numerical vector as the contemporary computer programs still have to contend with the burden of limited memory space. Basis of this vector space represents the variables that express state of the environment and vector components are values assigned to these variables. This definition respects variability in representations of environments with the same effective properties. Note that the actually possible states of the game are only a subset of the vector space without guaranteed closures.
  
- We can then classify the vector components based on their interactivity with the optimised agent: subjective and objective. Subjective variables or descriptors are subject to agent's action, determined by them fully or in part. Objective variables do not depend on agent's actions. For example in the game of Lunar Lander the direction and force of the wind is determined independently of in-game events and so no player's action may alter it. On the other hand the position of the shuttle is partially determined by the objective wind vector but also by the accelerating actuators the player has in their control and therefore is subjective. Rotation of the shuttle is only affected by player choice while in the air but close to the ground may be only limited by the shape of the landscape, again we may recognise a subjective variable. Note that not all descriptors of the environment must be objective and not all agents' descriptors are necessarily subjective. In CP the pole is part of the environment but influencing of it's state is the whole point of the game, on the other hand we may not alter size of the shuttle in LL despite it's impact on the results of the play, it is objective constraint of the game.
- \begin{defn}
- 	Let Z be a space of all subjective descriptors and $\Omega$ be the space of all objective descriptors.
- 	Then $S = (Z, \Omega)$ is a space of representable states.
- \end{defn}
- \begin{lemma}
- Let (B, $||\dot||$) be  vector space of behaviours with a norm, $S = (Z, \Omega)$ a complete space of representable states, 
- $V: Z\rightarrow B$ be a projection taking into account only subjective descriptors,
- $U: S\rightarrow B$ be a projection taking into account also objective descriptions and
- $W: \Omega\rightarrow B$ be a projection taking into account only objective descriptions.
- Then $\forall x  \in Z \forall\omega \in  \forall U \forall V \exists W: U(x, \omega) = V(x) + W(\omega)$
- \end{lemma}
- \begin{proof}
- 	Define $W(\omega) = U(x, \omega) - V(x)$. It is well-defined for all $(x, \omega)$  as long as U and V are defined for all $(x, \omega)$. By commutativity we get $U(x, \omega) = V(x) + W(x, \omega)$. 
- \end{proof}
- 
- \begin{thm}
- Let (B, $||\dot||$) be  vector space of behaviours with a norm, S a  space of representable states, 
- $V: S\rightarrow B$ be a projection taking into account only subjective descriptors and 
- $U: S\rightarrow B$ be a projection taking into account also objective descriptions. 
- Then $\forall x,y \in S \forall V \forall U: E(||V(x) - V(y)||) = E(||U(x) - U(y)||)$
- \end{thm}   
- \begin{proof}
-	\( 
-	E(||U(x) - U(y)||) = E(||(V(x) + W(x)) - (V(y) + W(y))||) = E(||(V(x) - V(y)) + (W(x) - W(y))||)
-	 \)
- \end{proof}
  

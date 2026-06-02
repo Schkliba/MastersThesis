@@ -80,15 +80,25 @@
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/"> 
    <xmp:CreatorTool>LaTeX with hyperref</xmp:CreatorTool> 
+<<<<<<< Updated upstream
    <xmp:ModifyDate>2026-06-01T21:51:42+02:00</xmp:ModifyDate> 
    <xmp:CreateDate>2026-06-01T21:51:42+02:00</xmp:CreateDate> 
    <xmp:MetadataDate>2026-06-01T21:51:42+02:00</xmp:MetadataDate> 
+=======
+   <xmp:ModifyDate>2026-05-31T23:01:56+02:00</xmp:ModifyDate> 
+   <xmp:CreateDate>2026-05-31T23:01:56+02:00</xmp:CreateDate> 
+   <xmp:MetadataDate>2026-05-31T23:01:56+02:00</xmp:MetadataDate> 
+>>>>>>> Stashed changes
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmpRights = "http://ns.adobe.com/xap/1.0/rights/"> 
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"> 
    <xmpMM:DocumentID>uuid:C8CFC28F-88E1-7995-E9AD-F6D12EAD346B</xmpMM:DocumentID> 
+<<<<<<< Updated upstream
    <xmpMM:InstanceID>uuid:AB2240F3-9572-06C3-84D4-851B6BDC44D1</xmpMM:InstanceID> 
+=======
+   <xmpMM:InstanceID>uuid:26DCB9DA-C277-5824-07DB-903ACE56563A</xmpMM:InstanceID> 
+>>>>>>> Stashed changes
   </rdf:Description> 
  </rdf:RDF> 
 </x:xmpmeta> 

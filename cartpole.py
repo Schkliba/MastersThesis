@@ -25,20 +25,6 @@ class CartpoleEvaluator(ai.Evaluator):
         else:
             self.behavior_space_f = behavioral_space_f
 
-    class CartpoleAgent(ai.Player):
-
-        
-        def __init__(self, hidden_dim=4, mut_l=None, trainable=False, dtype="float32"):
-            super().__init__(trainable=False, dtype=dtype)
-            self.d1 = keras.layers.Dense(CartpoleEvaluator.in_dim)
-
-            self.mutable_layer = keras.layers.Dense(hidden_dim, activation="tanh")
-            if mut_l is not None:
-                self.mutable_layer.set_weights(mut_l)
-          
-            self.d_out = keras.layers.Dense(CartpoleEvaluator.out_dim)
-
-
     def get_individual_base(self):
         return self.CartpoleAgent
 
@@ -50,6 +36,18 @@ class CartpoleEvaluator(ai.Evaluator):
         )
         toolbox.register("gen_pop", self.gen_pop ,ind_f=toolbox.gen_individual)
 
+class CartpoleAgent(ai.Player):
+
+        
+    def __init__(self, hidden_dim=4, mut_l=None, trainable=False, dtype="float32"):
+        super().__init__(trainable=False, dtype=dtype)
+        self.d1 = keras.layers.Dense(CartpoleEvaluator.in_dim)
+
+        self.mutable_layer = keras.layers.Dense(hidden_dim, activation="tanh")
+        if mut_l is not None:
+            self.mutable_layer.set_weights(mut_l)
+        
+        self.d_out = keras.layers.Dense(CartpoleEvaluator.out_dim)
 
 if __name__ == "__main__":
     eva = CartpoleEvaluator()
