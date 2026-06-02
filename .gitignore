@@ -8,3 +8,8 @@ poznamky
 /Docs/papers
 /.metals
 .vscode
+*.aux
+*.toc
+*.synctex.gz
+*.xmpi
+/Docs/**/*.log
