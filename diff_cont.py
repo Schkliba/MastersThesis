@@ -69,6 +69,7 @@ def argumented_function(
         archiving_period = 2,
         archive_batch = 1,
         fitness_weight=0.2,
+        decay=2,
         out_path = "./Data/Junk/"):
     
     cont_cls = consts.DIFF_CONTS[container]
@@ -123,7 +124,7 @@ def argumented_function(
     elif container == "add_novelty":
         alg = cont_cls(
             l,toolbox, seed, ng, creator, 
-            fit_w = fitness_weight
+            fit_w = fitness_weight, decay=decay
         )
     else:
         alg = cont_cls(

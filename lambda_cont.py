@@ -75,6 +75,7 @@ def argumented_function(
         archiving_period = 2,
         archive_batch = 1,
         fitness_weight = 0.2,
+        decay = 2,
         out_path = "./Data/Junk/"
     ):
     replay_env = consts.ENIVROMENTS[env](True)
@@ -147,7 +148,8 @@ def argumented_function(
             ng,
             toolbox,
             creator,  
-            fit_w = fitness_weight
+            fit_w = fitness_weight,
+            decay=decay
         )
     else:
         alg = cont_cls(l, m, mr, cr, seed, ng,toolbox,creator)
