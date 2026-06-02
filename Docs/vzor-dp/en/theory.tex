@@ -43,7 +43,7 @@ The neural networks consist of neurons organised in layers.
 \begin{defn}
 Let $ W \in R^{m x n} $ and $ b\in R^{n}$ and let $ f:R^{n} \rightarrow R$.Then we call W the weights of a neuron layer with $ n $ neurons, b the bias of the layer and f the activation function of the layer when given an input vector $ x \in R^{m} $ we calculate the output of the layer as $ f(W^{T}x+b)$. Two layers have directional connection when the output of first layer is used as input of the subsequent layer.
 \end{defn}
-We recognise several typical activation functions:
+The purpose of the activation function is to introduce exploitable non-linearity into the neural system. We recognise several basic activation function.
 \begin{itemize}
 \item sigmoid
 $$ \sigma (x) = \frac{1}{1+e^{-x}} $$
@@ -55,7 +55,7 @@ $$ ReLU (x) = max(0,x) $$
 \begin{defn}\citep{russell2021}  
 A neural network where the connections between layers of neural network form an acyclic graph is called a feed-forward neural network.
 \end{defn}
-Because the feed-forward NN doesn't hold any state or holds onto any previously acquired results, only produces output for a given input, they are ideal for implementation of simple reflex agents.
+Because the feed-forward NN doesn't hold any state or holds onto any previously acquired results, only produces output for a given input, they are ideal for implementation of simple reflex agents. In this thesis we use feed-forward netwroks exclusively, so any further mention of neural netwrok should be assumed to be feed-forward.
 
 
 

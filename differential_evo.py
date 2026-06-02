@@ -62,7 +62,7 @@ def archiving_differential_evolution(population, toolbox, ngen, stats, hof, arch
         ind.fitness.values = fit
 
     for gen in range(ngen):
-        population = tools.selBest(toolbox.mutation(population+archive.get_stored(), toolbox), pop_size)
+        population = tools.selRandom(toolbox.mutation(population+archive.get_stored(), toolbox), pop_size)
         archive.store_individuals(population)
         record = stats.compile(population)
         logbook.record(gen=gen, **record)

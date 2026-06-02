@@ -75,6 +75,7 @@ def argumented_function(
         archiving_period = 2,
         archive_batch = 1,
         fitness_weight = 0.2,
+        decay = 2,
         out_path = "./Data/Junk/"
     ):
     replay_env = consts.ENIVROMENTS[env](True)
@@ -90,7 +91,7 @@ def argumented_function(
 
     if container == "fitness" or container == "fit_archiving":
         creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-        creator.create("Individual",  enviroment.get_individual_base(), fitness=creator.FitnessMax)
+        creator.create("Individual",  enviroment.get_individual_base(), fitness=creator.FitnessMax, behaviour=None)
         toolbox.register("evaluate", enviroment.evalutation, seed=seed, episodes=episodes)
         visual_conv = visualisation.logbook2pandas
     elif container == "add_novelty":
@@ -147,7 +148,8 @@ def argumented_function(
             ng,
             toolbox,
             creator,  
-            fit_w = fitness_weight
+            fit_w = fitness_weight,
+            decay=decay
         )
     else:
         alg = cont_cls(l, m, mr, cr, seed, ng,toolbox,creator)

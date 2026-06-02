@@ -43,6 +43,7 @@ class Evaluator:
 
     def evalutation(self, individual: keras.Model, seed:int, episodes:int) -> float:
         fit, b = self.evalutation_b(individual, seed, episodes)
+        individual.behaviour = b
         return fit
 
 class Player(keras.Model):

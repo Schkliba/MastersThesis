@@ -61,7 +61,7 @@ class AddedNovelty(PureNovelty):
         self.ngen = ngen
     @property
     def add_novelty_operator(self):
-        def actual_operator(novelty_evaluation_f, evaluated_pop, eval_map=map, start_fit_w = 0.2):
+        def actual_operator(novelty_evaluation_f, evaluated_pop, eval_map=map, start_fit_w = 0.2, decay=2):
             max_novelty = None
             max_fitness = None
             min_novelty = None
@@ -100,9 +100,11 @@ class AddedNovelty(PureNovelty):
             for ind in evaluated_pop:
                 novelty = ind.fitness3
                 fitness = ind.fitness2.values[0]
-                scaled_novelty =  1 if max_novelty == min_novelty else(novelty - min_novelty)/(max_novelty-min_novelty)
-                scaled_fitness =  1 if max_fitness == min_fitness else (fitness - min_fitness)/(max_fitness-min_fitness)
-                W = start_fit_w * (1-(self.gen_counter/self.ngen)) + (self.gen_counter/self.ngen) 
+                scaled_novelty =  0 if max_novelty == min_novelty else(novelty - min_novelty)/(max_novelty-min_novelty)
+                scaled_fitness =  0 if max_fitness == min_fitness else (fitness - min_fitness)/(max_fitness-min_fitness)
+                t = self.gen_counter/self.ngen
+                W = start_fit_w * np.exp(-decay * t)
+                #W = start_fit_w * (1-(self.gen_counter/self.ngen)) + (self.gen_counter/self.ngen) 
                 fitness_novelty.append([W * scaled_novelty + (1-W) * scaled_fitness])
 
             return fitness_novelty
@@ -187,10 +189,10 @@ class LambdaAddNoveltyContainer(LambdaAlgContainer, AddedNovelty):
     """
     Implements evolutionary strategy L+M with mixed novelty
     """
-    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator,fit_w):
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator,fit_w, decay):
         LambdaAlgContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
         AddedNovelty.__init__(self, ngen)
-        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w)     
+        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)     
 
 class DiffNoveltyContainer(DiffAlgContainer, PureNovelty):
     """
@@ -206,10 +208,10 @@ class DiffAdditionNoveltyContainer(DiffAlgContainer, AddedNovelty):
     """
     Implements differential evolution with additive mix of novelty and fitness
     """
-    def __init__(self, pop, toolbox, seed, ngen, creator, fit_w):
+    def __init__(self, pop, toolbox, seed, ngen, creator, fit_w, decay):
         DiffAlgContainer.__init__(self,pop, toolbox, seed, ngen, creator)
         AddedNovelty.__init__(self, ngen)
-        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w)
+        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)
         toolbox.register("mutation", de.novelty_mutation)
 
 class DiffArchivingContainer(DiffAlgContainer):

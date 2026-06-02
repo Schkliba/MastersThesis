@@ -1,4 +1,4 @@
-from deap.tools import selBest
+from deap.tools import selBest,selRandom
 import numpy as np
 
 class Archive: #kouknout se do literatury na update archivu hlavně pro novelty!!!!!
@@ -8,7 +8,7 @@ class Archive: #kouknout se do literatury na update archivu hlavně pro novelty!
         self.period = period
         self.size = size
         self.pop_storage = []
-        self.selection = selBest
+        self.selection = selRandom
         self.batch = store_batch
         self.gn = 0
 
