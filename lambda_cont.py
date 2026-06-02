@@ -91,7 +91,7 @@ def argumented_function(
 
     if container == "fitness" or container == "fit_archiving":
         creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-        creator.create("Individual",  enviroment.get_individual_base(), fitness=creator.FitnessMax)
+        creator.create("Individual",  enviroment.get_individual_base(), fitness=creator.FitnessMax, behaviour=None)
         toolbox.register("evaluate", enviroment.evalutation, seed=seed, episodes=episodes)
         visual_conv = visualisation.logbook2pandas
     elif container == "add_novelty":
