@@ -5,15 +5,18 @@
             "lunarlander": "no-name-e88fa580-a490-41e6-bbb1-5aa576e4e219"
         },
         "diff":{
-            "cartpole":"no-name-ed669d60-a16a-493a-88e1-b09561980cfc"
+            "cartpole":"no-name-ed669d60-a16a-493a-88e1-b09561980cfc",
+            "lunarlander":"no-name-1478d1bf-8dea-4995-829f-60e6bd3fc2c9"
         }
     },
     "add_novelty": {
         "lambda":{
-            "cartpole": "no-name-4110b710-7edc-450b-921d-3bbc83f303ac"
+            "cartpole": "no-name-4110b710-7edc-450b-921d-3bbc83f303ac",
+            "lunarlander":"lambda_add_novelty_exp"
         },
         "diff":{
-            "cartpole":"no-name-dd0a28c7-9fcd-45ee-b656-7c3505ddca80"
+            "cartpole":"no-name-dd0a28c7-9fcd-45ee-b656-7c3505ddca80",
+            "lunarlander":"diff_add_novelty_exp"
         }
     },
     "novelty": {
