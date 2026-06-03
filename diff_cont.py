@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-g", "--generations", help="Number of generations", type=int, default=10)
 parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", type=float, default=0.6)
-parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "add_novelty", "archiving", "fit_archiving"], default="fitness")
+parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "add_novelty", "archiving", "fit_archiving", "novelty_archiving"], default="fitness")
 parser.add_argument("-en", "--enviroment", help="Enviroment type", choices=["cartpole", "lunarlander", "waterworld"], default="cartpole")
 
 parser.add_argument("-fw", "--fit_weight", help="Initial weight given to the fitnes", type=float, default=0.2)
@@ -115,7 +115,7 @@ def argumented_function(
         #visual_chart = visualisation.single_novelty_run_chart
 
     enviroment.prepare_toolbox(toolbox, creator.Individual)
-    if container == "fit_archiving":
+    if container == "fit_archiving" or container == "novelty_archving":
         alg = cont_cls(
             l,toolbox, seed, ng, creator, 
             archiving_period=archiving_period, 

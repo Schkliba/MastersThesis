@@ -16,7 +16,7 @@ parser.add_argument("-en", "--enviroment", help="Enviroment that is being tested
 
 parser.add_argument("-g", "--generations", help="Number of generations", type=int, default=10)
 parser.add_argument("-cm", "--cross_method", help="Method of crossing individuals", choices=["mean", "uniform"], default="mean")
-parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "fit_archiving", "archiving"], default="fitness")
+parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "fit_archiving", "novelty_archiving"], default="fitness")
 parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", type=float, default=0.5)
 parser.add_argument("-cru", "--cross_uni", help="Method of crossing individuals", type=float, default=0.4)
 parser.add_argument("-mr", "--mutation_rate", help="Rate of mutation", type=float, default=0.01)
@@ -124,7 +124,7 @@ def argumented_function(
 
     enviroment.prepare_toolbox(toolbox, creator.Individual)
     cont_cls = consts.LAMBDA_CONTS[container]
-    if container == "fit_archiving":
+    if container == "fit_archiving" or container == "novelty_archiving":
         cont_cls :consts.containers.LambdaArchivingContainer
         alg = cont_cls(
             l, 
