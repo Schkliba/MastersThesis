@@ -13,14 +13,15 @@ class Archive: #kouknout se do literatury na update archivu hlavně pro novelty!
         self.gn = 0
 
     def store_individuals(self, individual_list): #ukládat pouze ty významné
-        self.gn = (self.gn + 1) % self. period
-        if self.gn:
+        self.gn = (self.gn + 1) % self.period
+        if not self.gn:
             best_guys = self.selection(individual_list, self.batch)
             self.pop_storage += best_guys
             cutoff = max(0, len(self.pop_storage) - self.size)
             self.pop_storage = self.selection(self.pop_storage, self.size)
 
     def get_stored(self):
+        if self.pop_storage == []: return []
         return self.selection(self.pop_storage, self.batch) #vyhodit jednoho nejelpšího
 
 
