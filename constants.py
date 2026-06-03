@@ -32,3 +32,12 @@ ALG_MAPPING = {
     "lambda": lambda_cont,
 }
 
+EXAMPLE_MAPPING  = {
+    "lambda":"l",
+    "mu": "m",
+    "mutation_rate":"mr",
+    "cross_rate":"cr",
+    "sigma": "mutation_sigma",
+    "cross":"cross_uni",
+    "crossmethod":"cross_method"
+}
