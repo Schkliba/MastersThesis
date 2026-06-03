@@ -1,0 +1,40 @@
+{
+    "fitness": {
+        "lambda":{
+            "cartpole": "no-name-20c22990-4b37-4d6c-b643-9058816bcf41",
+            "lunarlander": "no-name-e88fa580-a490-41e6-bbb1-5aa576e4e219"
+        },
+        "diff":{
+            "cartpole":"no-name-ed669d60-a16a-493a-88e1-b09561980cfc"
+        }
+    },
+    "add_novelty": {
+        "lambda":{
+            "cartpole": "no-name-4110b710-7edc-450b-921d-3bbc83f303ac"
+        },
+        "diff":{
+            "cartpole":"no-name-dd0a28c7-9fcd-45ee-b656-7c3505ddca80"
+        }
+    },
+    "novelty": {
+        "lambda":{
+            "cartpole": "no-name-dfabef39-592c-4223-bc34-299a972893aa",
+            "lunarlander": "lambda_novelty"
+        },
+        "diff":{
+            "cartpole":"diff_novelty",
+            "lunarlander": "diff_novelty"
+
+        }
+    },
+    "fit_archiving": {
+        "lambda":{
+            "cartpole": "no-name-50aac953-b263-4c39-8a27-62db0b093c9f",
+            "lunarlander": "lambda_fit_archiving"
+        },
+        "diff":{
+            "cartpole":"no-name-806532cc-6fe6-40c5-8594-1c453ec9b221",
+            "lunarlander":"no-name-a6a24196-d355-4f39-af93-68a295e37c48"
+        }
+    }
+}
