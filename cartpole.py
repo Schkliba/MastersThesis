@@ -26,7 +26,7 @@ class CartpoleEvaluator(ai.Evaluator):
             self.behavior_space_f = behavioral_space_f
 
     def get_individual_base(self):
-        return self.CartpoleAgent
+        return CartpoleAgent
 
     def prepare_toolbox(self, toolbox, ind_f):
         toolbox.register(

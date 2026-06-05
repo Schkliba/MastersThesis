@@ -34,7 +34,9 @@ ALG_MAPPING = {
 
 EXAMPLE_MAPPING  = {
     "lambda":"l",
+    "pop":"l",
     "mu": "m",
+    "start_fit_w":"fitness_weight",
     "mutation_rate":"mr",
     "cross_rate":"cr",
     "sigma": "mutation_sigma",
