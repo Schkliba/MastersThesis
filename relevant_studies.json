@@ -32,12 +32,20 @@
     },
     "fit_archiving": {
         "lambda":{
-            "cartpole": "no-name-50aac953-b263-4c39-8a27-62db0b093c9f",
-            "lunarlander": "lambda_fit_archiving"
+            "cartpole": "lambda_fit_archiving_reloaded",
+            "lunarlander": "lambda_fit_archiving_reloaded"
         },
         "diff":{
             "cartpole":"no-name-806532cc-6fe6-40c5-8594-1c453ec9b221",
-            "lunarlander":"no-name-a6a24196-d355-4f39-af93-68a295e37c48"
+            "lunarlander":"diff_fit_archiving_reloaded"
+        }
+    },
+    "novelty_archiving":{
+        "lambda":{
+            "lunarlander": "lambda_novelty_archiving"
+        },
+        "diff":{
+            "lunarlander":"diff_fit_archiving_reloaded"
         }
     }
 }
