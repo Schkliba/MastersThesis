@@ -46,11 +46,16 @@ def main():
         "--seeds",
         "-s",
         type=int,
-        default=30,
+        default=5,
         help="Output path for generated results"
     )
 
-
+    parser.add_argument(
+        "--source",
+        "-R",
+        default="optuna",
+        help="Source of choice"
+    )
 
     args = parser.parse_args()
     seeds =list(range(101, 101+args.seeds))
@@ -59,6 +64,7 @@ def main():
         en=args.environment,
         alg=args.algorithm,
         seeds=seeds,
+        source=args.source,
         container=args.container,
         name=args.name
     )

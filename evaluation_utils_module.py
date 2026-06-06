@@ -1,7 +1,9 @@
 import numpy as np
 from constants import EXAMPLE_MAPPING
 import constants as Cs
-
+import optuna
+import json
+from pathlib import Path
 TEST_EVAL_EPS = 6
 
 def rename(dict):
@@ -34,3 +36,29 @@ def select_minimal_exaples(examples):
             selected_trials = [t]
             selected_trials_index.append(i)
     return selected_trials, selected_trials_index
+
+def load_from_grid_search(en, container, alg):
+    with open("relevant_grid_search.json", "r") as f:
+        grid_doc = json.load(f)
+    latest = grid_doc["latest"]
+    storage = f"Data/grid_search/{latest}/{en}/{container}/{alg}"
+    #study_name = grid_doc[container][alg][en]
+
+    directory = Path(storage)
+
+    for json_file in directory.glob("*.json"):
+        with open(json_file, "r") as f:
+            protocol = json.load(f)
+    most_promising  = protocol["final"]
+    return most_promising
+
+def load_from_optuna(en, container, alg):
+    with open("relevant_studies.json", "r") as f:
+        relevant_study_names = json.load(f)
+    storage = f"sqlite:///Data/optuna/{en}/{container}/{alg}.db"
+    study_name = relevant_study_names[container][alg][en]
+
+    new_study = optuna.load_study(study_name=study_name,storage=storage)
+    most_promising, indexes = select_minimal_exaples([t.params for t in new_study.best_trials])
+
+    return most_promising, indexes

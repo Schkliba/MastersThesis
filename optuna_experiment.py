@@ -1,3 +1,4 @@
+
 import optuna
 from optuna.samplers import TPESampler
 from optuna.trial import Trial
@@ -6,78 +7,172 @@ import diff_cont
 import lambda_cont
 import libs.agent_infra as ai
 import os
+import argparse
 import json
 import datetime
 import itertools
 import constants as Cs
 import concurrent.futures
 import numpy as np
+from concurrent.futures import ProcessPoolExecutor
 
-seeds = [101, 102, 103]
+SEEDS = [101, 102, 103]
 TEST_EVAL_EPS = 6
 
-#function ecapsulating one run of the algorithm
-def task_job(env, alg, args, s):
-    df, pop = Cs.ALG_MAPPING[alg].main(args=args)
-    print("Testing " + str(s))
-    fitnesses = [env.evalutation_b(p, 42, TEST_EVAL_EPS) for p in pop]
-    print("Finished seed %d of algorithm %s" % (s, alg))
-    return fitnesses
+parser = argparse.ArgumentParser(
+    description="Run final examination generation."
+)
+
+parser.add_argument(
+    "--environment",
+    "-e",
+    type=str,
+    required=True,
+    help="Environment name"
+)
+
+parser.add_argument(
+    "--algorithm",
+    "-a",
+    type=str,
+    required=True,
+    help="Algorithm name"
+)
+
+parser.add_argument(
+    "--container",
+    "-c",
+    type=str,
+    required=True,
+    help="Container name"
+)
+
+parser.add_argument(
+    "--name",
+    "-n",
+    type=str,
+    required=True,
+    help="Output path for generated results"
+)
+parser.add_argument(
+    "--seeds",
+    "-s",
+    type=int,
+    default=5,
+    help="Output path for generated results"
+)
+
+parser.add_argument(
+    "--source",
+    "-R",
+    default="optuna",
+    help="Source of choice"
+)
+
+args = parser.parse_args()
 
 
-def experiment_template(name, en, container,algorithms, grid_variables, grid_attr_f, filename_f):
-    BASE = ["--out_path", "./Data/Experiments/"+str(name), "--experiment", "--container", str(container)]
-    return_data = {}
-    for alg, *grid_v in itertools.product( algorithms,*grid_variables):
-        stat_futures = {}
-        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-            print("Launching " + str(alg) + "on Enviroment " + str(en) + " with " + str(grid_v))
-            for s in seeds:
-                env = Cs.ENIVROMENTS[en]()
-                arguments = BASE + grid_attr_f(en, grid_v, seed=s)
-                args = Cs.ALG_MAPPING[alg].parser.parse_args(arguments)
-                future = executor.submit(task_job, alg=alg, env=env, args=args, s=s)
-                stat_futures[future] = s
-
-        stats = {}
-        for future in concurrent.futures.as_completed(stat_futures):
-            s = stat_futures[future]
-            stats[s] = future.result()
-        dirpath = os.path.join(os.path.realpath(args.out_path), args.container,alg)
-        filename = filename_f(en, alg, grid_v)
-        json_path = os.path.join(dirpath, filename)
-        with open(json_path, "w") as json_file:
-            json.dump(stats,json_file)
-            print("Finished "+ filename)
-
-        return_data[(alg, *grid_v)] = stats
-    return return_data
-
-def objective(trial:Trial):
-    env = Cs.ENIVROMENTS["cartpole"]()
+def lambda_objective(trial:Trial):
+    environment = args.environment
+    env = Cs.ENIVROMENTS[environment]()
     cross_method = trial.suggest_categorical("crossmethod", ["uniform", "mean"])
-    l = trial.suggest_categorical("lambda",[10,20,30])
-    m = trial.suggest_categorical("mu",[10,20,30])
-    mr = trial.suggest_float("mutation_rate", 0, 0.1, step=0.1)
-    cr = trial.suggest_float("cross_rate", 0.1, 1, step=0.1)
+    if environment == "lunarlander":
+        l = trial.suggest_categorical("lambda",[ 40, 50, 60, 70])
+        m = trial.suggest_categorical("mu",[40, 50, 60, 70])
+        mr = trial.suggest_float("mutation_rate", 0, 0.1, step=0.01)
+        cr = trial.suggest_float("cross_rate", 0.3, 1, step=0.1)
+        sigma = trial.suggest_float("sigma", 0.5, 3, step=0.5)
+        archiving = trial.suggest_int("archiving_period", 2, 5)
+        archive_batch = trial.suggest_int("archive_batch", 1, 5)
+        cross_uni = None
+        if cross_method == "uniform":
+            cross_uni = trial.suggest_float("cross", 0.4, 0.6, step=0.1)
+    else:
+        l = trial.suggest_categorical("lambda",[10,20,30])
+        m = trial.suggest_categorical("mu",[10,20,30])
+        mr = trial.suggest_float("mutation_rate", 0, 0.1, step=0.01)
+        cr = trial.suggest_float("cross_rate", 0.3, 1, step=0.1)
+        sigma = trial.suggest_float("sigma", 0.5, 2, step=0.5)
+        archiving = trial.suggest_int("archiving_period", 2, 5)
+        archive_batch = trial.suggest_int("archive_batch", 1, 5)
 
-    df, pop = Cs.lambda_cont.argumented_function(
-        enviroment="cartpole",
-        container="fitness",
-        cross_method=cross_method,
-        ng=15,
-        l = l,
-        m=m,
-        cr=cr,
-        mr=mr,
-        seed=20
-    )
-    fitnesses = [env.evalutation_b(p, 42, TEST_EVAL_EPS) for p in pop]
+        cross_uni = None
+        if cross_method == "uniform":
+            cross_uni = trial.suggest_float("cross", 0.1, 0.9, step=0.1) 
+    with ProcessPoolExecutor(max_workers=len(SEEDS)) as executor:
+        futures = [
+            executor.submit(Cs.lambda_cont.argumented_function, 
+                env=environment,
+                container=args.container,
+                cross_method=cross_method,
+                ng = 15,
+                l = l,
+                m = m,
+                cr = cr,
+                mr = mr,
+                mutation_sigma = sigma,
+                archiving_period=archiving,
+                archive_batch=archive_batch,
+                cross_uni = cross_uni if cross_uni is not None else 0.5,
+                seed = seed) for seed in SEEDS
+        ]
+
+        pops = [f.result()[1] for f in futures]
+        fitnesses = [env.evalutation_b(p, 42, TEST_EVAL_EPS) for pop in pops for p in pop ]
+
+
+    #trial.set_user_attr("scores", fitnesses)
     fitnesses = list(map(lambda x:x[0], fitnesses))
     return np.max(fitnesses)
 
 
-sampler = TPESampler()
-study = create_study(sampler=sampler)
-study.optimize(objective, n_trials=100, n_jobs=5)
-print(study.best_trials)
+def diff_objective(trial:Trial):
+    environment = args.environment
+    env = Cs.ENIVROMENTS[environment]()
+    if environment == "lunarlander": 
+        l = trial.suggest_categorical("lambda",[40, 50, 60, 70])
+        mr = trial.suggest_float("mutation_rate", 0, 1, step=0.1)
+        cr = trial.suggest_float("cross_rate", 0.3, 1, step=0.1)
+        archiving = trial.suggest_int("archiving_period", 2, 5)
+        archive_batch = trial.suggest_int("archive_batch", 1, 5)
+    else:
+        l = trial.suggest_categorical("pop",[5,10,15,20])
+        mr = trial.suggest_float("mutation_rate", 0, 1, step=0.1)
+        cr = trial.suggest_float("cross_rate", 0.3, 1, step=0.1)
+        archiving = trial.suggest_int("archiving_period", 2, 5)
+        archive_batch = trial.suggest_int("archive_batch", 1, 5)   
+    with ProcessPoolExecutor(max_workers=len(SEEDS)) as executor:
+        futures = [
+            executor.submit(Cs.ALG_MAPPING[args.algorithm].argumented_function, env=environment,
+                container=args.container,
+                ng = 15,
+                l = l,
+                cr = cr,
+                mr = mr,
+                archiving_period=archiving,
+                archive_batch=archive_batch,
+                seed = seed) for seed in SEEDS
+        ]
+
+        pops = [f.result()[1] for f in futures]
+        fitnesses = [env.evalutation_b(p, 42, TEST_EVAL_EPS) for pop in pops for p in pop ]
+    #trial.set_user_attr("scores", fitnesses)
+    fitnesses = list(map(lambda x:x[0], fitnesses))
+    return np.max(fitnesses)
+
+objectives={
+    "diff":diff_objective,
+    "lambda":lambda_objective
+}
+sampler = TPESampler(n_startup_trials=20)
+diff_fita_study = create_study(
+    direction="maximize", 
+    study_name=args.name, 
+    sampler=sampler, 
+    storage=f"sqlite:///Data/optuna/{args.environment}/{args.container}/{args.algorithm}.db", 
+    load_if_exists=True
+)
+
+
+diff_fita_study.optimize(objectives[args.algorithm], n_trials=160, n_jobs=5)
+print(diff_fita_study.best_trials)

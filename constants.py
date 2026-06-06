@@ -15,7 +15,8 @@ LAMBDA_CONTS = {
     "archiving": containers.LambdaArchivingNoveltyContainer,
     "novelty": containers.LambdaNoveltyAlg,
     "add_novelty": containers.LambdaAddNoveltyContainer,
-    "novelty_archiving": containers.LambdaArchivingNoveltyContainer
+    "novelty_archiving": containers.LambdaArchivingNoveltyContainer,
+    "novelty_limit": containers.LambdaArchivingLimitNoveltyContainer
 }
     
 DIFF_CONTS = {
@@ -24,7 +25,9 @@ DIFF_CONTS = {
     "archiving": containers.DiffArchivingNoveltyContainer,
     "novelty": containers.DiffNoveltyContainer,
     "add_novelty": containers.DiffAdditionNoveltyContainer,
-    "novelty_archiving": containers.DiffArchivingNoveltyContainer
+    "novelty_archiving": containers.DiffArchivingNoveltyContainer,
+    "novelty_limit": containers.DiffArchivingLimitNoveltyContainer
+
 }
 
 ALG_MAPPING = {

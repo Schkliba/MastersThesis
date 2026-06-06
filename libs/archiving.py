@@ -1,6 +1,6 @@
 from deap.tools import selBest,selRandom
 import numpy as np
-
+import random
 class Archive: #kouknout se do literatury na update archivu hlavně pro novelty!!!!!
     # novelty z poppulace a archivu
     # práce s archivem podle paperu
@@ -8,22 +8,44 @@ class Archive: #kouknout se do literatury na update archivu hlavně pro novelty!
         self.period = period
         self.size = size
         self.pop_storage = []
-        self.selection = selRandom
+        #self.selection = selRandom
         self.batch = store_batch
         self.gn = 0
 
     def store_individuals(self, individual_list): #ukládat pouze ty významné
         self.gn = (self.gn + 1) % self.period
         if not self.gn:
-            best_guys = self.selection(individual_list, self.batch)
+            best_guys = random.sample(individual_list, self.batch)
             self.pop_storage += best_guys
             cutoff = max(0, len(self.pop_storage) - self.size)
-            self.pop_storage = self.selection(self.pop_storage, self.size)
+            self.pop_storage =  self.pop_storage[cutoff:]#self.selection(self.pop_storage, self.size)
 
     def get_stored(self):
         if self.pop_storage == []: return []
-        return self.selection(self.pop_storage, self.batch) #vyhodit jednoho nejelpšího
+        n = min(self.batch, len(self.pop_storage))
+        return random.sample(self.pop_storage, n) #vyhodit jednoho nejelpšího
 
+
+class LimitArchive(Archive):
+    def __init__(self, period, size, limit=0, store_batch=1, fitness_attr="fitness2"):
+        super().__init__(period, size, store_batch)
+        self.limit = limit
+        self.fitness_attr = fitness_attr
+
+    def store_individuals(self, individual_list:list[object]): #ukládat pouze ty významné
+        self.gn = (self.gn + 1) % self. period
+
+        if self.gn % self. period:
+            filtered = [ind for ind in individual_list if getattr(ind, self.fitness_attr) > self.limit]
+            if filtered == []: return
+            n = min(self.batch, len(filtered))
+            best_guys = self.selection(filtered, n)
+            self.pop_storage += best_guys
+            cutoff = max(0, len(self.pop_storage) - self.size)
+            self.pop_storage =  self.pop_storage[cutoff:]#self.selection(self.pop_storage, self.size)
+
+    def get_stored(self):
+        return self.pop_storage[:self.batch]
 
 class NoveltyArchive(Archive):
     def store_individuals(self, individual_list): #ukládat pouze ty významné

@@ -4,6 +4,7 @@ poznamky
 /Data/*
 !/Data/Experiments
 !/Data/optuna
+!Data/grid_search
 /Data/Experiments/.ipynb_checkpoints
 /Docs/papers
 /.metals

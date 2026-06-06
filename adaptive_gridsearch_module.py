@@ -350,7 +350,14 @@ def adaptive_grid_search(en, alg, run_name, container, hops = 3, out_path="./Dat
     filename = f"{ts}_{container}_{en}_protocol.json"
     dirpath = os.path.join(os.path.realpath(out_path),en, container,alg)
 
-    protocol = {"start":start.strftime("%Y-%m-%d_%H-%M-%S"), "end": end.strftime("%Y-%m-%d_%H-%M-%S"), "origin": most_promising, "final":selected, "visited":[dict(k) for k in visited]}
+    protocol = {
+        "name":run_name,
+        "start":start.strftime("%Y-%m-%d_%H-%M-%S"), 
+        "end": end.strftime("%Y-%m-%d_%H-%M-%S"), 
+        "origin": most_promising, 
+        "final":selected, 
+        "visited":[dict(k) for k in visited]
+    }
     json_path = os.path.join(dirpath, filename + ".json")
     with open(json_path, "w") as json_file:
         json.dump(protocol,json_file)

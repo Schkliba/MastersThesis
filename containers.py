@@ -291,6 +291,52 @@ class LambdaArchivingNoveltyContainer(LambdaArchivingContainer, PureNovelty):
         toolbox.decorate("select", self.archiveOp)
 
 
+class LambdaArchivingLimitNoveltyContainer(LambdaArchivingContainer, PureNovelty):
+    """
+    Implements diffential evolution with basic archiving, pure novelty
+    """
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, archiving_period=2, store_batch=1, archive_limit=0):
+        LambdaArchivingContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
+        PureNovelty.__init__(self)
+        toolbox.register("map", self.novelty_operator)        
+        self.archive = archiving.LimitArchive(
+            period=archiving_period, 
+            size=pop, 
+            store_batch=store_batch, 
+            limit=archive_limit,
+            fitness_attr=self.fit_attr
+        )
+        toolbox.decorate("select", self.archiveOp)
 
 
+
+class DiffArchivingLimitNoveltyContainer(DiffAlgContainer, PureNovelty):
+    """
+    Implements diffential novelty evolution with basic archiving, pure novelty
+    """
+    def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2, store_batch=1, archive_limit=0):
+        DiffAlgContainer.__init__(self,pop, toolbox, seed, ngen, creator)
+        PureNovelty.__init__(self)
+        toolbox.register("map", self.novelty_operator)
+        toolbox.register("mutation", de.novelty_mutation)
+        self.archive = archiving.LimitArchive(
+            period=archiving_period, 
+            size=pop, 
+            store_batch=store_batch,
+            limit=archive_limit,
+            fitness_attr=self.fit_attr
+        )
+
+    def run(self, verbose=True):
+        keras.utils.set_random_seed(self.seed)
+        self.final_pop, self.logbook = de.archiving_differential_evolution(
+            self.toolbox.gen_pop(self.pop_size),
+            self.toolbox, 
+            self.ngen, 
+            self.stats, 
+            self.hof, 
+            self.archive, 
+            verbose
+        )
+        return self.final_pop, self.logbook 
 

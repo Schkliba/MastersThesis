@@ -1,0 +1,1 @@
+python generation_examination.py -e lunarlander -a lambda -c novelty -o "second_try" -R grid_search

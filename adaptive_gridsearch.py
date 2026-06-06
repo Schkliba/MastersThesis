@@ -54,6 +54,13 @@ def main():
         help="Output directory (default: ./Data/grid_search)"
     )
 
+    parser.add_argument(
+        "--source",
+        "-S",
+        default="optuna",
+        help="source of choice"
+    )
+
     args = parser.parse_args()
 
     adaptive_grid_search(
