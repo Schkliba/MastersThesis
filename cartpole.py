@@ -10,12 +10,15 @@ from typing import *
 
 class CartpoleEvaluator(ai.Evaluator):
     hidden_dim = 4
-
+    enviroment = gym.make("CartPole-v1", render_mode=None)
+    in_dim = (enviroment.observation_space.shape)[0]
+    out_dim = enviroment.action_space.n
     def __new__(cls, replay=False, hidden_dim=None, behavioral_space_f=None):
-        cls.enviroment = gym.make("CartPole-v1", render_mode=None if not replay else "human")
+        cls.enviroment = gym.make("CartPole-v1", render_mode=None)
         cls.in_dim = (cls.enviroment.observation_space.shape)[0]
         cls.out_dim = cls.enviroment.action_space.n
         return super(CartpoleEvaluator, cls).__new__(cls)
+
 
     def __init__(self, replay=False, hidden_dim=None, behavioral_space_f=None):
         super().__init__()
@@ -38,7 +41,6 @@ class CartpoleEvaluator(ai.Evaluator):
 
 class CartpoleAgent(ai.Player):
 
-        
     def __init__(self, hidden_dim=4, mut_l=None, trainable=False, dtype="float32"):
         super().__init__(trainable=False, dtype=dtype)
         self.d1 = keras.layers.Dense(CartpoleEvaluator.in_dim)

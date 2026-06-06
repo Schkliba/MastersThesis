@@ -50,7 +50,6 @@ class LunarLanderEvaluator(ai.Evaluator):
             self.hidden_dim = hidden_dim
         #self.out_dim = self.enviroment.action_space.shape
     def get_individual_base(self):
-        
         return LunarLanderAgent
 
     def prepare_toolbox(self, toolbox, ind_f):
@@ -91,6 +90,7 @@ class LunarLanderAgent:
         x = self.mutable_layer1(x)
         x = self.mutable_layer2(x)
         return self.d_out(x)
+    
 if __name__ == "__main__":
     eva = LunarLanderEvaluator()
     ind = eva.get_individual_base()(hidden_dim=5)

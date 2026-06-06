@@ -77,13 +77,15 @@ def argument_combination_genration(selected, D_args):
         for i, a in enumerate(D_args):
             new[a] = selected[a] + delta[i]
             passed = (len(contraints_global[i]) == 0 or
-            contraints_global[i][0] is None or
-            contraints_global[i][0] < new[a] or
-            contraints_global[i][1] is None or
-            contraints_global[i][1] > new[a])
+            (contraints_global[i][0] is None or
+            contraints_global[i][0] < new[a]) and
+            (contraints_global[i][1] is None or
+            contraints_global[i][1] > new[a]))
             keep = keep and passed
 
-        if not keep: continue
+        if not keep:
+            print(f"Leaving out {new}")
+            continue
     
 
         generated_arguments.append(new)
@@ -305,8 +307,8 @@ def adaptive_grid_search(en, alg, run_name, container, hops = 3, out_path="./Dat
             dcr = 0.1
             dmr = 0.05
         else: #cartpole
-            dl = 10
-            dm = 10
+            dl = 5
+            dm = 5
             dcr = 0.1
             dmr = 0.05
         selected, visited = adaptive_lambda_grid_search(
