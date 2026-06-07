@@ -26,8 +26,9 @@ def evaluation_of_setup(en, alg, container, experiment_name, out_path, seeds, **
     with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:
         print("Launching " + alg + "on Enviroment " + str(en))
         for ng, s in itertools.product(GENS[en], seeds):
-            args["ng"] = ng
-            future = executor.submit(task_job, container=container, alg=alg, en=en, args=args, s=s, out_path=dirpath + "/stat")
+            ags = args.copy()
+            ags["ng"] = ng
+            future = executor.submit(task_job, container=container, alg=alg, en=en, args=ags, s=s, out_path=dirpath + "/stat")
             stat_futures[future] = s
             gens_future[future] = ng
 

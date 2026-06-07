@@ -12,14 +12,27 @@ Then function $ G: obss_P(E)\rightarrow A(E) $ is called an agent function, defi
 We ilustrate relationship of these concepts in the diagram \ref{fig:generalagent}.
 \begin{figure}
 \label{fig:generalagent}
-	\begin{tikzpicture}
-		   % Define nodes
-    \node[rectangle, draw=blue, fill=blue!20, line width=1.5pt, right=1cm, minimum width=2.5cm, minimum height=1.5cm] (agent) {\Large Agent}; 
-    \node[rectangle, draw=gray, fill=gray!20, line width=2.5pt, right=2cm of agent, minimum width=3cm, minimum height=2cm, text width=4cm] (enviroment) {\Huge Enviroment}; % Node name: step2
-    % Connect nodes with arrows
-    \draw[->, line width=1.2pt] ([yshift=0.8cm]agent) -- ([yshift=0.8cm]enviroment);
-    \draw[->, line width=1.2pt] (enviroment) -- (agent);
-
+	\begin{tikzpicture}[
+		>=latex,
+		node distance=5cm,
+		block/.style={
+			rectangle,
+			draw,
+			minimum width=3.5cm,
+			minimum height=1.2cm,
+			align=center
+		}
+		]
+		
+		\node[block] (agent) {Agent};
+		\node[block, right=of agent] (env) {Environment};
+		
+		\draw[->] (env) to[bend left=20]
+		node[above] {Percepts / Observations} (agent);
+		
+		\draw[->] (agent) to[bend left=20]
+		node[below] {Actions} (env);
+		
 	\end{tikzpicture}
   \caption{Agent and enviroment realtionship}
 \end{figure}

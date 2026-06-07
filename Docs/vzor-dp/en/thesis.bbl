@@ -1,9 +1,16 @@
-\begin{thebibliography}{3}
+\begin{thebibliography}{4}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bergstra et~al.(2011)Bergstra, Bardenet, Bengio, and
+  K{\'e}gl]{bergstra2011algorithms}
+James~S. Bergstra, R{\'e}mi Bardenet, Yoshua Bengio, and Bal{\'a}zs K{\'e}gl.
+\newblock Algorithms for hyper-parameter optimization.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2011.
 
 \bibitem[Beyer and Schwefel(2002)]{evoStrategy}
 Hans-Georg Beyer and Hans-Paul Schwefel.

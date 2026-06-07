@@ -76,6 +76,7 @@ def argumented_function(
         archive_batch = 1,
         fitness_weight = 0.2,
         decay = 2,
+        limit = 0,
         out_path = "./Data/Junk/"
     ):
     replay_env = consts.ENIVROMENTS[env](True)
@@ -137,6 +138,22 @@ def argumented_function(
             creator, 
             archiving_period=archiving_period, 
             store_batch=archive_batch
+        )
+    elif container == "novelty_limit":
+        cont_cls :consts.containers.LambdaArchivingLimitNoveltyContainer
+        alg = cont_cls(
+            l, 
+            m, 
+            mr, 
+            cr, 
+            seed, 
+            ng,
+            toolbox,
+            creator, 
+            archiving_period=archiving_period, 
+            store_batch=archive_batch,
+            archive_limit = limit
+
         )
     elif container == "add_novelty":
         alg = cont_cls(

@@ -62,3 +62,9 @@ def load_from_optuna(en, container, alg):
     most_promising, indexes = select_minimal_exaples([t.params for t in new_study.best_trials])
 
     return most_promising, indexes
+
+def load_from_relevant_file(en, container, alg, filename):
+    with open(filename, "r") as f:
+        relevant_json_file = json.load(f)
+        most_promising = relevant_json_file[container][alg][en]
+    return most_promising

@@ -347,7 +347,7 @@ def adaptive_grid_search(en, alg, run_name, container, hops = 3, out_path="./Dat
         )
     end =datetime.datetime.now()
     ts = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    filename = f"{ts}_{container}_{en}_protocol.json"
+    filename = f"{ts}_{container}_{en}_protocol"
     dirpath = os.path.join(os.path.realpath(out_path),en, container,alg)
 
     protocol = {

@@ -7,37 +7,68 @@ However we also have to take into account the hyper-parameters with which these 
 \section{Conditions}
 The conditions are defined by the hyper-parameters of the algorithms and the hyper-parameters of the individuals.
 \section{Individual hyper-parameter selection}
-The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. We determine these parameter based on empirical experience with the tasks as optimising this choice is beyond the scope of this thesis
+The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. We determined these parameter based on empirical experience in the chapter \ref{chap:environment}.
 
 \section{Algorithm hyperparameter selection}
 We have reviewed hyperparamets of each algorithm in the chapter \ref{chap:evolution}. Now we will review the process of their selection. The diffulty of the task lies mainly in the complexity of evaluation. As we will discuss later some of the experiments maybe evaluated over day or even several days on the available hardware even for a 100 limited algorithm runs. For this reason we need to utilise bayesian search which is able to prune a lot of the redundant space out so that we may not waste time with it. This however has a considerable downside for our purposes as we would like to compare the algorithms on their best footing. Therefore we refine the bayesian search results with local grid search attempting to deviate from the supposed hyperparameter equilibria.
 
+\subsection{Bayesian Search}
+Because we are faced with multiple 
+Bayesian search is an algorithm where we stochastically deliniate where a possibly good solution may lie and then try to exploit this deliniation. Because the specific workings of Bayesian search are time-consuming to implement ad hoc (and also such implementation is out of the scope of this thesis) I have utlised library Optuna for the purpose.
+
+\subsubsection{Optuna}
+Just as in our case a lot of machine-learning techniques need for their proper function to obtain adequate hyperparameters first. Optuna is a Python library designed for this purpose. The library itself is multifasceted, so we will only discuss algortihms and terms pertaining to the subject of this thesis.
+<define trial>
+<define study>
+<define optimisiation run>
+
+As the optimisation algorithm we have selected Tree-structured Parzen Estimator (TPE) due to the fairly low complexity and efectivness, wasting no trials as we want to conserve as much actual runtime as possible.
+\subsubsection{TPE}
+The Tree-structured Parzen Estimator (TPE) used in Optuna is a sequential model-based optimization method for hyperparameter tuning that reformulates Bayesian optimization in terms of density estimation over the input space rather than the objective space. It was introduced by Bergstra et al. (2011) as part of early work on scalable hyperparameter optimization~\cite{bergstra2011algorithms}.
+
+In a standard hyperparameter optimization setting, we observe a dataset of trials
+\[\mathcal{D} = \{(x_i, y_i)\},\]
+where \(x_i\) is a hyperparameter configuration and \(y_i\) is the corresponding loss (or score). TPE begins by splitting these observations into two groups using a threshold \(y^*\), typically chosen as a quantile of observed outcomes:
+
+\begin{itemize}
+	\item \textbf{Good configurations:} those with \(y_i < y^*\)
+	\item \textbf{Bad configurations:} those with \(y_i \geq y^*\)
+\end{itemize}
+
+This split is not arbitrary—it defines what the algorithm currently considers promising based on past experience.
+
+Instead of learning a direct predictive model \(p(y \mid x)\), TPE learns two simpler distributions over configurations:
+
+\[\ell(x) = p(x \mid y < y^*), \quad
+g(x) = p(x \mid y \geq y^*),\]
+
+These distributions are typically estimated using smooth non-parametric density estimators (Parzen estimators), which can flexibly model continuous, discrete, and categorical hyperparameters without strong assumptions about the shape of the space.
+The key idea is that the next configuration should be one that is:
+\begin{itemize}
+	\item likely under the “good” distribution, and
+	\item unlikely under the “bad” distribution.
+\end{itemize}
+This leads to the selection rule:
+\[x^* = \arg\max_x \frac{\ell(x)}{g(x)}.\]
+Rather than optimizing this expression directly, TPE samples candidate points from \(\ell(x)\) and evaluates them using this ratio, selecting the best candidate. This makes the method computationally efficient and avoids difficult global optimization of an acquisition function.
+
 \subsection{General Gridsearches}
-Some of the paramters are common for all    
+Now we will discuss grid searches that are common for all implementations of our EAs. Note that for convenience we do not present these concepts in the temporal order in which they have been evaluated. 
 \subsubsection{evaluation episodes vs. generations}
-Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run in these experiments. The parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to select the lowest possible number. For this purpose we will run a grid search comparing algorithm's performance over different number of generations. Since the Gymnasium environments discussed in chapter \ref{chap:environment}. are based on similair principles we can be confident about generation of this result to conserve time for more meaningful experiment.
+Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run in these experiments. The parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to select the lowest possible number. For this purpose we will run a grid search comparingdifferential algorithm's performance over different number of generations. Since the Gymnasium environments discussed in chapter \ref{chap:environment}. are based on similair principles we can be confident about generation of this result to conserve time for more meaningful experiment.
+<insert parameters>
 
-\subsubsection{population vs. generations}
-Having refining the best parameter for each population we should consider them in contrast to how many generations are required for the evolution to find good enough solutions.
-
-\subsection{$\lambda + \mu$ hyperparameter selection}
-
-\subsection{mutation sigma vs. generations}
-This experiment will help us narrow our choice of sigma used for the continuous mutation distribution. Because the mutations are commutative we can infer that many small mutations will add up to fewer larger mutations and vice versa the larger mutation can be emulated by several smaller mutations. The number of mutations applied on individual is limited by number of generations the algorithm runs. Therefore we need to balance our choice of sigma so that the mutations do not disturb progression of our population and but also achieve beneficial change during as few generations as possible. 
-
-\subsubsection{offsprings vs. mutation-rate}
-This experiment should help us find meaningful mapping between values of mutation rate and size of the offspring pool. The mutation rate determines how much random information is being introduced to the population while larger offspring pool allows for more effective harnessing of this random fluctuations. During the experiment the population pool is static and cross-over is eliminated. 
-\subsubsection{population vs. cross-rate} 
-This experiment should help us find meaningful mapping between values of cross-over rate and the size of the population pool 
-\subsubsection{definitive parameter search}
-In this experiment we use previously acquired mappings to search for the most performative combination of the hyper-parameters. 
+\subsubsection{generations grid search}
+After obtaining refined solution from each EAs respective incremental grid search 
+\subsection{Incremental grid search}
+Because we obtained the optimised parameters from Bayesian search stochastically we would like to ensure that there is no easily obtainable set of parameters more performant than the set from BS. All however in time consuming fashion. To this end we have devised an algorithm of incremental grid search where we evaluate possibly useful deviations from the supposed local optima. Upon dicovering new optima we recenter the search around it. If we are not successfull in finding dominating set of parameters we end the search with the last obtained optima. We also end the search after more than 3 recentering. Since this is only refining algorithm of already functional solution we do not expect long searches.
+\subsection{$\lambda + \mu$ incemental grid search}
 
 
-\subsection{differential hyper-parameter selection}
 
-\subsubsection{population vs. gamma learning rate}
-We can interpret the learning rate as probabilistic constant, a measure of belief in the direction calculated from the differential mutation. We should consider this parameter in contrast with the size of the population as the increasing size might provide better opportunities but also drown them out in less optimal alternatives.
-\subsubsection{population vs. alpha recombination}
-We can interpret alpha as a measure of our belief in suitability of the current population even more directly than the learning rate. Therefore we have to also consider it against the size of this population as the increasing population might provide more optimal individuals out of pocket but their influence on the population direction may ultimately dissolve in the amount of combinations.
+
+\subsection{DEs incremental grid search}
+
+
 
 
