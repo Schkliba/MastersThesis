@@ -32,20 +32,23 @@
     },
     "fit_archiving": {
         "lambda":{
-            "cartpole": "lambda_fit_archiving_reloaded",
+            "cartpole": "lambda_fit_archiving_no_repeat",
             "lunarlander": "lambda_fit_archiving_reloaded"
         },
         "diff":{
-            "cartpole":"no-name-806532cc-6fe6-40c5-8594-1c453ec9b221",
+            "cartpole":"diff_fit_archiving_no_repeat",
             "lunarlander":"diff_fit_archiving_reloaded"
         }
     },
     "novelty_archiving":{
         "lambda":{
-            "lunarlander": "lambda_novelty_archiving"
+            "lunarlander": "lambda_novelty_archiving",
+            "cartpole":"lambda_novelty_archiving_no_repeat"
         },
         "diff":{
-            "lunarlander":"diff_fit_archiving_reloaded"
+            "lunarlander":"diff_fit_archiving_reloaded",
+            "cartpole":"diff_novelty_archiving_no_repeat"
+
         }
     }
 }

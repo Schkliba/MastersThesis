@@ -19,7 +19,9 @@ def evaluation_of_setup(en, alg, container, experiment_name, out_path, seeds, **
 
     stat_futures = {}
     args = rename(kwargs)
-    args["ng"] = 15
+    if "ng" not in args:
+        print("Generation number not present!!!!")
+        args["ng"] = 15
     dirpath = os.path.join(os.path.realpath(out_path), en, container,alg, experiment_name)
 
     with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:
