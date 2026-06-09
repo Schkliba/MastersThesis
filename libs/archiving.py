@@ -1,6 +1,7 @@
 from deap.tools import selBest,selRandom
 import numpy as np
 import random
+from operator import attrgetter
 class Archive: #kouknout se do literatury na update archivu hlavně pro novelty!!!!!
     # novelty z poppulace a archivu
     # práce s archivem podle paperu
@@ -31,21 +32,20 @@ class LimitArchive(Archive):
         super().__init__(period, size, store_batch)
         self.limit = limit
         self.fitness_attr = fitness_attr
+        self.getter = attrgetter(fitness_attr)
 
     def store_individuals(self, individual_list:list[object]): #ukládat pouze ty významné
         self.gn = (self.gn + 1) % self. period
 
         if self.gn % self. period:
-            filtered = [ind for ind in individual_list if getattr(ind, self.fitness_attr) > self.limit]
+            filtered = [ind for ind in individual_list if self.getter(ind).values[0] > self.limit]
             if filtered == []: return
             n = min(self.batch, len(filtered))
-            best_guys = self.selection(filtered, n)
+            best_guys = random.sample(filtered, n)
             self.pop_storage += best_guys
             cutoff = max(0, len(self.pop_storage) - self.size)
             self.pop_storage =  self.pop_storage[cutoff:]#self.selection(self.pop_storage, self.size)
 
-    def get_stored(self):
-        return self.pop_storage[:self.batch]
 
 class NoveltyArchive(Archive):
     def store_individuals(self, individual_list): #ukládat pouze ty významné
