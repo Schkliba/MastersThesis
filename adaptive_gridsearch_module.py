@@ -78,9 +78,9 @@ def argument_combination_genration(selected, D_args):
             new[a] = selected[a] + delta[i]
             passed = (len(contraints_global[i]) == 0 or
             (contraints_global[i][0] is None or
-            contraints_global[i][0] < new[a]) and
+            contraints_global[i][0] <= new[a]) and
             (contraints_global[i][1] is None or
-            contraints_global[i][1] > new[a]))
+            contraints_global[i][1] >= new[a]))
             keep = keep and passed
 
         if not keep:
@@ -147,7 +147,7 @@ def adaptive_lambda_grid_search(run_name, en,container, hops, starting_position,
     for i in range(hops):
         generated_arguments = argument_combination_genration(
             selected=selected, 
-            D_args={"cr":[D_cr, (0,1)], "l":[D_l, (0,None)]})
+            D_args={"cr":[D_cr, (0,1)], "l":[D_l, (1,None)]})
         # we have finised our 
         if generated_arguments == []: return selected, selected_fitness
 
@@ -173,7 +173,7 @@ def adaptive_lambda_grid_search(run_name, en,container, hops, starting_position,
         visited = new_visited
         generated_arguments = argument_combination_genration(
             selected=selected, 
-            D_args={"mr":[D_mr, (0,1)], "m":[D_m, (0,None)]})
+            D_args={"mr":[D_mr, (0,1)], "m":[D_m, (1,None)]})
         # we have finised our 
         if generated_arguments == []: return selected, selected_fitness
         selection_fitness, selection_diversity, new_selected, new_visited = process_generated_arguments(
@@ -230,7 +230,7 @@ def adaptive_diff_grid_search(
 
         generated_arguments = argument_combination_genration(
             selected=selected, 
-            D_args={"l":[D_l, (0,None)]})
+            D_args={"l":[D_l, (1,None)]})
         # we have finised our 
         if generated_arguments == []: return selected, selected_fitness
 
