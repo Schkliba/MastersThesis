@@ -53,12 +53,12 @@
     },
     "novelty_limit":{
         "lambda":{
-            "lunarlander": "lambda_novelty_archiving_no_repeat",
-            "cartpole":"lambda_novelty_archiving_no_repeat"
+            "lunarlander": "lambda_novelty_limit",
+            "cartpole":"lambda_novelty_limit"
         },
         "diff":{
-            "lunarlander":"diff_novelty_archiving_no_repeat",
-            "cartpole":"diff_novelty_archiving_no_repeat"
+            "lunarlander":"diff_novelty_limit",
+            "cartpole":"lambda_novelty_limit"
 
         }
     }
