@@ -5,6 +5,8 @@ poznamky
 !/Data/Experiments
 !/Data/optuna
 !Data/grid_search
+!Data/generation_ex
+
 /Data/Experiments/.ipynb_checkpoints
 /Docs/papers
 /.metals
