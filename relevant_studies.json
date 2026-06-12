@@ -2,7 +2,7 @@
     "fitness": {
         "lambda":{
             "cartpole": "no-name-20c22990-4b37-4d6c-b643-9058816bcf41",
-            "lunarlander": "no-name-e88fa580-a490-41e6-bbb1-5aa576e4e219"
+            "lunarlander": "lambda_fitness_mean"
         },
         "diff":{
             "cartpole":"no-name-ed669d60-a16a-493a-88e1-b09561980cfc",

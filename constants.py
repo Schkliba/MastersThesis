@@ -12,21 +12,25 @@ ENIVROMENTS = {
 LAMBDA_CONTS = {
     "fitness": containers.LambdaAlgContainer,
     "fit_archiving": containers.LambdaArchivingContainer,
+    "elite_archiving":containers.LambdaArchivingEliteContainer,
     "archiving": containers.LambdaArchivingNoveltyContainer,
     "novelty": containers.LambdaNoveltyAlg,
     "add_novelty": containers.LambdaAddNoveltyContainer,
     "novelty_archiving": containers.LambdaArchivingNoveltyContainer,
-    "novelty_limit": containers.LambdaArchivingLimitNoveltyContainer
+    "novelty_limit": containers.LambdaArchivingLimitNoveltyContainer,
+    "sub_novelty": containers.LambdaSubNoveltyContainer
 }
     
 DIFF_CONTS = {
     "fitness": containers.DiffAlgContainer,
     "fit_archiving": containers.DiffArchivingContainer,
+    "elite_archiving":containers.DiffArchivingEliteContainer,
     "archiving": containers.DiffArchivingNoveltyContainer,
     "novelty": containers.DiffNoveltyContainer,
     "add_novelty": containers.DiffAdditionNoveltyContainer,
     "novelty_archiving": containers.DiffArchivingNoveltyContainer,
-    "novelty_limit": containers.DiffArchivingLimitNoveltyContainer
+    "novelty_limit": containers.DiffArchivingLimitNoveltyContainer,
+    "sub_novelty":containers.DiffSubNoveltyContainer
 
 }
 

@@ -5,18 +5,20 @@ from operator import attrgetter
 class Archive: #kouknout se do literatury na update archivu hlavně pro novelty!!!!!
     # novelty z poppulace a archivu
     # práce s archivem podle paperu
-    def __init__(self, period, size, store_batch=1):
+    def __init__(self, period, size, store_batch=1, selection=None):
         self.period = period
         self.size = size
         self.pop_storage = []
-        #self.selection = selRandom
+        if selection is None:
+            self.selection = lambda x, n: random.sample(x,n)
+        else: self.selection = selection
         self.batch = store_batch
         self.gn = 0
 
     def store_individuals(self, individual_list): #ukládat pouze ty významné
         self.gn = (self.gn + 1) % self.period
         if not self.gn:
-            best_guys = random.sample(individual_list, self.batch)
+            best_guys = self.selection(individual_list, self.batch)
             self.pop_storage += best_guys
             cutoff = max(0, len(self.pop_storage) - self.size)
             self.pop_storage =  self.pop_storage[cutoff:]#self.selection(self.pop_storage, self.size)
@@ -24,7 +26,7 @@ class Archive: #kouknout se do literatury na update archivu hlavně pro novelty!
     def get_stored(self):
         if self.pop_storage == []: return []
         n = min(self.batch, len(self.pop_storage))
-        return random.sample(self.pop_storage, n) #vyhodit jednoho nejelpšího
+        return self.selection(self.pop_storage, n) #vyhodit jednoho nejelpšího
 
 
 class LimitArchive(Archive):

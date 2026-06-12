@@ -155,7 +155,7 @@ def argumented_function(
             archive_limit = limit
 
         )
-    elif container == "add_novelty":
+    elif container == "add_novelty" or container == "sub_novelty" :
         alg = cont_cls(
             l, 
             m, 

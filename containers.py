@@ -109,6 +109,62 @@ class AddedNovelty(PureNovelty):
 
             return fitness_novelty
         return actual_operator
+    
+class SubNovelty(PureNovelty):
+    def __init__(self, ngen):
+        super().__init__()
+        self.gen_counter = 0
+        self.ngen = ngen
+    @property
+    def add_novelty_operator(self):
+        def actual_operator(novelty_evaluation_f, evaluated_pop, eval_map=map, start_fit_w = 0.2, decay=2):
+            max_novelty = None
+            max_fitness = None
+            min_novelty = None
+            min_fitness = None
+            fitness_novelty = []
+            behaviours = list(eval_map(novelty_evaluation_f, evaluated_pop))
+            for b, ind in zip(behaviours, evaluated_pop):
+
+                fitness, beh = b
+                ind.behaviour = beh
+                ind.fitness2.values=fitness
+                beh_distances = map(
+                    lambda x: np.linalg.norm(np.array(x[1])-np.array(beh)), 
+                    behaviours
+                )
+                novelty = np.mean(np.array(list(beh_distances)))
+                if min_novelty is None:
+                    min_novelty=novelty
+                else:
+                    min_novelty=min(novelty,min_novelty)
+                if max_novelty is None:
+                    max_novelty=novelty
+                else:
+                    max_novelty = max(max_novelty, novelty)
+                if min_fitness is None:
+                    min_fitness=fitness[0]
+                else:
+                    min_fitness=min(fitness[0],min_fitness)
+                if max_fitness is None:
+                    max_fitness=fitness[0]
+                else:
+                    max_fitness = max(fitness[0], max_fitness)
+                ind.fitness3 = novelty
+
+            
+            for ind in evaluated_pop:
+                novelty = ind.fitness3
+                fitness = ind.fitness2.values[0]
+                scaled_novelty =  0 if max_novelty == min_novelty else(novelty - min_novelty)/(max_novelty-min_novelty)
+                scaled_fitness =  0 if max_fitness == min_fitness else (fitness - min_fitness)/(max_fitness-min_fitness)
+                t = self.gen_counter/self.ngen
+                W = start_fit_w * np.exp(-decay * t)
+                #W = start_fit_w * (1-(self.gen_counter/self.ngen)) + (self.gen_counter/self.ngen) 
+                fitness_novelty.append([(1-W) * scaled_novelty + (W) * scaled_fitness])
+
+            return fitness_novelty
+        return actual_operator
 
 class LambdaAlgContainer(Replayble):
     """
@@ -192,7 +248,16 @@ class LambdaAddNoveltyContainer(LambdaAlgContainer, AddedNovelty):
     def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator,fit_w, decay):
         LambdaAlgContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
         AddedNovelty.__init__(self, ngen)
-        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)     
+        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)   
+
+class LambdaSubNoveltyContainer(LambdaAlgContainer, SubNovelty):
+    """
+    Implements evolutionary strategy L+M with mixed novelty
+    """
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator,fit_w, decay):
+        LambdaAlgContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
+        SubNovelty.__init__(self, ngen)
+        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)       
 
 class DiffNoveltyContainer(DiffAlgContainer, PureNovelty):
     """
@@ -214,6 +279,16 @@ class DiffAdditionNoveltyContainer(DiffAlgContainer, AddedNovelty):
         toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)
         toolbox.register("mutation", de.novelty_mutation)
 
+class DiffSubNoveltyContainer(DiffAlgContainer, SubNovelty):
+    """
+    Implements differential evolution with additive mix of novelty and fitness
+    """
+    def __init__(self, pop, toolbox, seed, ngen, creator, fit_w, decay):
+        DiffAlgContainer.__init__(self,pop, toolbox, seed, ngen, creator)
+        SubNovelty.__init__(self, ngen)
+        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)
+        toolbox.register("mutation", de.novelty_mutation)
+
 class DiffArchivingContainer(DiffAlgContainer):
     """
     Implements diffential evolution with basic archiving
@@ -221,6 +296,27 @@ class DiffArchivingContainer(DiffAlgContainer):
     def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2, store_batch=1):
         super().__init__(pop, toolbox, seed, ngen, creator)
         self.archive = archiving.Archive(archiving_period, pop, store_batch=store_batch)
+
+    def run(self,verbose=True):
+        keras.utils.set_random_seed(self.seed)
+        self.final_pop, self.logbook = de.archiving_differential_evolution(
+            self.toolbox.gen_pop(self.pop_size),
+            self.toolbox, 
+            self.ngen, 
+            self.stats, 
+            self.hof, 
+            self.archive, 
+            verbose
+        )
+        return self.final_pop, self.logbook 
+    
+class DiffArchivingEliteContainer(DiffAlgContainer):
+    """
+    Implements diffential evolution with basic archiving
+    """
+    def __init__(self, pop, toolbox, seed, ngen, creator, archiving_period=2, store_batch=1):
+        super().__init__(pop, toolbox, seed, ngen, creator)
+        self.archive = archiving.Archive(archiving_period, pop, store_batch=store_batch, selection=tools.selBest)
 
     def run(self,verbose=True):
         keras.utils.set_random_seed(self.seed)
@@ -278,6 +374,24 @@ class LambdaArchivingContainer(LambdaAlgContainer):
             return wrapper
         return decorator
 
+class LambdaArchivingEliteContainer(LambdaAlgContainer):
+    """
+    Implements L+M strategy with basic archiving
+    """
+    def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator, archiving_period=2, store_batch=1):
+        super().__init__(pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
+        self.archive = archiving.Archive(archiving_period, pop, store_batch=store_batch, selection=tools.selBest)
+        toolbox.decorate("select", self.archiveOp)
+
+    @property
+    def archiveOp(self):
+        def decorator(select):
+            def wrapper(population, number, tournsize):
+                population = select(population + self.archive.get_stored(), number, tournsize=tournsize)
+                self.archive.store_individuals(population)
+                return population
+            return wrapper
+        return decorator
 
 class LambdaArchivingNoveltyContainer(LambdaArchivingContainer, PureNovelty):
     """
