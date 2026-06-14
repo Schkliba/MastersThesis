@@ -82,7 +82,7 @@ def argumented_function(
     toolbox.register("triOp", ai.tri_op, alpha=mr)
     toolbox.register("recombine", ai.recombine, prob_filter=cr)
 
-    if container == "fitness" or container == "fit_archiving":
+    if container == "fitness" or container == "fit_archiving" or container == "elite_archiving":
         creator.create("FitnessMax", base.Fitness, weights=(1.0,))
         creator.create("Individual",  enviroment.get_individual_base(), fitness=creator.FitnessMax, behaviour=None)
         toolbox.register("evaluate", enviroment.evalutation, seed=seed, episodes=episodes)
@@ -116,7 +116,7 @@ def argumented_function(
         #visual_chart = visualisation.single_novelty_run_chart
 
     enviroment.prepare_toolbox(toolbox, creator.Individual)
-    if container == "fit_archiving" or container == "novelty_archving":
+    if container == "fit_archiving" or container == "novelty_archving" or container=="elite_archiving":
         alg = cont_cls(
             l,toolbox, seed, ng, creator, 
             archiving_period=archiving_period, 

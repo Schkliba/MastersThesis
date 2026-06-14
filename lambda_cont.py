@@ -90,7 +90,7 @@ def argumented_function(
         toolbox.register("mate", ai.uniform_cross, prob_filter=cross_uni)
     toolbox.register("mutate", ai.mutation_func, sigma=mutation_sigma)
 
-    if container == "fitness" or container == "fit_archiving":
+    if container == "fitness" or container == "fit_archiving" or container == "elite_archiving":
         creator.create("FitnessMax", base.Fitness, weights=(1.0,))
         creator.create("Individual",  enviroment.get_individual_base(), fitness=creator.FitnessMax, behaviour=None)
         toolbox.register("evaluate", enviroment.evalutation, seed=seed, episodes=episodes)
@@ -125,7 +125,7 @@ def argumented_function(
 
     enviroment.prepare_toolbox(toolbox, creator.Individual)
     cont_cls = consts.LAMBDA_CONTS[container]
-    if container == "fit_archiving" or container == "novelty_archiving":
+    if container == "fit_archiving" or container == "novelty_archiving" or container == "elite_archiving":
         cont_cls :consts.containers.LambdaArchivingContainer
         alg = cont_cls(
             l, 
