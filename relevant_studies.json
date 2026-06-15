@@ -19,6 +19,14 @@
             "lunarlander":"diff_add_novelty_exp"
         }
     },
+    "sub_novelty": {
+        "lambda":{
+            "lunarlander":"lambda_sub_novelty_exp"
+        },
+        "diff":{
+            "lunarlander":"diff_sub_novelty_exp"
+        }
+    },
     "novelty": {
         "lambda":{
             "cartpole": "no-name-dfabef39-592c-4223-bc34-299a972893aa",
