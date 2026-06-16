@@ -67,11 +67,8 @@ class AddedNovelty(PureNovelty):
             min_novelty = None
             min_fitness = None
             fitness_novelty = []
-            print(f"fw: {start_fit_w}")
-            print(f"d: {decay}")
             t = self.gen_counter/self.ngen
             W = start_fit_w * np.exp(-decay * t)
-            print(f"W: {W} - {t}")
             behaviours = list(eval_map(novelty_evaluation_f, evaluated_pop))
             for b, ind in zip(behaviours, evaluated_pop):
 
