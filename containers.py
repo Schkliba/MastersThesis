@@ -67,6 +67,11 @@ class AddedNovelty(PureNovelty):
             min_novelty = None
             min_fitness = None
             fitness_novelty = []
+            print(f"fw: {start_fit_w}")
+            print(f"d: {decay}")
+            t = self.gen_counter/self.ngen
+            W = start_fit_w * np.exp(-decay * t)
+            print(f"W: {W} - {t}")
             behaviours = list(eval_map(novelty_evaluation_f, evaluated_pop))
             for b, ind in zip(behaviours, evaluated_pop):
 
@@ -95,18 +100,17 @@ class AddedNovelty(PureNovelty):
                 else:
                     max_fitness = max(fitness[0], max_fitness)
                 ind.fitness3 = novelty
-
+            
             
             for ind in evaluated_pop:
                 novelty = ind.fitness3
                 fitness = ind.fitness2.values[0]
                 scaled_novelty =  0 if max_novelty == min_novelty else(novelty - min_novelty)/(max_novelty-min_novelty)
                 scaled_fitness =  0 if max_fitness == min_fitness else (fitness - min_fitness)/(max_fitness-min_fitness)
-                t = self.gen_counter/self.ngen
-                W = start_fit_w * np.exp(-decay * t)
+                
                 #W = start_fit_w * (1-(self.gen_counter/self.ngen)) + (self.gen_counter/self.ngen) 
                 fitness_novelty.append([W * scaled_novelty + (1-W) * scaled_fitness])
-
+            self.gen_counter +=1
             return fitness_novelty
         return actual_operator
     
@@ -116,7 +120,7 @@ class SubNovelty(PureNovelty):
         self.gen_counter = 0
         self.ngen = ngen
     @property
-    def add_novelty_operator(self):
+    def sub_novelty_operator(self):
         def actual_operator(novelty_evaluation_f, evaluated_pop, eval_map=map, start_fit_w = 0.2, decay=2):
             max_novelty = None
             max_fitness = None
@@ -162,7 +166,7 @@ class SubNovelty(PureNovelty):
                 W = start_fit_w * np.exp(-decay * t)
                 #W = start_fit_w * (1-(self.gen_counter/self.ngen)) + (self.gen_counter/self.ngen) 
                 fitness_novelty.append([(1-W) * scaled_novelty + (W) * scaled_fitness])
-
+            self.gen_counter +=1
             return fitness_novelty
         return actual_operator
 
@@ -257,7 +261,7 @@ class LambdaSubNoveltyContainer(LambdaAlgContainer, SubNovelty):
     def __init__(self, pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator,fit_w, decay):
         LambdaAlgContainer.__init__(self,pop, offs, mut_rate, cross_rate, seed, ngen, toolbox, creator)
         SubNovelty.__init__(self, ngen)
-        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)       
+        toolbox.register("map", self.sub_novelty_operator, start_fit_w=fit_w, decay=decay)       
 
 class DiffNoveltyContainer(DiffAlgContainer, PureNovelty):
     """
@@ -286,7 +290,7 @@ class DiffSubNoveltyContainer(DiffAlgContainer, SubNovelty):
     def __init__(self, pop, toolbox, seed, ngen, creator, fit_w, decay):
         DiffAlgContainer.__init__(self,pop, toolbox, seed, ngen, creator)
         SubNovelty.__init__(self, ngen)
-        toolbox.register("map", self.add_novelty_operator, start_fit_w=fit_w, decay=decay)
+        toolbox.register("map", self.sub_novelty_operator, start_fit_w=fit_w, decay=decay)
         toolbox.register("mutation", de.novelty_mutation)
 
 class DiffArchivingContainer(DiffAlgContainer):

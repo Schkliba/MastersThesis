@@ -6,6 +6,8 @@ poznamky
 !/Data/optuna
 !Data/grid_search
 !Data/generation_ex
+!Data/decay_search
+
 
 /Data/Experiments/.ipynb_checkpoints
 /Docs/papers

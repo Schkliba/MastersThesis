@@ -16,8 +16,9 @@ GENS = {
 }
 DECAYS = {
     "lunarlander":{
-        "diff":[0.2, 0.5, 1.0, 1.5],
-        "lambda":[0.5, 1.0, 2.0, 3.0]}
+        "diff":[{"d":0.2, "fw":0.7}, {"d":0.5, "fw":0.8}, {"d":1.0, "fw":0.9}, {"d":1.5, "fw":1},],
+        "lambda":[{"d":0.5, "fw":0.7}, {"d":1.0, "fw":0.8}, {"d":2.0, "fw":0.9}, {"d":3.0, "fw":1},]
+    }
 }
 
 def evaluation_of_setup(en, alg, container, experiment_name, out_path, seeds, **kwargs):
@@ -35,9 +36,13 @@ def evaluation_of_setup(en, alg, container, experiment_name, out_path, seeds, **
         for dec, ng, s in itertools.product(DECAYS[en][alg],GENS[en], seeds):
             ags = args.copy()
             ags["ng"] = ng
+            ags["decay"] = dec["d"]
+            ags["fitness_weight"] = dec["fw"]
+            print(ags)
             future = executor.submit(task_job, container=container, alg=alg, en=en, args=ags, s=s, out_path=dirpath + "/stat")
             stat_futures[future] = s
             dec_future[future] = dec
+
             gens_future[future] = ng
 
     stats = {}
@@ -45,6 +50,7 @@ def evaluation_of_setup(en, alg, container, experiment_name, out_path, seeds, **
     for future in concurrent.futures.as_completed(stat_futures):
         s = stat_futures[future]
         ng = gens_future[future]
+        dec = dec_future[future]
         result = future.result()
         if "fitness" not in stats:
             stats["fitness"] = {}
@@ -61,6 +67,7 @@ def evaluation_of_setup(en, alg, container, experiment_name, out_path, seeds, **
     stats["algorithm"] = alg
     stats["container"] = container
     stats["arguments"] = args
+    stats["table"] = DECAYS[en][alg]
     json_path = os.path.join(dirpath, filename + ".json")
 
     with open(json_path, "w") as json_file:
