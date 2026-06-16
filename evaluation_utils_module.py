@@ -18,10 +18,21 @@ def task_job(en, alg, container, args, s, out_path):
     return fitnesses, pop
 
 def select_minimal_exaples(examples):
+    rates = -np.inf
     pop = np.inf
     selected_trials = []
     selected_trials_index = []
     for i, t in enumerate(examples):
+        k = t["cross_rate"] + t["mutation_rate"]
+        if rates == k:
+            selected_trials.append(t)
+        elif rates < k:
+            rates = k
+            selected_trials = [t]
+            selected_trials_index.append(i)
+    refined_trials = []
+    refined_trials_index = []       
+    for i, t in zip(selected_trials_index, selected_trials):
         if "lambda" in t:
             k = t["lambda"]
             if "mu" in t:
@@ -30,12 +41,12 @@ def select_minimal_exaples(examples):
             k=t["pop"]
         else: raise NameError(f"wtf")
         if pop == k:
-            selected_trials.append(t)
+            refined_trials.append(t)
         elif pop > k:
             pop = k
-            selected_trials = [t]
-            selected_trials_index.append(i)
-    return selected_trials, selected_trials_index
+            refined_trials = [t]
+            refined_trials_index.append(i)
+    return refined_trials, refined_trials_index
 
 def load_from_grid_search(en, container, alg):
     with open("relevant_grid_search.json", "r") as f:

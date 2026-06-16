@@ -73,7 +73,7 @@ def make_final_examination(en, alg, container, name, seeds, source="optuna"):
     elif source == "grid_search":
         most_promising = load_from_grid_search(en=en, alg=alg, container=container)
     elif source == "list":
-        most_promising = load_from_relevant_file(en=en, alg=alg, container=container, filename="relevant_final_examination.json")
+        most_promising = load_from_relevant_file(en=en, alg=alg, container=container, filename="relevant_finals.json")
     pops, stats = evaluation_of_setup(
         en=en, 
         alg=alg, 
@@ -81,6 +81,6 @@ def make_final_examination(en, alg, container, name, seeds, source="optuna"):
         experiment_name=name,
         seeds=seeds,
         out_path=f"./Data/final",
-        **most_promising[0]
+        **most_promising
     )
     return pops, stats
