@@ -12,21 +12,21 @@
     "add_novelty": {
         "lambda":{
             "cartpole": "lambda_add_novelty_repair",
-            "lunarlander":"lambda_add_novelty_exp"
+            "lunarlander":"lambda_add_novelty_exp_fixed"
         },
         "diff":{
             "cartpole":"diff_add_novelty_fix",
-            "lunarlander":"diff_add_novelty_exp"
+            "lunarlander":"diff_add_novelty_exp_fixed"
         }
     },
     "sub_novelty": {
         "lambda":{
             "cartpole":"lambda_sub_novelty_repaired",
-            "lunarlander":"lambda_sub_novelty_exp"
+            "lunarlander":"lambda_sub_novelty_exp_fixed"
         },
         "diff":{
             "cartpole":"diff_sub_novelty",
-            "lunarlander":"diff_sub_novelty_exp"
+            "lunarlander":"diff_sub_novelty_exp_repair"
         }
     },
     "novelty": {
