@@ -11,19 +11,21 @@
     },
     "add_novelty": {
         "lambda":{
-            "cartpole": "no-name-4110b710-7edc-450b-921d-3bbc83f303ac",
+            "cartpole": "lambda_add_novelty_repair",
             "lunarlander":"lambda_add_novelty_exp"
         },
         "diff":{
-            "cartpole":"no-name-dd0a28c7-9fcd-45ee-b656-7c3505ddca80",
+            "cartpole":"diff_add_novelty_fix",
             "lunarlander":"diff_add_novelty_exp"
         }
     },
     "sub_novelty": {
         "lambda":{
+            "cartpole":"lambda_sub_novelty_repaired",
             "lunarlander":"lambda_sub_novelty_exp"
         },
         "diff":{
+            "cartpole":"diff_sub_novelty",
             "lunarlander":"diff_sub_novelty_exp"
         }
     },
@@ -73,11 +75,11 @@
     "elite_archiving":{
         "lambda":{
             "lunarlander": "lambda_fit_archiving",
-            "cartpole":"no-name-50aac953-b263-4c39-8a27-62db0b093c9f"
+            "cartpole":"elite_archiving_study"
         },
         "diff":{
             "lunarlander":"no-name-a6a24196-d355-4f39-af93-68a295e37c48",
-            "cartpole":"no-name-806532cc-6fe6-40c5-8594-1c453ec9b221"
+            "cartpole":"elite_archiving_study"
 
         }
     }
