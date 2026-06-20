@@ -3,7 +3,10 @@ import lunarlander
 import containers
 import diff_cont
 import lambda_cont
+import numpy as np
+from collections import namedtuple
 
+Bounds = namedtuple("Bounds", ["max", "min"])
 ENIVROMENTS = {
     "cartpole": cartpole.CartpoleEvaluator,
     "lunarlander": lunarlander.LunarLanderEvaluator,
@@ -37,6 +40,28 @@ DIFF_CONTS = {
 ALG_MAPPING = {
     "diff": diff_cont, 
     "lambda": lambda_cont,
+}
+
+FITNESS_LIMIT = {
+    "lunarlander":Bounds(
+        max = 200,
+        min = -1000
+    ),
+    "cartpole":Bounds(
+        max = 500,
+        min = 0
+    )
+}
+
+NOVELTY_LIMIT = {
+    "lunarlander":Bounds(
+        max = 2*np.sqrt(2),
+        min = 0
+    ),
+    "cartpole":Bounds(
+        max=2*np.sqrt(2),
+        min=0
+    )
 }
 
 EXAMPLE_MAPPING  = {

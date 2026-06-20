@@ -164,7 +164,9 @@ def argumented_function(
             seed, 
             ng,
             toolbox,
-            creator,  
+            creator,
+            fitness_limits = consts.FITNESS_LIMIT[env], 
+            novelty_limits = consts.NOVELTY_LIMIT[env],  
             fit_w = fitness_weight,
             decay=decay
         )

@@ -24,7 +24,7 @@ def novelty_mutation(pop, toolbox:base.Toolbox):
     new_ids = []
     for j in range(len(pop)):
         candidates = [candidate for i,candidate in enumerate(pop) if i != j]
-        a, b, c = tools.selRandom(candidates, 3)
+        a,b,c = random.sample(candidates, k=3)
         new_ind = toolbox.triOp(a, b, c)
         new_ids.append(new_ind)
     trials = list(map(lambda x: toolbox.recombine(x[0], x[1]), zip(pop, new_ids)))
@@ -35,6 +35,23 @@ def novelty_mutation(pop, toolbox:base.Toolbox):
     outputed = map(lambda x: tools.selBest([x[1], x[0]], 1)[0], zip(pop, list(trials)))
     return list(outputed)
     
+def add_novelty_mutation(pop, toolbox:base.Toolbox):
+    new_ids = []
+    for j in range(len(pop)):
+        candidates = [candidate for i,candidate in enumerate(pop) if i != j]
+        a, b, c = tools.selRandom(candidates, 3)
+        new_ind = toolbox.triOp(a, b, c)
+        new_ids.append(new_ind)
+    trials = list(map(lambda x: toolbox.recombine(x[0], x[1]), zip(pop, new_ids)))
+    reframed_novelties = toolbox.dry_map(pop) #writing in fitness2 and behaviour
+    for ind, fit in zip(pop, reframed_novelties):
+        ind.fitness.values = fit
+    novelties = toolbox.map(toolbox.evaluate, trials) #writing in fitness2 and behaviour
+    for ind, fit in zip(trials, novelties):
+        ind.fitness.values = fit
+    
+    outputed = map(lambda x: tools.selBest([x[1], x[0]], 1)[0], zip(pop, list(trials)))
+    return list(outputed)
 
 def differential_evolution(population, toolbox, ngen, stats, hof, verbose=True):
     logbook = tools.Logbook()

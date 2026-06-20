@@ -94,7 +94,7 @@ def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen,
     # Begin the generational process
     for gen in range(1, ngen + 1):
         # Vary the population
-        offspring = varOver(population, toolbox, lambda_, cxpb, mutpb)
+        offspring = toolbox.varOver(population, toolbox, lambda_, cxpb, mutpb)
 
         # Evaluate the individuals with an invalid fitness
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]

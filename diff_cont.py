@@ -132,8 +132,11 @@ def argumented_function(
         )
     elif container == "add_novelty" or container == "sub_novelty" :
         alg = cont_cls(
-            l,toolbox, seed, ng, creator, 
-            fit_w = fitness_weight, decay=decay
+            l,toolbox, seed, ng, creator,
+            fitness_limits = consts.FITNESS_LIMIT[env], 
+            novelty_limits = consts.NOVELTY_LIMIT[env],
+            fit_w = fitness_weight, 
+            decay=decay
         )
     else:
         alg = cont_cls(
