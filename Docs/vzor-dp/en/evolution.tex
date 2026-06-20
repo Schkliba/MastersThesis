@@ -1,23 +1,27 @@
 % !TeX spellcheck = en_GB
 \chapter{Evolutionary algorithms}
 \label{chap:evolution}
-The evolutionary algorithms (EA) are a class of optimisation methods modelled after our ideas of biological process of evolution. 
+The evolutionary algorithms (EA) are a class of optimisation methods modelled after our ideas of biological process of evolution.
+ 
 \begin{defn}
-General optimisation problem takes the form:
+General maximising optimisation problem takes the form:
 \[
 \begin{aligned}
-\text{minimise:} \quad & f(x) \\
+\text{maximise:} \quad & f(x) \\
 \text{subject to:} \quad & g_i(x) \le 0, \quad i = 1, \dots, m, \\
 & h_j(x) = 0, \quad j = 1, \dots, p, \\
 \end{aligned}
 \]
-where   is the solution vector, f is objective function,\\
+where x is the solution vector, f is objective function,\\
 and $g_i, h_j $ are constraints imposed on $ x $ \\ 
 \end{defn}
+ Although theoretically it could be also minimising, in this thesis we will not encounter the minimising optimisation and so our concer is mainly with the maximising case.
 
-Often in literature on EA we might find confluence of the term objective function and another term borrowed from biology - fitness. For reasons that will become apparent in the course of this chapter we will make sharp distinction between them for he purposes of this thesis. By objective function we will understand function for which the algorithm directly optimises while fitness will be used to describe semantic quality of an individual in the context of its use.
-Because of this biological connection solution vectors are in the literature often referred to as individuals and we will refer to them this way henceforth as well. Alternatively when emphasising either the numerical form of the vector or  semantic interpretation of this form beyond the optimisation algorithm the individual may be refer to as either a genotype or phenotype respectively.\\  
-Group of individuals representing candidate solutions at a given time is referred to as a population. Evolutionary algorithms then evolve the population by applying three operations (operators) to it in a loop until either the population converges to optimum or the limit on number of steps is reached.  
+Because of this biological connection solution vectors are in the literature often referred to as individuals and we will refer to them this way henceforth as well. Alternatively when emphasising either the numerical form of the vector or  semantic interpretation of this form beyond the optimisation algorithm the individual may be refer to as either a \textbf{genotype} or \textbf{phenotype} respectively.\\  
+Group of individuals representing candidate solutions at a given time is referred to as a population. In general case evolutionary algorithms then evolve the population by applying three operations (operators) to it in a loop until either the population converges to optimum or the limit on number of steps is reached. 
+\begin{defn}
+	Let f be objective function in minimisation (resp. maximisation) problem. We call an individual $ i $ more successful than individual $ j $ if value $ f(i) < f(j) $, resp. $ f(i) > f(j) $. 
+\end{defn}
 \begin{algorithm}
 
 \caption{Generalised Evolutionary Algortihm \label{generalEvo}}
@@ -31,76 +35,231 @@ $pop \gets Select(m)$\;
 }
 \Return{pop}
 \end{algorithm}
-\\
-Crossover usually involves recombination of features from two or more individuals from the population. It's purpose is to provide means of exploitation of features beneficial to the population already developed by some individual.\\
-On the other hand mutation provides means of exploration by introducing randomness into the individuals.\\
-EA without crossover would be more akin to a random walk algorithm.
-Selection then is about filtering the resulting individuals based on the objective function of the algorithm. It might be performed deterministically or with varying degree of stochasticity as elaborated in section \ref{continuousOpt}.
 
-\section{Continuous Optimisation}
-\label{continuousOpt}
-Historically the individuals optimised by EA used be primarily concieved as vectors over binary domain - $\lbrace 0, 1 \rbrace$ . However this aproach was due to practical concerns later expanded into the domain of vectors over real numbers - in litarature refered to as continuous optimisation. For this purpose the operators of EAs had to be adapted to the domain. The literature shows many aproaches without any obvious limit to their variety. In this thesis we have will explore only two most widespread evolutionary aproaches to continuous optimisation.
+Let us review the meaning of the aformentioned operators.
+\begin{itemize}
+	\item crossover usually involves recombination of features from two or more individuals from the population. It's purpose is to provide means of exploitation of features beneficial to the population already developed by some individual.
+	\item mutation provides means of exploration by introducing randomness into the individuals
+	EA without crossover would be more akin to a random walk algorithm.
+	\item selection then is about filtering the resulting individuals based on the objective function of the algorithm. It might be performed deterministically or with varying degree of stochasticity as elaborated in section \ref{continuousOpt}.
+\end{itemize}
+It should be noted that the order of mutation and cross-over here are arbitrary and are specific to each particular evolutionary technique.  
+For futher discussion of selection process we need to introduce a few terms specific to evolutionary algorithm that have been borrowed from their counterpart in biology.
+
+
+\section{Continuous Optimisation \label{continuousOpt}}
+
+Historically the individuals optimised by EA used be primarily concieved as vectors over binary domain - $\lbrace 0, 1 \rbrace$ . However this aproach was  later expanded into the domain of vectors over real numbers. In litarature this is refered to as continuous optimisation. In this thesis we are interested in neuro-evolution, a subset of continuous optimisation as neural networks discussed in the chapter \ref{ch:agents} are represeted as a series of vectors of real numbers. But since the intend of this thesis is mainly to compare different objective functions we will not delve too deeply into the intricacies of neuro-evolution field and instead aproach the following techniques from the more general standpoint of continous optimisation.
+
+In this section we will review the selected evolutionary algorithms and describe them as they are going to be used during the experiments in chapter \ref{ch:experiments}.
 \subsection{Evolutionary Strategies \citep{evoStrategy}}
-Evolutionary strategies (ES) are very direct incarnation of algorithm \ref{generalEvo} into the realm of real numbers. Distinct feature of evolutionary staregies is the mutation operator that takes as a parameter standard devaition $ \sigma $ and which mutates the value stochastically by a number $ y ~ N(0, \sigma) $
-We recognise two types of evolutionary strategies: $  \lambda + \mu $ and $  \lambda,  \mu $.
+\label{sec:ES}
+Evolutionary strategies (ES) are very direct incarnation of algorithm \ref{generalEvo} into the realm of real numbers. 
 
-\begin{algorithm}[H]
+We recognise two types of evolutionary strategies: $ \mu + \lambda $ and $  \mu , \lambda$. $ \mu $ denotes size of already existing population while $\lambda$ denotes size of new population pool. In $  \mu + \lambda $ selection happens from the existing population pool and the new population pool at the same time while the $  \mu , \lambda  $ variant only ever selects from the new population pool. This makes the evolution $  \lambda + \mu $ more stable as established successful individuals have a bigger chance to pass to the next generation unless a more successful inidividual has been found. That said, for some problems this aproach risks stagnation and it is prefferable to use $ \mu, \lambda $. However the experience with our selected environments from chapter \ref{chap:environment} clearly showed dominance of $ \mu + \lambda $ as even for the Cartpole, simpler of the environments, improving mutations were too costly to be lost on an unlucky new generation. 
 
-\caption{Evolutionary Strategy $  \lambda + \mu $ \label{lambdaPlus}}
-\KwData{population count, offspring count, number of generations}
+Therefore all further discussion of evolutionary strategies will be focused on $  \mu + \lambda$. We detail the procedural aspects of $  \mu + \lambda$ in the algorithm \ref{alg:lambdaPlus}.
+\subsubsection{Mutation}
+Distinct feature of evolutionary staregies is the mutation operator that takes as a parameter standard devaition $ \sigma $ and which mutates the value stochastically by a number $ y \sim N(0, \sigma) $. In the literature we can often find ES where the mutation $ \sigma $ is part of the individual genotype this might help the evolution as more successful individuals might enforce milder mutation while less successful individuals might mutate wildly in search of better genotype.
+For our purposes this however introduces two problems. Firstly it complicates iterpretability of the results and since we are more interested in the comparison than raw results we cannot ignore this downside. Secondly this aproach intuitively works well for cases where objective function is also the meta-measure we actually care about but we are precisely interested in comparison with cases where the objective function is rather orthogonal to actual usefullness of the individual as we will discuss in section \ref{sec:objFunc}. There this aproach could be chaotic at best and detrimental at worst.
 
-\KwResult{optimised population}
-$ \lambda \gets$ population count\;
-$ \mu \gets$ offspring count \;
-$ pop \gets InitPop(\lambda) $\;
-\For{$g \in 1..N$}{
-$ off \gets CrossOver(pop, \mu)$\;
-$ off \gets Mutate(off) $\;
-$ pop \gets Select(pop + off, \lambda)$\;
-}
-\Return{pop}
+For these reasons we opt for a global $ \sigma $ that does not change during the run of the evolution.
+\subsubsection{Crossover Methods}
+Crossover is a  method of combining values from two selected individuals. Based on 
+We will discuss mainly two kinds of cross-over:
+ \begin{itemize}
+ 	\item Arithmetic crossover where we combine genotype vectors $ x_1, x_2 $ into a new genotype $ x' $ as follows: $$ x' = \frac{x_1 + x_2}{2} $$
+ 	\item Unifirm crossover where go over $ p_u $
+ \end{itemize}
+\subsubsection{Tournament selection}
+\label{subsec:tournament}
+Selection in evolutionary algorithms can be realised by various means such as roulette selection where each individual $ i $ has likelyhood of passing into the next generation $ p_i $ as follows: $ p_i = \frac{f(i)}{f(pop)}$, where $ f(i) $ is objective function value for the individual $ i $ and $ f(pop) $ is sum of objective value of all individuals. This however works only for objective functions that give out only either negative or positive numbers. As we have described in chapter \ref{chap:environment} environments explored in this thesis can give out rewards with value negative or positive based on the agent's performance. Therefore we will utilise tournament selection described in \cite{GOLDBERG199169}. Tournament selection works on simple principle where we select pool of individuals, size of which is called \textit{tournament size}. From them we then select the one with the most optimal objective function value \citep{GOLDBERG199169}. We detail the workings of tournament selection in algorithm \ref{alg:lambdaPlus}. Note that for the purposes of this thesis we have selected \textit{tournament size} = 3, or ternary tournament. Bigger tournament size provides greater stability to the search as the more optimal inidividual are given more chances to be selected. The ternary tournament has been selected on empirical basis specifically for our environments.
+ 
+
+\begin{algorithm}[h]
+	
+	\caption{Evolutionary Strategy $  \lambda + \mu $}
+	\label{alg:lambdaPlus}
+	\SetAlgoNoEnd
+	\KwIn{Population size $\lambda$, new generation pool size $\mu$, crossover rate $CR$, mutation rate $ MR $, objective function $f(x)$, crossover operator $CrossOp(x)$, mutation power $ \sigma $, number of generations $G$}
+	Initialize population $\{x_i^0\}_{i=1}^\mu$\;
+	
+	Evaluate $f(x_i^0)$ for all $i$\;
+	\tcp{$ x^0 $ forms initial population} 				
+	\For{$g = 0$ \KwTo $G-1$}{
+		\For{$i = 1$ \KwTo $\lambda$}{
+			\tcp{Crossover:}
+				randomly choose $r_{CR} \sim Uniform(0,1)$\; 
+				\If{$r_{CR} < CR $}{
+					Select random individuals $a, b \sim Uniform(1,\mu)$\;
+					$$ v_i \leftarrow CrossOp(x_a^g, x_b^g) $$
+				}
+				\Else{
+					Select random individual $a \sim Uniform(1,\mu)$\;
+					$$ v_i \leftarrow x_a^g $$
+				}
+			\tcp{Mutation:}
+				randomly choose $r_{MR} \sim Uniform(0,1)$\;
+				\If{$r_{MR} < MR $}{
+
+					$$ v'_i = v_i + \sigma \mathcal{N}(0, 1)$$
+				}
+				\Else{
+
+					$$ v'_i = v_i$$
+				} 
+			Evaluate $f(v'_i)$; 
+		}
+		
+		\tcp{$ v' $ forms the new population pool} 
+		$ v'i \rightarrow x_{\mu+i}^g$\;				
+		\tcp{Tournament selection:}
+			\For{$i = 1$ \KwTo $\mu$}{
+				Select random individual $a, b, c \sim Uniform(1,\mu + \lambda)$\;
+				$$ x_i^{g+1}  \leftarrow \arg\max(f(x_a), f(x_b), f(x_c)) $$
+			}
+	}
+	\Return{$ x^{G}  $}
 \end{algorithm}
 
-\begin{algorithm}[H]
 
-\caption{Evolutionary Strategy $  \lambda, \mu $ \label{lambdaComma}}
-\KwData{population count, offspring count, number of generations}
 
-\KwResult{optimised population}
-$ \lambda \gets$ population count\;
-$ \mu \gets$ offspring count \;
-$ pop \gets InitPop(\lambda) $\;
-\For{$g \in 1..N$}{
-$ off \gets CrossOver(pop, \mu)$\;
-$ off \gets Mutate(off) $\;
-$ pop \gets Select(off, \lambda)$\;
-}
-\Return{pop}
+
+
+
+\subsection{Differential Evolution \citep{diffEV}}
+In the introductory paper \cite{diffEV} the differential evolution is characterised mainly by it's industrial capabilities such as easy paralelisation and application.
+Because of these benefits it is a popular technique in the field of neuroevolution.
+We detail the whole process in algorithm \ref{alg:diffEv}.
+The algorithm for resolving a single generation happens in a signle loop with the familiar stages which we detail in algorithm $ \ref{alg:diffEv} $.
+\subsubsection{Selection}
+Unlike in evolutionary strategies described in  section \ref{sec:ES}, slection is done on individual basis to enhance parallelisation capabilities of the algorithm. This means that for each individual $ x_i $ we either select it or it's proposed replacement $ v_i $ based on the values of objective function for each of them. Of course we keep the more successful one. 
+
+\subsubsection{Mutation}
+While Evolutionary strategies introduce stochasticity in explicit and controled manner, differential evolution relies on a special form of contextual mutation where three individuals from the population are drafted and combined. This means that we do not have to search for optimal value of $ \sigma $. 
+
+We select three individuals $ x_a, x_b, x_c $ distinct from $ x_i $ and compute a new inidvidual: $ x_i' =  x_a + \alpha (x_b - x_c)$ where $ x_a $ is called anchor, $ (x_b - x_c) $ differential and $ \alpha $ is scaling factor. 
+
+Although the scaling factor $ \alpha $ does not have probabilistic interpretation, in some sense it corresponds to mutation rate in ES as the grater it is, the more stochasticity affects the system.
+\subsubsection{Recombination}
+During recombination we decide for each vector component of the newly forming individual $ x_i' $ whether we will source it from  the already mutated version $ x_i' $ or the original $ x_i $ based on recombination rate $ \gamma $. Recombination is rough translation of the concept of crossver for the purposes of single easily parallelised loop and recombination rate could be likened to the uniform crossover cross-rate $ R_U $.
+
+\begin{algorithm}[h]
+	\caption{Differential Evolution}
+	\label{alg:diffEv}
+	\SetAlgoNoEnd
+	\KwIn{Population size $N$, scaling factor $\alpha$, recombination probability $\gamma$, objective function $f(x)$, number of generations $G$}
+	Initialize population $\{x_i^0\}_{i=1}^N$\;
+	
+	Evaluate $f(x_i^0)$ for all $i$\;
+	
+	\For{$g = 0$ \KwTo $G-1$}{
+		
+		\For{$i = 1$ \KwTo $N$}{
+			\tcp{Mutation:}
+			Select random inidividuals $a, b, c \neq i$\;
+			\[
+			v_i = x_{a}^g + \alpha (x_{b}^g - x_{c}^g)
+			\]
+			
+			\tcp{Crossover:}
+			\[
+			u_{i,j} =
+			\begin{cases}
+				v_{i,j} & \text{if } r\sim\mathrm{Uniform}(0,1) < \gamma \\
+				x_{i,j}^g & \text{otherwise}
+			\end{cases}
+			\]
+			
+			\tcp{Selection:}
+			Evaluate $f(u_i)$\;
+			\If{$f(u_i) \ge f(x_i)$}{
+				$x_i^{g + 1} \leftarrow u_i$\;
+			}
+			\Else{
+				$x_i^{g + 1}  \leftarrow x_i^g$\;
+			}
+		}	
+	}
+	\Return{$ x_i^{G} $}
 \end{algorithm}
+\subsection{Archives}
+\label{sec:archives}
+A technique that may enhance the techniques presented in this sections is installing an archive into the algorithm.
+Archive is a longterm storage outside of the optimised population of a certain size where a batch of individuals selected from regular population is added periodically and are being reinstroduced  during the selection. This aproach can help preserve diversity of individuals or on the contrary to preserve the best solutions found so far. We will distinguish archives inteded for the second purpose as \textit{elite archives }.
 
+For evolutionary strategy we simply add the archive batch from which a new generation pool is being selected as this will not affect the run of the algorithm in any way. 
 
+For differential evolution we cannot just add the archive to the existing population. We actually have to reinstroduce the the archived individuals instead of parts of the population. In this thesis we will do this on basis of random pick from the $ population + archive $.
 
-\subsection{Differential Evolution}
-While evolutionary strategies follow quite closely the general blueprint of EAs across domains, differential evolution is on the hand quite unique for the domain of continuos optimisation.  
-While the nomenclature of differential evolution is somewhat different from other EA we ask the reader to be mindful of analogy between recombination and mutation when we talk about evolutionary algorithms broadly while we will use the proper terms when talking about the differential evolution specifically. 
 \section{Objective functions}
-As foreshadowed at the start of this chapter it might be desirable to divorce the utility (fitness) of an individual from the objective the algorithm follows in it's search. In this thesis we are interested in objective function of novelty \cite{noveltyarticle} and it's combinations with fitness.
+\label{sec:objFunc}
+In this section we will discuss possible objective functions for the evolutionary optimisation search.
 
-\subsection{Pure Novelty}
+\subsection{Fitness}
+\label{sec:fitness}
+
+Using objective function as the utility function of the algorithm is the most direct way of establishing relationship between the solution we want and the individuals in the evolving population.
+
+
+Though this approach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can in easily get stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyper-parameters to favour random exploration, it may come to point where the benefits of evolutionary approach are made void.
+
+\subsubsection{Archiving}
+As stated in section \ref{sec:archives} for fitness the two main reasons 
+
+\subsection{Novelty}
+\label{sec:novelty}
 In its introductory paper novelty \cite{noveltyarticle} is conceived as a guide of the evolutionary search to help avoid traps of local optima. 
 \begin{defn}\citep{doncieux:hal-02561846}
-Let E be environment and S be a space of all possible states of the environment and let $ d(x,y) $ be some metric. Then (B, d) is a behavioural space and a function $ o_B: S^{T}\rightarrow B $ is called observer function. 
+Let E be environment and $ h_t $ be a history up to a time $ t $ and let $ d(x,y) $ be a metric over set $ B $ . Then (B, d) is a behavioural space if there is  a function $ o_B: h_t\rightarrow B $, called observer function. 
 \end{defn}
 \begin{defn}\citep{noveltyarticle}
-Let P be a population of individuals within EA and (Img(B), d) be a behavioural space. Then for each individual $ a $ we define novelty as such:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d(a,b)}{|P|-1} $$ 
+Let P be a population of individuals within EA and (B, d) be a behavioural space. Then for each individual $ a $ we define novelty:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d(a,b)}{|P|-1} $$ 
 \end{defn}
-With novelty as objective function the selection process incentivises diversification of behaviour among the population. This allows the evolutionary search to retain variety within the population across generations, leveraging the crossover as well as mutations to leave local optima.\\
-Downside of this approach might be in the ambiguity in the choice of behavioural space. Incorporating too many environment variables will lead to faux-exploration in variables completely orthogonal to fitness. On the other hand leaving out an important variable means the algorithm will not retain diversity where it matters, making novelty pointless. This means the behavioural function and space have to be selected empirically for given problem.
-\subsection{Fitness}
-Using objective function as the utility function of the algorithm is the most direct way of establishing relationship between the solution we want and the individuals in the evolving population.\\
-Though this approach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can easily get stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyper-parameters to favour random exploration, it may come to point where the benefits of evolutionary approach are made void.
+With novelty as objective function the selection process incentivises diversification of behaviour among the population. This allows the evolutionary search to retain variety within the population across generations, leveraging the crossover as well as mutations to leave local optima.
 
+
+Downside of this approach might be in the ambiguity in the choice of behavioural space. Incorporating too many environment variables will lead to faux-exploration in variables completely orthogonal to fitness. On the other hand leaving out an important variable means the algorithm will not retain diversity where it matters, making novelty pointless. This means the behavioural function and space have to be selected empirically for given problem.
+
+
+If we do not state otherwise in this thesis novelty will be calculated in relation to the upcoming generation $ g+1 $ During the unrecorded preliminary experiments we have not found any significant advantage to other methods of computation.
+
+For each environment we will also 
+
+
+\subsubsection{Archiving}
+Unlike in fitness described in section \ref{sec:fitness}, we will not use elite archive for the novelty search, instead we will discuss our elitist solution as a combination of fitness and novelty in section \ref{sec:combFitNov}.
+
+
+In fitness the archive had a role of providing variety, which is the main goal of novelty search. Here we actually hope to use the randomness as a stabilising element since reintroduction of old behaviours will propt the new generation to avoid them. This aproach was with success used in \cite{noveltyEmpirical}, outperforming pure novelty and novelty based archive.
 \subsection{Combinations of Novelty}
+\label{sec:combFitNov}
 The novelty does not take into account the individual's performance with objective function. Therefore when two individuals with similar behavioural characteristics appear but one of them performs significantly better than the other, pure novelty algorithm can easily select the less performant individual, losing the more performant genome for further generations. To prevent this we want to meaningfully combine novelty with fitness.\\
-One obvious way of doing this is 
+\subsubsection{Exponential Decay Weight}
+Taking inspiration from \cite{notenoughnovelty}, we will try to combine novelty with fitness in the most straight-forward way - linear combination with decaying weights.
+However first we need to address some issues such as the disproportion in scale of fitness to scale of novelty. This mean we require normalisation for the two. Again taking inspiration from \cite{notenoughnovelty}, we will normalise with the maximum and minimum of both fitness and novelty in the currently existing population for each individual $ i $: 
+$$
+\hat{f}_{i}=
+\frac{f_i-f_{\min}}
+{f_{\max}-f_{\min}},
+\qquad
+\hat{n}_{i}=
+\frac{n_i-n_{\min}}
+{n_{\max}-n_{\min}}
+$$
+
+Both maximum and minimum are easy to obtain as they are one O(n) while other methods such as z-score might be computationally more demanding in the multiplicative constant.
+Then we get combination:
+$$ c_i = W\hat{f}_{i} + W'\hat{n}_{i} $$
+
+
+Unlike \cite{notenoughnovelty} we will however decay the weight $ W $ of fitness or $ W' = (1-W) $ of novelty over time.
+So that for base $ W_b $, decay rate $ r_D $, current generation $ g $, total number of generations $ G $  and \textbf{increasing novelty} we have: 
+$$ W = W_b e^{-r_D\frac{g}{G}} $$
+Conversly for \textbf{increasing fitness}
+$$ W' = W_b e^{-r_D\frac{g}{G}} $$
+
+This will allow us to explore whether the exploratory stage has more meaning at the beggining when it generates diverse population that can later pruned by the shift for fitness or is it better to first evolve the population to certain level and then explore with more adept individuals.
+
+\subsubsection{Limited Novelty Archive}
 

@@ -4,23 +4,150 @@ To compare different types of objective functions fairly, we have to select crit
 \section{General criteria}
 Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective environments, getting more comprehensive picture then from a single run. This will be mainly reflected in the seed for random numbers generator of the environment. Since the promise of the novelty approach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced by the algorithm runs\\
 However we also have to take into account the hyper-parameters with which these populations have been achieved. This is especially (but not limited to) population size and number of generations, hyper-parameters responsible for most of the computational complexity of a evolutionary algorithm run. 
-\section{Conditions}
-The conditions are defined by the hyper-parameters of the algorithms and the hyper-parameters of the individuals.
+\section{Containers}
+While we have reviewed evolutionary algorithms and proposed different objective functions in chapter \ref{chap:evolution}, we now have to somehow refer to the combination of the two. For this purpose we propose the term \textbf{container}.
+We can divide the containers on the axis of algorithm to ES containers and DE container. And we can divide them on basis of objective function handling:
+\begin{itemize}
+	\item \textbf{fitness} container implements pure fitness aproach as described in \ref{sec:fitness}
+	\item \textbf{novelty} container implements pure novelty aproach as described in \ref{sec:novelty}
+	\item \textbf{fitness archive} container implements fitness search with random selection archive as described in \ref{sec:fitness}
+	\item \textbf{elite archive} container implements fitness search with elite selection archive as described in \ref{sec:fitness}
+	\item \textbf{novelty archive} container implements novelty search with random selection archive as described in \ref{sec:novelty}
+	\item \textbf{increase novelty} container implements increasing novelty objective as described in as described in \ref{sec:combFitNov}
+	\item \textbf{increase fitness} container implements increasing fitness objective as described in as described in \ref{sec:combFitNov}
+	\item \textbf{limit archive} container implements novelty search with fitness threshold archive as described in \ref{sec:combFitNov}
+\end{itemize}
+
 \section{Individual hyper-parameter selection}
 The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. We determined these parameter based on empirical experience in the chapter \ref{chap:environment}.
+\subsection{Cartpole}
+\subsubsection{Behavioral Space}
+\subsubsection{title}
+\begin{figure}[h]
+	\centering
+	\label{fig:cartpoleNN}
+	\begin{tikzpicture}[
+		>=latex,
+		node distance=1.8cm,
+		input/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			minimum width=3cm,
+			minimum height=1cm,
+			fill=blue!10,
+			align=center
+		},
+		hidden/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			minimum width=3cm,
+			minimum height=1cm,
+			fill=green!10,
+			align=center
+		},
+		output/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			minimum width=3cm,
+			minimum height=1cm,
+			fill=red!10,
+			align=center
+		}
+		]
+		
+		% Nodes
+		\node[input] (in) {Input\\Observation};
+		
+		\node[hidden, below=of in] (h1) {Hidden Layer\\(7 neurons)};
+		
+	
+		
+		\node[output, below=of h1] (out) {Output\\Action Vector};
+		
+		% Connections
+		\draw[->] (in) -- node[right] {$\tanh$} (h1);
+		\draw[->] (h1) -- node[right] {$\tanh$} (out);
+
+		
+	\end{tikzpicture}
+	\caption{Structure of Carpole agentic network}
+\end{figure}
+\subsection{Lunar Lander}
+\begin{figure}[h]
+	\centering
+	\label{fig:lunarlanderNN}
+	\begin{tikzpicture}[
+		>=latex,
+		node distance=1.8cm,
+		input/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			minimum width=3cm,
+			minimum height=1cm,
+			fill=blue!10,
+			align=center
+		},
+		hidden/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			minimum width=3cm,
+			minimum height=1cm,
+			fill=green!10,
+			align=center
+		},
+		output/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			minimum width=3cm,
+			minimum height=1cm,
+			fill=red!10,
+			align=center
+		}
+		]
+		
+		% Nodes
+		\node[input] (in) {Input\\Observation};
+		
+		\node[hidden, below=of in] (h1) {Hidden Layer 1\\(7 neurons)};
+		
+		\node[hidden, below=of h1] (h2) {Hidden Layer 2\\(7 neurons)};
+		
+		\node[output, below=of h2] (out) {Output\\Action Vector};
+		
+		% Connections
+		\draw[->] (in) -- node[right] {$\tanh$} (h1);
+		\draw[->] (h1) -- node[right] {$\tanh$} (h2);
+		\draw[->] (h2) -- node[right] {linear} (out);
+		
+	\end{tikzpicture}
+	\caption{Structure of Lunar Lander agentic network}
+\end{figure}
 
 \section{Algorithm hyperparameter selection}
 We have reviewed hyperparamets of each algorithm in the chapter \ref{chap:evolution}. Now we will review the process of their selection. The diffulty of the task lies mainly in the complexity of evaluation. As we will discuss later some of the experiments maybe evaluated over day or even several days on the available hardware even for a 100 limited algorithm runs. For this reason we need to utilise bayesian search which is able to prune a lot of the redundant space out so that we may not waste time with it. This however has a considerable downside for our purposes as we would like to compare the algorithms on their best footing. Therefore we refine the bayesian search results with local grid search attempting to deviate from the supposed hyperparameter equilibria.
 
 \subsection{Bayesian Search}
 Because we are faced with multiple 
-Bayesian search is an algorithm where we stochastically deliniate where a possibly good solution may lie and then try to exploit this deliniation. Because the specific workings of Bayesian search are time-consuming to implement ad hoc (and also such implementation is out of the scope of this thesis) I have utlised library Optuna for the purpose.
+Bayesian search is an algorithm where we stochastically deliniate where a possibly good solution may lie and then try to exploit this deliniation. Because the specific workings of Bayesian search are time-consuming to implement ad hoc (and also such implementation is out of the scope of this thesis) We will utilise library Optuna for the purpose.
 
 \subsubsection{Optuna}
 Just as in our case a lot of machine-learning techniques need for their proper function to obtain adequate hyperparameters first. Optuna is a Python library designed for this purpose. The library itself is multifasceted, so we will only discuss algortihms and terms pertaining to the subject of this thesis.
-<define trial>
-<define study>
-<define optimisiation run>
+\begin{defn}
+	By Optuna trial or just trial we mean one run of the evolutionary algorithm with one chosen set of hyperparameters and the results of this run.
+\end{defn}
+\begin{defn}
+	Optuna study a set of related trials with implied continuity of choice. 
+\end{defn}
+\begin{defn}
+	Optuna optimisation run describes run of the chosen optimisation algorithm, adding optimised trials to selected study.
+\end{defn}
+Note that study maybe composed of multiple optimisation runs. In this thesis we have only done one study per container and one optimisation run per study if not for anything htan to mind coputational time.
 
 As the optimisation algorithm we have selected Tree-structured Parzen Estimator (TPE) due to the fairly low complexity and efectivness, wasting no trials as we want to conserve as much actual runtime as possible.
 \subsubsection{TPE}
@@ -59,12 +186,72 @@ Before we start other experiments we have to determine how many episodes will be
 <insert parameters>
 
 \subsubsection{generations grid search}
-After obtaining refined solution from each EAs respective incremental grid search 
+After obtaining refined solution from each caontainer respective incremental grid search described in section \ref{sec:incgridsearch}  
 \subsection{Incremental grid search}
-Because we obtained the optimised parameters from Bayesian search stochastically we would like to ensure that there is no easily obtainable set of parameters more performant than the set from BS. All however in time consuming fashion. To this end we have devised an algorithm of incremental grid search where we evaluate possibly useful deviations from the supposed local optima. Upon dicovering new optima we recenter the search around it. If we are not successfull in finding dominating set of parameters we end the search with the last obtained optima. We also end the search after more than 3 recentering. Since this is only refining algorithm of already functional solution we do not expect long searches.
+\label{sec:incgridsearch}
+Because we obtained the optimised parameters from Bayesian search stochastically we would like to ensure that there is no easily obtainable set of parameters more performant than the set from BS. All however in time consuming fashion. To this end we have devised an algorithm of incremental grid search where we evaluate possibly useful deviations from the supposed local optima. Upon dicovering new optima we recenter the search around it. If we are not successfull in finding dominating set of parameters we end the search with the last obtained optima. We also end the search after more than 3 recentering (hops).  Since this is only refining algorithm of already functional solution we do not expect long searches.
+
+
+\begin{algorithm}[H]
+	\caption{Incremental grid search general}
+	\label{alg:incrGS}
+	\SetAlgoNoEnd
+	
+	\KwIn{Initial argument set $x_0$, number of hops $H$, 
+		
+		evaluation algorithm $ A $}
+	\KwOut{Final argument set $x$}
+	
+	$x \leftarrow x_0$\;
+	$\mathcal{V} \leftarrow \emptyset$\;
+	\tcp{fitness performances}
+	$ s \leftarrow  \emptyset$ \;
+	\tcp{final populations}
+	$ pop \leftarrow  \emptyset$ \;
+	$s(x_0), pop(x_0) \leftarrow A(x_0)$\; 
+	\For{$h \leftarrow 1$ \KwTo $H$}{
+		
+		Generate valid candidate argument sets
+		$\mathcal{C} \leftarrow \mathrm{Generate}(x, \mathcal{V}, h)$\;
+		
+
+		\ForEach{$c \in \mathcal{C}$}{
+			$s(c), pop(c) \leftarrow A(c)$\;
+			
+			$\mathcal{V} \leftarrow \mathcal{V} \cup \{c\}$\;
+		}
+		
+		
+		\If{$\mathcal{C} \neq \emptyset$}{
+			
+			$S^\star \leftarrow \max_{c \in \mathcal{C}} s(c)$\;
+			
+			$\mathcal{B} \leftarrow
+			\{c \in \mathcal{C} \mid s(c) = S^\star \wedge s(x) \le s(c)\}$\;
+		
+			
+			\If{$|\mathcal{B}| = 1$}{
+				$x \leftarrow$ only element of $\mathcal{B}$\;
+			}
+			\ElseIf{$|\mathcal{B}| = 0$}{
+				\tcp{We have not found improving solution}
+				\Return $x$, $ s(x) $\;
+			}
+			\Else{
+				$x \leftarrow
+				\arg\max_{c \in \mathcal{B}}
+				\mathrm{Diversity}(pop(c))$\;
+			
+			}
+		}
+	}
+	
+	\Return $x$, $ s(x) $\;
+	
+\end{algorithm}
+
+
 \subsection{$\lambda + \mu$ incemental grid search}
-
-
 
 
 \subsection{DEs incremental grid search}

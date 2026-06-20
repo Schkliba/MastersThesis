@@ -1,4 +1,4 @@
-\begin{thebibliography}{4}
+\begin{thebibliography}{11}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -18,6 +18,13 @@ Hans-Georg Beyer and Hans-Paul Schwefel.
 \newblock \emph{Natural Computing}, 1:\penalty0 3--52, 03 2002.
 \newblock \doi{10.1023/A:1015059928466}.
 
+\bibitem[Cuccu and Gomez(2011)]{notenoughnovelty}
+Giuseppe Cuccu and Faustino Gomez.
+\newblock When novelty is not enough.
+\newblock volume 6624, pages 234--243, 04 2011.
+\newblock ISBN 978-3-642-20524-8.
+\newblock \doi{10.1007/978-3-642-20525-5_24}.
+
 \bibitem[Doncieux et~al.(2019)Doncieux, Laflaqui{\`e}re, and
   Coninx]{doncieux:hal-02561846}
 Stephane Doncieux, Alban Laflaqui{\`e}re, and Alexandre Coninx.
@@ -27,11 +34,66 @@ Stephane Doncieux, Alban Laflaqui{\`e}re, and Alexandre Coninx.
 \newblock \doi{10.1145/3321707.3321752}.
 \newblock URL \url{https://hal.science/hal-02561846}.
 
+\bibitem[Goldberg and Deb(1991)]{GOLDBERG199169}
+David~E. Goldberg and Kalyanmoy Deb.
+\newblock A comparative analysis of selection schemes used in genetic
+  algorithms.
+\newblock volume~1 of \emph{Foundations of Genetic Algorithms}, pages 69--93.
+  Elsevier, 1991.
+\newblock \doi{https://doi.org/10.1016/B978-0-08-050684-5.50008-2}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/B9780080506845500082}.
+
+\bibitem[Gomes et~al.(2015)Gomes, Mariano, and Christensen]{noveltyEmpirical}
+Jorge Gomes, Pedro Mariano, and Anders~Lyhne Christensen.
+\newblock Devising effective novelty search algorithms: A comprehensive
+  empirical study.
+\newblock In \emph{Proceedings of the 2015 Annual Conference on Genetic and
+  Evolutionary Computation}, GECCO '15, page 943–950, New York, NY, USA,
+  2015. Association for Computing Machinery.
+\newblock ISBN 9781450334723.
+\newblock \doi{10.1145/2739480.2754736}.
+\newblock URL \url{https://doi.org/10.1145/2739480.2754736}.
+
+\bibitem[Kaelbling et~al.(1998)Kaelbling, Littman, and
+  Cassandra]{KAELBLING199899}
+Leslie~Pack Kaelbling, Michael~L. Littman, and Anthony~R. Cassandra.
+\newblock Planning and acting in partially observable stochastic domains.
+\newblock \emph{Artificial Intelligence}, 101\penalty0 (1):\penalty0 99--134,
+  1998.
+\newblock ISSN 0004-3702.
+\newblock \doi{https://doi.org/10.1016/S0004-3702(98)00023-X}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S000437029800023X}.
+
+\bibitem[Lehman and Stanley(2011)]{noveltyarticle}
+Joel Lehman and Kenneth Stanley.
+\newblock Abandoning objectives: Evolution through the search for novelty
+  alone.
+\newblock \emph{Evolutionary computation}, 19:\penalty0 189--223, 06 2011.
+\newblock \doi{10.1162/EVCO_a_00025}.
+
+\bibitem[Ross et~al.(2014)Ross, Pineau, Paquet, and
+  Chaib{-}draa]{DBLP:journals/corr/RossPPC14}
+St{\'{e}}phane Ross, Joelle Pineau, S{\'{e}}bastien Paquet, and Brahim
+  Chaib{-}draa.
+\newblock Online planning algorithms for pomdps.
+\newblock \emph{CoRR}, abs/1401.3436, 2014.
+\newblock URL \url{http://arxiv.org/abs/1401.3436}.
+
 \bibitem[Russell and Norvig(2021)]{russell2021}
 Stuart Russell and Peter Norvig.
 \newblock \emph{{Artificial Intelligence, Global Edition A Modern Approach}}.
 \newblock Pearson Deutschland, 2021.
 \newblock ISBN 9781292401133.
 \newblock URL \url{https://elibrary.pearson.de/book/99.150005/9781292401171}.
+
+\bibitem[Storn and Price(1997)]{diffEV}
+Rainer Storn and Kenneth Price.
+\newblock Differential evolution - a simple and efficient heuristic for global
+  optimization over continuous spaces.
+\newblock \emph{Journal of Global Optimization}, 11:\penalty0 341--359, 01
+  1997.
+\newblock \doi{10.1023/A:1008202821328}.
 
 \end{thebibliography}

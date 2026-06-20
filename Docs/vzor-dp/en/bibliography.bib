@@ -51,6 +51,49 @@
   number = {1}
 }
 
+@incollection{GOLDBERG199169,
+	title = {A Comparative Analysis of Selection Schemes Used in Genetic Algorithms},
+	editor = {GREGORY J.E. RAWLINS},
+	series = {Foundations of Genetic Algorithms},
+	publisher = {Elsevier},
+	volume = {1},
+	pages = {69-93},
+	year = {1991},
+	issn = {1081-6593},
+	doi = {https://doi.org/10.1016/B978-0-08-050684-5.50008-2},
+	url = {https://www.sciencedirect.com/science/article/pii/B9780080506845500082},
+	author = {David E. Goldberg and Kalyanmoy Deb},
+	keywords = {proportionate selection, ranking selection, tournament selection, Genitor, takeover time, time complexity, growth ratio},
+	abstract = {This paper considers a number of selection schemes commonly used in modern genetic algorithms. Specifically, proportionate reproduction, ranking selection, tournament selection, and Genitor (or “steady state”) selection are compared on the basis of solutions to deterministic difference or differential equations, which are verified through computer simulations. The analysis provides convenient approximate or exact solutions as well as useful convergence time and growth ratio estimates. The paper recommends practical application of the analyses and suggests a number of paths for more detailed analytical investigation of selection techniques.}
+}
+@article{diffEV,
+	author = {Storn, Rainer and Price, Kenneth},
+	year = {1997},
+	month = {01},
+	pages = {341-359},
+	title = {Differential Evolution - A Simple and Efficient Heuristic for Global Optimization over Continuous Spaces},
+	volume = {11},
+	journal = {Journal of Global Optimization},
+	doi = {10.1023/A:1008202821328}
+}
+
+@article{DBLP:journals/corr/RossPPC14,
+	author       = {St{\'{e}}phane Ross and
+	Joelle Pineau and
+	S{\'{e}}bastien Paquet and
+	Brahim Chaib{-}draa},
+	title        = {Online Planning Algorithms for POMDPs},
+	journal      = {CoRR},
+	volume       = {abs/1401.3436},
+	year         = {2014},
+	url          = {http://arxiv.org/abs/1401.3436},
+	eprinttype   = {arXiv},
+	eprint       = {1401.3436},
+	timestamp    = {Mon, 13 Aug 2018 16:48:37 +0200},
+	biburl       = {https://dblp.org/rec/journals/corr/RossPPC14.bib},
+	bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
 @inproceedings{bergstra2011algorithms,
 	title     = {Algorithms for Hyper-Parameter Optimization},
 	author    = {Bergstra, James S. and Bardenet, R{\'e}mi and Bengio, Yoshua and K{\'e}gl, Bal{\'a}zs},
@@ -58,17 +101,22 @@
 	year      = {2011}
 }
 
-@ARTICLE{Genberget08,
-  author = {Genberg, B. L. and Kulich, M. and Kawichai, S. and Modiba, P. and
-	Chingono, A. and Kilonzo, G. P. and Richter, L. and Pettifor, A.
-	and Sweat, M. and Celentano, D. D.},
-  title = {{HIV} risk behaviors in Sub-{S}aharan {A}frica and {N}orthern {T}hailand:
-	{B}aseline behavioral data from project {A}ccept},
-  journal = {Journal of Acquired Immune Deficiency Syndrome},
-  year = {2008},
-  volume = {49},
-  pages = {309--319}
+@article{KAELBLING199899,
+	title = {Planning and acting in partially observable stochastic domains},
+	journal = {Artificial Intelligence},
+	volume = {101},
+	number = {1},
+	pages = {99-134},
+	year = {1998},
+	issn = {0004-3702},
+	doi = {https://doi.org/10.1016/S0004-3702(98)00023-X},
+	url = {https://www.sciencedirect.com/science/article/pii/S000437029800023X},
+	author = {Leslie Pack Kaelbling and Michael L. Littman and Anthony R. Cassandra},
+	keywords = {Planning, Uncertainty, Partially observable Markov decision processes},
+	abstract = {In this paper, we bring techniques from operations research to bear on the problem of choosing optimal actions in partially observable stochastic domains. We begin by introducing the theory of Markov decision processes (mdps) and partially observable MDPs (pomdps). We then outline a novel algorithm for solving pomdps off line and show how, in some cases, a finite-memory controller can be extracted from the solution to a POMDP. We conclude with a discussion of how our approach relates to previous work, the complexity of finding exact solutions to pomdps, and of some possibilities for finding approximate solutions.}
 }
+
+
 
 @ARTICLE{KaplanMeier58,
   author = {Kaplan, E. L. and Meier, P.},
@@ -142,6 +190,46 @@ doi = {10.1023/A:1015059928466}
   PDF = {https://hal.science/hal-02561846v1/file/NS_theory.pdf},
   HAL_ID = {hal-02561846},
   HAL_VERSION = {v1},
+}
+
+@article{noveltyarticle,
+	author = {Lehman, Joel and Stanley, Kenneth},
+	year = {2011},
+	month = {06},
+	pages = {189-223},
+	title = {Abandoning Objectives: Evolution Through the Search for Novelty Alone},
+	volume = {19},
+	journal = {Evolutionary computation},
+	doi = {10.1162/EVCO_a_00025}
+}
+
+@inproceedings{notenoughnovelty,
+	author = {Cuccu, Giuseppe and Gomez, Faustino},
+	year = {2011},
+	month = {04},
+	pages = {234-243},
+	title = {When Novelty Is Not Enough},
+	volume = {6624},
+	isbn = {978-3-642-20524-8},
+	doi = {10.1007/978-3-642-20525-5_24}
+}
+
+@inproceedings{noveltyEmpirical,
+	author = {Gomes, Jorge and Mariano, Pedro and Christensen, Anders Lyhne},
+	title = {Devising Effective Novelty Search Algorithms: A Comprehensive Empirical Study},
+	year = {2015},
+	isbn = {9781450334723},
+	publisher = {Association for Computing Machinery},
+	address = {New York, NY, USA},
+	url = {https://doi.org/10.1145/2739480.2754736},
+	doi = {10.1145/2739480.2754736},
+	abstract = {Novelty search is a state-of-the-art evolutionary approach that promotes behavioural novelty instead of pursuing a static objective. Along with a large number of successful applications, many different variants of novelty search have been proposed. It is still unclear, however, how some key parameters and algorithmic components influence the evolutionary dynamics and performance of novelty search. In this paper, we conduct a comprehensive empirical study focused on novelty search's algorithmic components. We study the "k" parameter -- the number of nearest neighbours used in the computation of novelty scores; the use and function of an archive; how to combine novelty search with fitness-based evolution; and how to configure the mutation rate of the underlying evolutionary algorithm. Our study is conducted in a simulated maze navigation task. Our results show that the configuration of novelty search can have a significant impact on performance and behaviour space exploration. We conclude with a number of guidelines for the implementation and configuration of novelty search, which should help future practitioners to apply novelty search more effectively.},
+	booktitle = {Proceedings of the 2015 Annual Conference on Genetic and Evolutionary Computation},
+	pages = {943–950},
+	numpages = {8},
+	keywords = {premature convergence, novelty search, neuroevolution, evolutionary robotics, empirical study},
+	location = {Madrid, Spain},
+	series = {GECCO '15}
 }
 
 @misc{pathak2017curiositydrivenexplorationselfsupervisedprediction,
