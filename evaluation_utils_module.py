@@ -51,7 +51,7 @@ def select_minimal_exaples(examples):
 def load_from_grid_search(en, container, alg):
     with open("relevant_grid_search.json", "r") as f:
         grid_doc = json.load(f)
-    latest = grid_doc["latest"]
+    latest = grid_doc[en]
     storage = f"Data/grid_search/{latest}/{en}/{container}/{alg}"
     #study_name = grid_doc[container][alg][en]
 
