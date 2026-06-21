@@ -58,7 +58,7 @@ def main():
     )
 
     args = parser.parse_args()
-    seeds =list(range(101, 101+args.seeds))
+    seeds =list(range(121, 121+args.seeds))
     print(seeds)
     make_decay_examination(
         en=args.environment,

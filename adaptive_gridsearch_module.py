@@ -14,7 +14,7 @@ from concurrent.futures import Future
 
 
 SEEDS = [101,102,103]
-
+EV_NG = 20
 def evaluation_of_setup(en, run_name, alg, container, out_path, ev_ng, **kwargs):
     #we do not deviate the sigma
     # first we evaluate the current setup
@@ -99,46 +99,60 @@ def process_generated_arguments(run_name, en, container, alg, generated_argument
             toupled = tuple(sorted(args.items()))
             if toupled in visited:
                 future = Future().set_result(visited[toupled])
-
-            future = executor.submit(
-                evaluation_of_setup, 
-                run_name=run_name,
-                en=en, 
-                alg=alg,
-                ev_ng=20, 
-                container=container,
-                out_path=outpath,
-                **args)
+                
+            else:
+                future = executor.submit(
+                    evaluation_of_setup, 
+                    run_name=run_name,
+                    en=en, 
+                    alg=alg,
+                    ev_ng=EV_NG, 
+                    container=container,
+                    out_path=outpath,
+                    **args)
             arg_futures[future] = args
-        max_fitness = selected_fitnes
-        max_diversity = selected_diversity
-        return_candidate = None
-        for future in concurrent.futures.as_completed(arg_futures):
-            args = arg_futures[future]
-            toupled = tuple(sorted(args.items()))
-            fitness, diversity  = future.result()
-            visited_new[toupled] = (fitness, diversity)
-            if fitness > max_fitness:
-                print("We should have changed who's the best!")
+    max_fitness = selected_fitnes
+    max_diversity = selected_diversity
+    return_candidate = None
+    for future in concurrent.futures.as_completed(arg_futures):
+        args = arg_futures[future]
+        toupled = tuple(sorted(args.items()))
+        fitness, diversity  = future.result()
+        visited_new[toupled] = (fitness, diversity)
+        if fitness > max_fitness:
+            print("We should have changed who's the best!")
+            max_fitness = fitness
+            return_candidate = args
+            max_diversity = diversity
+        elif fitness == max_fitness:
+            if diversity > max_diversity:
+                print("We should have changed based on diversity!")
                 max_fitness = fitness
                 return_candidate = args
                 max_diversity = diversity
-            elif fitness == max_fitness:
-                if diversity > max_diversity:
-                    print("We should have changed based on diversity!")
-                    max_fitness = fitness
-                    return_candidate = args
-                    max_diversity = diversity
-                
-        return max_fitness, max_diversity, return_candidate, visited_new
+            
+    return max_fitness, max_diversity, return_candidate, visited_new
     
 
-def adaptive_lambda_grid_search(run_name, en,container, hops, starting_position, starting_fitness, dl, dm, dcr, dmr, outpath):
+def adaptive_lambda_grid_search(
+        run_name, 
+        en,
+        container, 
+        hops, 
+        starting_position, 
+        starting_fitness,
+        starting_diversity, 
+        dl, 
+        dm, 
+        dcr, 
+        dmr, 
+        outpath
+    ):
     visited = dict()
-    visited[tuple(sorted(starting_position.items()))] = (starting_fitness, 0)
+    visited[tuple(sorted(starting_position.items()))] = (starting_fitness, starting_diversity)
     selected = starting_position
     selected_fitness = starting_fitness
-    selected_diversity = 0
+    selected_diversity = starting_diversity
     D_cr = [dcr, 0, -dcr]
     D_mr = [dmr, 0, -dmr]
     D_m = [dm, 0, -dm]
@@ -211,17 +225,18 @@ def adaptive_diff_grid_search(
         container, 
         hops, 
         starting_position, 
-        starting_fitness, 
+        starting_fitness,
+        starting_diversity, 
         dl, 
         dcr, 
         dmr, 
         outpath
     ):
     visited = dict()
-    visited[tuple(sorted(starting_position.items()))] = (starting_fitness, 0)
+    visited[tuple(sorted(starting_position.items()))] = (starting_fitness, starting_diversity)
     selected = starting_position
     selected_fitness = starting_fitness
-    selected_diversity = 0
+    selected_diversity = starting_diversity
     D_cr = [dcr, 0, -dcr]
     D_mr = [dmr, 0, -dmr]
     D_l = [dl, 0, -dl]
@@ -298,6 +313,16 @@ def adaptive_grid_search(en, alg, run_name, container, hops = 3, out_path="./Dat
     new_study = optuna.load_study(study_name=study_name,storage=storage)
     most_promising, mi = select_minimal_exaples([t.params for t in new_study.best_trials])
     selected_trial = new_study.best_trials[mi[0]]
+    most_promising_args = rename(most_promising[0])
+    most_fitness, most_diversity = evaluation_of_setup(
+        en=en, 
+        run_name=run_name,
+        alg=alg,
+        container=container,
+        out_path=out_path+f"/{en}", 
+        ev_ng=EV_NG,
+        **most_promising_args
+    )
     start =datetime.datetime.now()
     
     if alg=="lambda":
@@ -316,8 +341,9 @@ def adaptive_grid_search(en, alg, run_name, container, hops = 3, out_path="./Dat
             en=en,
             container=container, 
             hops=hops, 
-            starting_position=rename(most_promising[0]),
-            starting_fitness=selected_trial.value, 
+            starting_position=most_promising_args,
+            starting_fitness=most_fitness,
+            starting_diversity=most_diversity,  
             dl=dl, 
             dm=dm, 
             dcr=dcr, 
@@ -338,8 +364,9 @@ def adaptive_grid_search(en, alg, run_name, container, hops = 3, out_path="./Dat
             en=en,
             container=container, 
             hops=hops, 
-            starting_position=rename(most_promising[0]),
-            starting_fitness=selected_trial.value, 
+            starting_position=most_promising_args,
+            starting_fitness=most_fitness,
+            starting_diversity = most_diversity, 
             dl=dl,  
             dcr=dcr, 
             dmr=dmr,

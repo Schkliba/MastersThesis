@@ -70,10 +70,9 @@ parser.add_argument(
 )
 
 args = parser.parse_args()
-
+environment = args.environment
 
 def lambda_objective(trial:Trial):
-    environment = args.environment
     env = Cs.ENIVROMENTS[environment]()
     cross_method = trial.suggest_categorical("crossmethod", ["uniform", "mean"])
     if environment == "lunarlander":
