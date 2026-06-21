@@ -7,5 +7,5 @@ for i in "${arr[@]}"
 do
    python adaptive_gridsearch.py -e cartpole -a lambda -c $i -o $OUTPUT -r bash_run -H 3 &
    python adaptive_gridsearch.py -e cartpole -a diff -c $i -o $OUTPUT -r bash_run -H 3 &
+   wait
 done
-wait
