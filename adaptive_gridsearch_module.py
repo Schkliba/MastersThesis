@@ -98,7 +98,8 @@ def process_generated_arguments(run_name, en, container, alg, generated_argument
         for args in generated_arguments:
             toupled = tuple(sorted(args.items()))
             if toupled in visited:
-                future = Future().set_result(visited[toupled])
+                future = Future()
+                future.set_result(visited[toupled])
                 
             else:
                 future = executor.submit(
