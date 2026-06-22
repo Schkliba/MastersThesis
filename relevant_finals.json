@@ -118,7 +118,7 @@
                 "archive_batch": 5,
                 "limit": 220.0,
                 "cross_uni": 0.6,
-                "ng": 35
+                "ng": 20
             }
         }
     },
@@ -201,7 +201,7 @@
                 "cr": 0.7000000000000001,
                 "archiving_period": 3,
                 "archive_batch": 3,
-                "ng": 35
+                "ng": 20
             }
         }
     },
