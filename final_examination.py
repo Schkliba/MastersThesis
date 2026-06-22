@@ -50,7 +50,12 @@ def main():
         help="Output path for generated results"
     )
 
-
+    parser.add_argument(
+        "--source",
+        "-R",
+        default="list",
+        help="Source of choice"
+    )
 
     args = parser.parse_args()
     seeds =list(range(101, 101+args.seeds))
@@ -59,7 +64,8 @@ def main():
         alg=args.algorithm,
         seeds=seeds,
         container=args.container,
-        name=args.name
+        name=args.name,
+        source = args.source
     )
 
 
