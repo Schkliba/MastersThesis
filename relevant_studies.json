@@ -68,7 +68,7 @@
         },
         "diff":{
             "lunarlander":"diff_novelty_limit",
-            "cartpole":"lambda_novelty_limit"
+            "cartpole":"diff_novelty_limit"
 
         }
     },
