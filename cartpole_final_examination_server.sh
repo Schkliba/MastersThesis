@@ -1,6 +1,6 @@
 OUTPUT="server_try0" 
 
-declare -a arr=("fit_archving" "novelty_limit" "novelty_archiving" "elite_archiving")
+declare -a arr=("fit_archiving" "novelty_limit" "novelty_archiving" "elite_archiving")
 
 ## loop through above array (quotes are important if your elements may contain spaces)
 for i in "${arr[@]}"
