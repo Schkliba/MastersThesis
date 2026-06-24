@@ -9,8 +9,8 @@ class Evaluator:
     
     def __init__(self):
         self.behavior_space_f = lambda x: x
-        self.behavior_transform = lambda x,eps:x
-        self.fitness_transform = lambda x,eps: (x/eps, )
+        self.behavior_transform = lambda x,eps,stps:x
+        self.fitness_transform = lambda x,eps,stps: (x/eps, )
 
     @staticmethod
     def gen_pop(pop_size, ind_f):
@@ -29,6 +29,7 @@ class Evaluator:
         total_score = 0
         for episode in range(episodes):
             observation, score, done = self.reset()[0], 0, False
+            total_steps = 0
             behavior = self.behavior_space_f(observation, [0,0])
             while not done:
                 prediction = individual(observation[np.newaxis])[0].numpy()
@@ -37,9 +38,13 @@ class Evaluator:
                 behavior = self.behavior_space_f(observation, behavior)
                 score += reward
                 done = terminated or truncated
+                total_steps += 1
             total_score += score
 
-        return self.fitness_transform(total_score, episodes), self.behavior_transform(behavior, episodes)  
+        return (
+                self.fitness_transform(total_score, episodes, total_steps), 
+                self.behavior_transform(behavior, episodes, total_steps)
+            )
 
     def evalutation(self, individual: keras.Model, seed:int, episodes:int) -> float:
         fit, b = self.evalutation_b(individual, seed, episodes)

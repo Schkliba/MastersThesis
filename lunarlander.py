@@ -44,7 +44,7 @@ class LunarLanderEvaluator(ai.Evaluator):
             self.behavior_space_f = lambda observation, b: [(observation[0]/2.5), (observation[3]/10) + b[1]]#lambda observation: [observation[0]/2.5, observation[4]/6.2831855]
         else:
             self.behavior_space_f = behavioral_space_f
-        self.behavior_transform = lambda x, eps: [x[0], x[1]/eps]
+        self.behavior_transform = lambda x, eps, stps: [x[0], x[1]/stps]
         #self.in_dim = self.enviroment.observation_space.shape
         if hidden_dim is not None:
             self.hidden_dim = hidden_dim
