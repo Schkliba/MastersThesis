@@ -11,7 +11,7 @@
     },
     "add_novelty": {
         "lambda":{
-            "cartpole": "lambda_add_novelty_repair_insp",
+            "cartpole": "lambda_add_novelty_repair_insp3",
             "lunarlander":"lambda_add_novelty_exp_fixed_last"
         },
         "diff":{
