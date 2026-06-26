@@ -12,6 +12,8 @@
                 "l": 50,
                 "m": 50,
                 "mr": 0.03,
+                "mutation_sigma": 1.5,
+                "cross_uni": 0.5,
                 "cr": 0.8,
                 "ng": 25
             }
@@ -43,7 +45,7 @@
                 "cr": 0.5,
                 "archiving_period": 5,
                 "archive_batch": 4,
-                "ng": 25
+                "ng": 40
             },
             "lambda": {
                 "cross_method": "uniform",
@@ -94,7 +96,7 @@
                 "archive_batch": 4,
                 "limit": -80.0,
                 "cross_uni": 0.5,
-                "ng": 70
+                "ng": 25
             },
             "diff": {
                 "l": 50,
@@ -103,7 +105,7 @@
                 "archiving_period": 2,
                 "archive_batch": 1,
                 "limit": -180.0,
-                "ng": 35
+                "ng": 25
             }
         },
         "cartpole": {
@@ -141,7 +143,7 @@
                 "cr": 0.7,
                 "mutation_sigma": 2.5,
                 "cross_uni": 0.2,
-                "ng": 25
+                "ng": 10
             },
             "diff": {
                 "l": 40,
@@ -177,7 +179,7 @@
                 "cr": 0.9000000000000001,
                 "archiving_period": 4,
                 "archive_batch": 5,
-                "ng": 15
+                "ng": 80
             },
             "lambda": {
                 "cross_method": "mean",
@@ -234,7 +236,7 @@
                 "cr": 0.6000000000000001,
                 "archiving_period": 2,
                 "archive_batch": 2,
-                "ng": 35
+                "ng": 80
             }
         },
         "cartpole": {
@@ -279,6 +281,28 @@
                 "fitness_weight": 0.4,
                 "ng": 30
             }
+        },
+        "lunarlander": {
+            "diff": {
+                "l": 50,
+                "mr": 0.13,
+                "cr": 0.4,
+                "fitness_weight": 0.5,
+                "decay": 4.0,
+                "ng": 15
+            },
+            "lambda": {
+                "cross_method": "uniform",
+                "l": 85,
+                "m": 70,
+                "mr": 0.25,
+                "cr": 1.0,
+                "mutation_sigma": 0.5,
+                "fitness_weight": 0.6000000000000001,
+                "decay": 2.0,
+                "cross_uni": 0.7000000000000001,
+                "ng": 15
+            }
         }
     },
     "sub_novelty": {
@@ -302,6 +326,16 @@
                 "decay": 1.0,
                 "cross_uni": 0.7000000000000001,
                 "ng": 20
+            }
+        },
+        "lunarlander": {
+            "diff": {
+                "l": 70,
+                "mr": 0.04,
+                "cr": 0.7000000000000001,
+                "fitness_weight": 0.4,
+                "decay": 1.0,
+                "ng": 25
             }
         }
     }

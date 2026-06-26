@@ -56,7 +56,7 @@ def load_from_grid_search(en, container, alg):
     #study_name = grid_doc[container][alg][en]
 
     directory = Path(storage)
-
+    print(directory)
     for json_file in directory.glob("*.json"):
         with open(json_file, "r") as f:
             protocol = json.load(f)
