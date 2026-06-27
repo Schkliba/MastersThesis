@@ -34,15 +34,18 @@ def evaluation_of_setup(en, alg, container, generations, experiment_name, out_pa
             gens_future[future] = ng
 
     stats = {}
+    pops={}
     for future in concurrent.futures.as_completed(stat_futures):
         s = stat_futures[future]
         ng = gens_future[future]
+        #pops[future]
         result = future.result()
         if "fitness" not in stats:
             stats["fitness"] = {}
         if str(ng) not in stats["fitness"]:
             stats["fitness"][str(ng)] = {}
         stats["fitness"][str(ng)][s] = result[0]
+        pops[str(ng)] = result[1] 
     
     if type_out == "base":
         ts = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -57,8 +60,8 @@ def evaluation_of_setup(en, alg, container, generations, experiment_name, out_pa
         with open(json_path, "w") as json_file:
             json.dump(stats,json_file)
             print("Finished "+ filename)
-        # with open(pickle_path, "wb") as f:
-            # pickle.dump(pops, f)
+        with open(pickle_path, "wb") as f:
+            pickle.dump(pops, f)
         
     else:
         path = f"./Data/generation_ex/{en}/{container}/{alg}/{experiment_name}"
