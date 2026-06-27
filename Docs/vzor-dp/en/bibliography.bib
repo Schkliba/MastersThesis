@@ -21,6 +21,16 @@
   isbn = {80-7378-001-1}
 }
 
+@book{statistics,
+	author = {Spencer, Neil and Smeeton, Nigel and Sprent, Peter},
+	year = {2025},
+	month = {03},
+	pages = {},
+	title = {Applied Nonparametric Statistical Methods},
+	isbn = {9780429326172},
+	doi = {10.1201/9780429326172}
+}
+
 @BOOK{Andel98,
   title = {Statistické metody},
   publisher = {Matfyzpress},
@@ -75,6 +85,35 @@
 	volume = {11},
 	journal = {Journal of Global Optimization},
 	doi = {10.1023/A:1008202821328}
+}
+
+@article{Cureton01091967,
+	author = {Edward E. Cureton},
+	title = {The Normal Approximation to the Signed-Rank Sampling Distribution When Zero Differences are Present},
+	journal = {Journal of the American Statistical Association},
+	volume = {62},
+	number = {319},
+	pages = {1068--1069},
+	year = {1967},
+	publisher = {Taylor \& Francis},
+	doi = {10.1080/01621459.1967.10500917},
+	
+	
+	URL = { 
+	
+	
+	https://www.tandfonline.com/doi/abs/10.1080/01621459.1967.10500917
+	
+	
+	},
+	eprint = { 
+	
+	
+	https://www.tandfonline.com/doi/pdf/10.1080/01621459.1967.10500917
+	
+	
+	}
+	
 }
 
 @article{DBLP:journals/corr/RossPPC14,
@@ -202,7 +241,34 @@ doi = {10.1023/A:1015059928466}
 	journal = {Evolutionary computation},
 	doi = {10.1162/EVCO_a_00025}
 }
+@inproceedings{Salehi_2021, series={GECCO ’21},
+	title={BR-NS: an archive-less approach to novelty search},
+	url={http://dx.doi.org/10.1145/3449639.3459303},
+	DOI={10.1145/3449639.3459303},
+	booktitle={Proceedings of the Genetic and Evolutionary Computation Conference},
+	publisher={ACM},
+	author={Salehi, Achkan and Coninx, Alexandre and Doncieux, Stephane},
+	year={2021},
+	month=June, pages={172–179},
+	collection={GECCO ’21} }
 
+@inproceedings{behaviorCharML,
+	author = {Meyerson, Elliot and Lehman, Joel and Miikkulainen, Risto},
+	title = {Learning Behavior Characterizations for Novelty Search},
+	year = {2016},
+	isbn = {9781450342063},
+	publisher = {Association for Computing Machinery},
+	address = {New York, NY, USA},
+	url = {https://doi.org/10.1145/2908812.2908929},
+	doi = {10.1145/2908812.2908929},
+	abstract = {Novelty search and related diversity-driven algorithms provide a promising approach to overcoming deception in complex domains. The behavior characterization (BC) is a critical choice in the application of such algorithms. The BC maps each evaluated individual to a behavior, i.e., some vector representation of what the individual is or does during evaluation. Search is then driven towards diversity in a metric space of these behaviors. BCs are built from hand-designed features that are limited by human expertise, or upon generic descriptors that cannot exploit domain nuance. The main contribution of this paper is an approach that addresses these shortcomings. Generic behaviors are recorded from evolution on several training tasks, and a new BC is learned from them that funnels evolution towards successful behaviors on any further tasks drawn from the domain. This approach is tested in increasingly complex simulated maze-solving domains, where it outperforms both hand-coded and generic BCs, in addition to outperforming objective-based search. The conclusion is that adaptive BCs can improve search in many-task domains with little human expertise.},
+	booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference 2016},
+	pages = {149–156},
+	numpages = {8},
+	keywords = {behavior characterization, diversity, novelty search, search},
+	location = {Denver, Colorado, USA},
+	series = {GECCO '16}
+}
 @inproceedings{notenoughnovelty,
 	author = {Cuccu, Giuseppe and Gomez, Faustino},
 	year = {2011},
@@ -240,4 +306,56 @@ doi = {10.1023/A:1015059928466}
 	archivePrefix={arXiv},
 	primaryClass={cs.LG},
 	url={https://arxiv.org/abs/1705.05363}, 
+}
+
+@article{algTesting,
+	author = {García, Salvador and Molina, Daniel and Lozano, Manuel and Herrera, Francisco},
+	year = {2009},
+	month = {12},
+	pages = {617-644},
+	title = {A study on the use of non-parametric tests for analyzing the evolutionary algorithms' behaviour: A case study on the CEC'2005 Special Session on Real Parameter Optimization},
+	volume = {15},
+	journal = {J. Heuristics},
+	doi = {10.1007/s10732-008-9080-4}
+}
+
+@book{introduction,
+	author = {Eiben, A. and Smith, Jim},
+	year = {2003},
+	month = {01},
+	pages = {},
+	title = {Introduction To Evolutionary Computing},
+	volume = {45},
+	isbn = {978-3-642-07285-7},
+	journal = {Computing Reviews},
+	doi = {10.1007/978-3-662-05094-1}
+}
+@article{Beiranvand_2017,
+	title={Best practices for comparing optimization algorithms},
+	volume={18},
+	ISSN={1573-2924},
+	url={http://dx.doi.org/10.1007/s11081-017-9366-1},
+	DOI={10.1007/s11081-017-9366-1},
+	number={4},
+	journal={Optimization and Engineering},
+	publisher={Springer Science and Business Media LLC},
+	author={Beiranvand, Vahid and Hare, Warren and Lucet, Yves},
+	year={2017},
+	month=Sept, pages={815–848} }
+
+
+@Inbook{Wilcoxon1992,
+	author="Wilcoxon, Frank",
+	editor="Kotz, Samuel
+	and Johnson, Norman L.",
+	title="Individual Comparisons by Ranking Methods",
+	bookTitle="Breakthroughs in Statistics: Methodology and Distribution",
+	year="1992",
+	publisher="Springer New York",
+	address="New York, NY",
+	pages="196--202",
+	abstract="The comparison of two treatments generally falls into one of the following two categories: (a) we may have a number of replications for each of the two treatments, which are unpaired, or (b) we may have a number of paired comparisons leading to a series of differences, some of which may be positive and some negative. The appropriate methods for testing the significance of the differences of the means in these two cases are described in most of the textbooks on statistical methods.",
+	isbn="978-1-4612-4380-9",
+	doi="10.1007/978-1-4612-4380-9_16",
+	url="https://doi.org/10.1007/978-1-4612-4380-9_16"
 }

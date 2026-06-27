@@ -1,8 +1,15 @@
 \chapter{Experiments}
 \label{ch:experiments}
-\section{Hyperparameter selection}
-\subsection{Bayesian Search}
-\subsection{Iterative refinement}
+In this chapter we will discuss the experiment and their results. The code for the experiments has been written in Python 3.10 and experiments were conducted on several computers characterised in atachment \ref{atch:computers}. The complete project with data and scripts is available publicly in \href{https://github.com/Schkliba/MastersThesis}{Github repository}.
+
+\section{Bayesian Search}
+As mentioned in section \ref{sec:bayesSearch}, we perform one optimisation run per container, resulting in one relevant study. This is purely practical measure pertaining to time feasibility of the experiments. In each optimisation run we perform fixed number of trials. We use 150 trials as baseline, adding 10-20 trials for more parametrised containers. Because we are dealing with stochastic method this number does not guarantee neither good or bad performance and has been arbitrarily chosen from experience with preliminary experiments.
+The hyperparameter selection for each run is done within limits detailed in table \ref{tab:optunaStart}.
+
+
+\subsection{Iterative grid search}
+
+
 \subsection{Generational grid search}
 \section{Final comparison}
 \subsection{Cartpole}

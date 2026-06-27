@@ -1,9 +1,18 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Beiranvand et~al.(2017)Beiranvand, Hare, and Lucet]{Beiranvand_2017}
+Vahid Beiranvand, Warren Hare, and Yves Lucet.
+\newblock Best practices for comparing optimization algorithms.
+\newblock \emph{Optimization and Engineering}, 18\penalty0 (4):\penalty0
+  815–848, 2017.
+\newblock ISSN 1573-2924.
+\newblock \doi{10.1007/s11081-017-9366-1}.
+\newblock URL \url{http://dx.doi.org/10.1007/s11081-017-9366-1}.
 
 \bibitem[Bergstra et~al.(2011)Bergstra, Bardenet, Bengio, and
   K{\'e}gl]{bergstra2011algorithms}
@@ -25,6 +34,16 @@ Giuseppe Cuccu and Faustino Gomez.
 \newblock ISBN 978-3-642-20524-8.
 \newblock \doi{10.1007/978-3-642-20525-5_24}.
 
+\bibitem[Cureton(1967)]{Cureton01091967}
+Edward~E. Cureton.
+\newblock The normal approximation to the signed-rank sampling distribution
+  when zero differences are present.
+\newblock \emph{Journal of the American Statistical Association}, 62\penalty0
+  (319):\penalty0 1068--1069, 1967.
+\newblock \doi{10.1080/01621459.1967.10500917}.
+\newblock URL
+  \url{https://www.tandfonline.com/doi/abs/10.1080/01621459.1967.10500917}.
+
 \bibitem[Doncieux et~al.(2019)Doncieux, Laflaqui{\`e}re, and
   Coninx]{doncieux:hal-02561846}
 Stephane Doncieux, Alban Laflaqui{\`e}re, and Alexandre Coninx.
@@ -33,6 +52,21 @@ Stephane Doncieux, Alban Laflaqui{\`e}re, and Alexandre Coninx.
   Conference}}, pages 99--106, Prague Czech Republic, France, July 2019. {ACM}.
 \newblock \doi{10.1145/3321707.3321752}.
 \newblock URL \url{https://hal.science/hal-02561846}.
+
+\bibitem[Eiben and Smith(2003)]{introduction}
+A.~Eiben and Jim Smith.
+\newblock \emph{Introduction To Evolutionary Computing}, volume~45.
+\newblock 01 2003.
+\newblock ISBN 978-3-642-07285-7.
+\newblock \doi{10.1007/978-3-662-05094-1}.
+
+\bibitem[García et~al.(2009)García, Molina, Lozano, and Herrera]{algTesting}
+Salvador García, Daniel Molina, Manuel Lozano, and Francisco Herrera.
+\newblock A study on the use of non-parametric tests for analyzing the
+  evolutionary algorithms' behaviour: A case study on the cec'2005 special
+  session on real parameter optimization.
+\newblock \emph{J. Heuristics}, 15:\penalty0 617--644, 12 2009.
+\newblock \doi{10.1007/s10732-008-9080-4}.
 
 \bibitem[Goldberg and Deb(1991)]{GOLDBERG199169}
 David~E. Goldberg and Kalyanmoy Deb.
@@ -73,6 +107,17 @@ Joel Lehman and Kenneth Stanley.
 \newblock \emph{Evolutionary computation}, 19:\penalty0 189--223, 06 2011.
 \newblock \doi{10.1162/EVCO_a_00025}.
 
+\bibitem[Meyerson et~al.(2016)Meyerson, Lehman, and
+  Miikkulainen]{behaviorCharML}
+Elliot Meyerson, Joel Lehman, and Risto Miikkulainen.
+\newblock Learning behavior characterizations for novelty search.
+\newblock In \emph{Proceedings of the Genetic and Evolutionary Computation
+  Conference 2016}, GECCO '16, page 149–156, New York, NY, USA, 2016.
+  Association for Computing Machinery.
+\newblock ISBN 9781450342063.
+\newblock \doi{10.1145/2908812.2908929}.
+\newblock URL \url{https://doi.org/10.1145/2908812.2908929}.
+
 \bibitem[Ross et~al.(2014)Ross, Pineau, Paquet, and
   Chaib{-}draa]{DBLP:journals/corr/RossPPC14}
 St{\'{e}}phane Ross, Joelle Pineau, S{\'{e}}bastien Paquet, and Brahim
@@ -88,6 +133,21 @@ Stuart Russell and Peter Norvig.
 \newblock ISBN 9781292401133.
 \newblock URL \url{https://elibrary.pearson.de/book/99.150005/9781292401171}.
 
+\bibitem[Salehi et~al.(2021)Salehi, Coninx, and Doncieux]{Salehi_2021}
+Achkan Salehi, Alexandre Coninx, and Stephane Doncieux.
+\newblock Br-ns: an archive-less approach to novelty search.
+\newblock In \emph{Proceedings of the Genetic and Evolutionary Computation
+  Conference}, GECCO ’21, page 172–179. ACM, 2021.
+\newblock \doi{10.1145/3449639.3459303}.
+\newblock URL \url{http://dx.doi.org/10.1145/3449639.3459303}.
+
+\bibitem[Spencer et~al.(2025)Spencer, Smeeton, and Sprent]{statistics}
+Neil Spencer, Nigel Smeeton, and Peter Sprent.
+\newblock \emph{Applied Nonparametric Statistical Methods}.
+\newblock 03 2025.
+\newblock ISBN 9780429326172.
+\newblock \doi{10.1201/9780429326172}.
+
 \bibitem[Storn and Price(1997)]{diffEV}
 Rainer Storn and Kenneth Price.
 \newblock Differential evolution - a simple and efficient heuristic for global
@@ -95,5 +155,13 @@ Rainer Storn and Kenneth Price.
 \newblock \emph{Journal of Global Optimization}, 11:\penalty0 341--359, 01
   1997.
 \newblock \doi{10.1023/A:1008202821328}.
+
+\bibitem[Wilcoxon(1992)]{Wilcoxon1992}
+Frank Wilcoxon.
+\newblock \emph{Individual Comparisons by Ranking Methods}, pages 196--202.
+\newblock Springer New York, New York, NY, 1992.
+\newblock ISBN 978-1-4612-4380-9.
+\newblock \doi{10.1007/978-1-4612-4380-9_16}.
+\newblock URL \url{https://doi.org/10.1007/978-1-4612-4380-9_16}.
 
 \end{thebibliography}

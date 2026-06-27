@@ -78,10 +78,12 @@ This introduces a layer of complexity that is outside of the scope of this thesi
 	\label{alg:envloop}
 	
 	\KwIn{Environment $\mathcal{E}$}
-	\KwIn{Observation aggregation function $agg$}
-	
-	$o \leftarrow \mathrm{reset}(\mathcal{E})$\;
+	\KwIn{Number of episodes $ n $}
+	\KwIn{Observation aggregation functions $agg$ and $ transform $}
 	R = 0\;
+	\For{i =0 \KwTo n}{
+	$o \leftarrow \mathrm{reset}(\mathcal{E})$\;
+	$O \leftarrow \mathrm{reset}(O)$\;
 	\While{not terminated}{
 		
 		$a \leftarrow \mathrm{Agent}(o)$\;
@@ -92,13 +94,15 @@ This introduces a layer of complexity that is outside of the scope of this thesi
 		$ R \leftarrow R + r $\;
 		$ O  \leftarrow agg(O, o)$\;
 	}
-	
-	\Return R, O;
+	}
+	\Return R/n, $ transform(O) $;
 	
 \end{algorithm}
 
 
- As mentioned in the introduction the selected environments are called Cartpole and Lunar Lander.
+ As mentioned in the introduction the selected environments are called Cartpole and Lunar Lander. 
+ 
+ We will discuss the full purpose of $ agg $ and $ transform $ in the section \ref{sec:novelty} and section \ref{sec:behavioralSpace}.
 
 \subsection{Cartpole}
 \label{env:cartpole}

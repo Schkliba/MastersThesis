@@ -1,5 +1,6 @@
 % !TeX spellcheck = en_GB
 \chapter{Comparison criteria and conditions}
+\label{ch:setup}
 To compare different types of objective functions fairly, we have to select criteria by which we compare them and establish conditions under which will this comparison take place so that our conclusions are fair.
 \section{General criteria}
 Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective environments, getting more comprehensive picture then from a single run. This will be mainly reflected in the seed for random numbers generator of the environment. Since the promise of the novelty approach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced by the algorithm runs\\
@@ -8,24 +9,39 @@ However we also have to take into account the hyper-parameters with which these 
 While we have reviewed evolutionary algorithms and proposed different objective functions in chapter \ref{chap:evolution}, we now have to somehow refer to the combination of the two. For this purpose we propose the term \textbf{container}.
 We can divide the containers on the axis of algorithm to ES containers and DE container. And we can divide them on basis of objective function handling:
 \begin{itemize}
-	\item \textbf{fitness} container implements pure fitness aproach as described in \ref{sec:fitness}
-	\item \textbf{novelty} container implements pure novelty aproach as described in \ref{sec:novelty}
-	\item \textbf{fitness archive} container implements fitness search with random selection archive as described in \ref{sec:fitness}
-	\item \textbf{elite archive} container implements fitness search with elite selection archive as described in \ref{sec:fitness}
-	\item \textbf{novelty archive} container implements novelty search with random selection archive as described in \ref{sec:novelty}
-	\item \textbf{increase novelty} container implements increasing novelty objective as described in as described in \ref{sec:combFitNov}
-	\item \textbf{increase fitness} container implements increasing fitness objective as described in as described in \ref{sec:combFitNov}
-	\item \textbf{limit archive} container implements novelty search with fitness threshold archive as described in \ref{sec:combFitNov}
+	\item \textbf{fitness} container implements pure fitness aproach as described 
+	
+	in section \ref{sec:fitness}
+	
+	\item \textbf{novelty} container implements pure novelty aproach as described 
+	
+	in section \ref{sec:novelty}
+	
+	\item \textbf{fitness archive} container implements fitness search with random selection archive as described in section  \ref{sec:fitness}
+	
+	\item \textbf{elite archive} container implements fitness search with elite selection
+	
+	archive as described in section \ref{sec:fitness}
+	
+	
+	\item \textbf{novelty archive} container implements novelty search with random selection archive as described in section \ref{sec:novelty}
+	\item \textbf{increase novelty} container implements increasing novelty objective as described in as described in section \ref{sec:combFitNov}
+	\item \textbf{increase fitness} container implements increasing fitness objective as described in as described in section \ref{sec:combFitNov}
+	\item \textbf{limit archive} container implements novelty search with fitness threshold archive as described in section \ref{sec:combFitNov}
 \end{itemize}
-
+Specifically for ES the crossover method is considered a hyperparameter that will be pinpointed druign the bayes search described in section \ref{sec:bayesSearch}.
 \section{Individual hyper-parameter selection}
-The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. We determined these parameter based on empirical experience in the chapter \ref{chap:environment}.
-\subsection{Cartpole}
-\subsubsection{Behavioral Space}
-\subsubsection{title}
+The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. 
+
+\subsection{NN Structure}
+As discussed in chapter \ref{ch:agents} as a choice we are making our agents to be simple feed-forward neural networks. This choice is on account of simplicty but also on account of adequacy as the bigger the neural network is the more resources need to be spend on optimising it. The NN structures are depicted on figures \ref{fig:cartpoleNN} and \ref{fig:lunarlanderNN} for Cartpole and Lunarlander respectively. 
+
+Both structures have been selected on account of preliminary experience with the environments. Shapes of input and output layer are determined by the respective observation and action space. 
+
+The genom of evolving individual consists purely of the weight and bias matrices of the hidden layers nothing else is subject to evolution. For the purposes of this thesis and in relation to the descriptions of evolutionary mechanics given so far we should think about these matrices as flattened to a single long vector. In the case of Lunar lander with multiple layer the vectors are concatenated.  
 \begin{figure}[h]
 	\centering
-	\label{fig:cartpoleNN}
+	
 	\begin{tikzpicture}[
 		>=latex,
 		node distance=1.8cm,
@@ -61,24 +77,25 @@ The hyper-parameters characterising individuals are number of layers and the num
 		% Nodes
 		\node[input] (in) {Input\\Observation};
 		
-		\node[hidden, below=of in] (h1) {Hidden Layer\\(7 neurons)};
+		\node[hidden, below=of in] (h1) {Hidden Layer\\(4 neurons)};
 		
 	
 		
-		\node[output, below=of h1] (out) {Output\\Action Vector};
+		\node[output, below=of h1] (out) {Output Action\\ softmax};
 		
 		% Connections
-		\draw[->] (in) -- node[right] {$\tanh$} (h1);
+		\draw[->] (in) -- node[right] {} (h1);
 		\draw[->] (h1) -- node[right] {$\tanh$} (out);
 
 		
 	\end{tikzpicture}
 	\caption{Structure of Carpole agentic network}
+	\label{fig:cartpoleNN}
 \end{figure}
-\subsection{Lunar Lander}
+
 \begin{figure}[h]
 	\centering
-	\label{fig:lunarlanderNN}
+	
 	\begin{tikzpicture}[
 		>=latex,
 		node distance=1.8cm,
@@ -118,21 +135,34 @@ The hyper-parameters characterising individuals are number of layers and the num
 		
 		\node[hidden, below=of h1] (h2) {Hidden Layer 2\\(7 neurons)};
 		
-		\node[output, below=of h2] (out) {Output\\Action Vector};
+		\node[output, below=of h2] (out) {Output Action\\ softmax};
 		
 		% Connections
-		\draw[->] (in) -- node[right] {$\tanh$} (h1);
+		\draw[->] (in) -- node[right] {} (h1);
 		\draw[->] (h1) -- node[right] {$\tanh$} (h2);
-		\draw[->] (h2) -- node[right] {linear} (out);
+		\draw[->] (h2) -- node[right] {$\tanh$} (out);
 		
 	\end{tikzpicture}
 	\caption{Structure of Lunar Lander agentic network}
+	\label{fig:lunarlanderNN}
 \end{figure}
 
+\subsection{Behavioral Space}
+\label{sec:behavioralSpace}
+As we can see through the definition of observer function in definition \ref{def:observer}, the choice of transaformation from history to behavioral space can be arbitrarily complex.
+Recently there have been proposals of automatic behavioral space extraction like in the paper \cite{behaviorCharML} or \cite{Salehi_2021} . However the original paper \cite{noveltyarticle} ephasises application of domain knowledge to the behavioral space design. Because this thesis is in the core comparative and we are interested in the interpretability of the design as much as raw performance, we have opted for manual design based on our preliminary experiments and experience with the environments. We also take into account the fact that the greatest advantage from an automatic behavioral space extraction is obtained mainly in complex environments \citep{behaviorCharML}. 
+
+While we won't specify $ agg $ and $ transform$ functions introduced in algorithm \ref{alg:envloop} explicitly for readability purposes, their definitions are implied by respective definition of observer function $ \omega_B $ and the fact we will only consider the behaviour of the last evaluated episode. While such aproach loses some of the infromation about the evaluated individual it also does not introduce consistency trade-offs of standard aggregations like $ \max $, $ \min $ or $ mean $ applied component-wise. Their solution is out of the scope of this thesis. 
+\subsubsection{Cartpole}
+Let $ h_{Cart} = (a_0,o_1,a_1, \dots, o_T) $ be history of one completed episode of Cartpole that lasted $ T $ steps and $ o_T $ is the last observation. Then we define observer function: $$ \omega_B(h_{Cart}) = (pos_X(o_T), \theta(o_T))$$ where $ pos_X(o_T) $ is reported position on  x-axis in observation $o_T$ and $ \theta(o_T) $ is pole angle both normalised to interval $ \left[-1, 1\right] $ through their respective maximal values reported in table \ref{tab:cartpole_state_space}.
+\subsubsection{Lunar Lander}
+Let $ h_{Lun} = (a_0,o_1,a_1, \dots, o_T) $ be history of one completed episode of Lunar Lander that lasted $ T $ steps. Then we define observer function: $$ \omega_B(h_{Lun}) = (pos_X(o_T), v_Y(\bar{o}))$$ where $ pos_X(o_T) $ is reported position on  x-axis in observation $o_T$, $ v_Y $ is a reported velocity in y-axis and $ \bar{o} 
+ $ is mean of all observations recorded in $ h_{Lun} $.  Both components of behavioral vector again normalised to interval $ \left[-1, 1\right] $ through their respective maximal values reported in table \ref{tab:lander_state_space}.
 \section{Algorithm hyperparameter selection}
 We have reviewed hyperparamets of each algorithm in the chapter \ref{chap:evolution}. Now we will review the process of their selection. The diffulty of the task lies mainly in the complexity of evaluation. As we will discuss later some of the experiments maybe evaluated over day or even several days on the available hardware even for a 100 limited algorithm runs. For this reason we need to utilise bayesian search which is able to prune a lot of the redundant space out so that we may not waste time with it. This however has a considerable downside for our purposes as we would like to compare the algorithms on their best footing. Therefore we refine the bayesian search results with local grid search attempting to deviate from the supposed hyperparameter equilibria.
 
 \subsection{Bayesian Search}
+\label{sec:bayesSearch}
 Because we are faced with multiple 
 Bayesian search is an algorithm where we stochastically deliniate where a possibly good solution may lie and then try to exploit this deliniation. Because the specific workings of Bayesian search are time-consuming to implement ad hoc (and also such implementation is out of the scope of this thesis) We will utilise library Optuna for the purpose.
 
@@ -181,12 +211,13 @@ Rather than optimizing this expression directly, TPE samples candidate points fr
 
 \subsection{General Gridsearches}
 Now we will discuss grid searches that are common for all implementations of our EAs. Note that for convenience we do not present these concepts in the temporal order in which they have been evaluated. 
-\subsubsection{evaluation episodes vs. generations}
-Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run in these experiments. The parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to select the lowest possible number. For this purpose we will run a grid search comparingdifferential algorithm's performance over different number of generations. Since the Gymnasium environments discussed in chapter \ref{chap:environment}. are based on similair principles we can be confident about generation of this result to conserve time for more meaningful experiment.
-<insert parameters>
 
-\subsubsection{generations grid search}
-After obtaining refined solution from each caontainer respective incremental grid search described in section \ref{sec:incgridsearch}  
+\subsubsection{Evaluation episodes vs. generations}
+Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run in these experiments. The parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to select the lowest possible number. For this purpose we will run a grid search comparingdifferential algorithm's performance over different number of generations. Since the Gymnasium environments discussed in chapter \ref{chap:environment}. are based on similair principles we will perform the search only and Cartpole but generalise the results to both. This is done to conserve time for more impactful experiments. 
+
+\subsubsection{Generations grid search}
+During the refining in Bayesian search and Incremental grid search we use fixed number of generations for the optimisations. This mean that we don't know how many generetaions are truly best. We perform a grid search over a range of generations. This will also allow us to compare performances and performance curves based on this parameter.
+  
 \subsection{Incremental grid search}
 \label{sec:incgridsearch}
 Because we obtained the optimised parameters from Bayesian search stochastically we would like to ensure that there is no easily obtainable set of parameters more performant than the set from BS. All however in time consuming fashion. To this end we have devised an algorithm of incremental grid search where we evaluate possibly useful deviations from the supposed local optima. Upon dicovering new optima we recenter the search around it. If we are not successfull in finding dominating set of parameters we end the search with the last obtained optima. We also end the search after more than 3 recentering (hops).  Since this is only refining algorithm of already functional solution we do not expect long searches.
@@ -208,7 +239,7 @@ Because we obtained the optimised parameters from Bayesian search stochastically
 	$ s \leftarrow  \emptyset$ \;
 	\tcp{final populations}
 	$ pop \leftarrow  \emptyset$ \;
-	$s(x_0), pop(x_0) \leftarrow A(x_0)$\; 
+	$s(x_0), diversity(x_0) \leftarrow A(x_0)$\; 
 	\For{$h \leftarrow 1$ \KwTo $H$}{
 		
 		Generate valid candidate argument sets
@@ -216,7 +247,7 @@ Because we obtained the optimised parameters from Bayesian search stochastically
 		
 
 		\ForEach{$c \in \mathcal{C}$}{
-			$s(c), pop(c) \leftarrow A(c)$\;
+			$s(c), diversity(c) \leftarrow A(c)$\; \tcp{for $ c\in \mathcal{V} $ we use cached values}
 			
 			$\mathcal{V} \leftarrow \mathcal{V} \cup \{c\}$\;
 		}
@@ -240,7 +271,7 @@ Because we obtained the optimised parameters from Bayesian search stochastically
 			\Else{
 				$x \leftarrow
 				\arg\max_{c \in \mathcal{B}}
-				\mathrm{Diversity}(pop(c))$\;
+				(diversity(c))$\;
 			
 			}
 		}
@@ -251,11 +282,57 @@ Because we obtained the optimised parameters from Bayesian search stochastically
 \end{algorithm}
 
 
-\subsection{$\lambda + \mu$ incemental grid search}
+The cadidates are generated from neighbourhoods of the selected solution $ x $ in one or more hyperparameter. For hyperparameter $ H $ the neighbourhood is defined by $ \delta_H $. We generate $ x_{-\delta}$, $ x_{+\delta}$, $ x_0 $ such that for  $ x_{-\delta}(H) = x(H) -  \delta_H $ and analogically for $ x_{+\delta}$. The option of $ x_0 $ might not make sense to generate for a single hyperparameter as this is just $ x $ repeated but in combination of two or more hyperparameters this ensures we truly check all combinations consisting the neighbourhood of $ x $ in those hyperparameters.
 
+\subsection{$\mu + \lambda$ incemental grid search}
+\label{sec:lambdaGrid}
+For the purposes of $\mu + \lambda$ algorithm we split the Generation and evaluation of candate solution for the iteration of the main loop into two parts.
+First part generates candidates in the neighbourhood on the hyperparameters $ \mu  +  CR $, the second $ \lambda +  MR$.
+While all hyperpaarameters interact we claim that theses pairs interact very strongly if not strongest as exploitation power of $ CR $ is directly interlinked with the stochastic diversity reservoir of the current population. On the other hand the size the new individual pool limits exploration power of mutation rate. It should be noted that the selection process happens after both candiate batch generations and so the candidates in $ \lambda +  MR$ stage might be generated from solution already updated by $ \mu  +  CR $ stage. The reason why we do this instead of generating all at once is time conservation and priority based on projected stability of the solution - we claim that alterations to the main population and crossover rate produce more stable algorithm based on preliminary experimantation. If we don't find the solution at first stage algorithm cannot prematurely terminate before the second stage is evaluated negatively as well.
 
 \subsection{DEs incremental grid search}
+\label{sec:deGrid}
+As we described in section \ref{sec:lambdaGrid} we split the candidate generation even for the differential evolution. First stage alternates only size of the population. Second stage alterantes hyperparameters $ \alpha + \gamma $ or the rescale factor and recombination rate introduced in \ref{alg:diffEv}. The algorithm again cannot terminate prematurely before both stages have been checked for improving solution.
 
+\section{Final comparison}
+In addition to graphical methods suggested in paper  \cite{Beiranvand_2017}
+to examine the results of the test we will use several statistical methods. Following advice in the paper \cite{algTesting}, which is specifically concerned with evolutionary algorithms, we will mainly utilise the non-parametrical tests which we introduce in this section. This enables us to compare results of our algorithm without imposing additional contrainsts. 
 
+The tests represent a null hypoteses $ H_0 $ which may or may not be rejected in favour of hypoteses $ H_1 $. This is done based on obtained p-value $ p $ representing a probability of observing the obtained data assuming the null hypoteses is true. We define a threshold of significance $ \alpha $ so that for $ \alpha > p $ the null hypoteses is rejected. Usually values $ 	\alpha = 0.1 $ or $ 	\alpha = 0.05 $ are chosen.\citep{algTesting}
+\subsection{Friedman test}
+We will use description of Friedman test from \cite{algTesting}. 
+There it is described as a statistical test testing $ k $ algorithms. The null hypotesis is that all $ k $ algorithm sample from the same population distribution. If rejected we accept at least one of the $ k $ algorithms samples from a different population distribution from the rest.
+We compute rankings $ r_j^i  $ of each algorithm $ j $ for each comparsion instance $ i $. In the case of this thesis comparison instance is a initial coditions set for an particular instance of evolutionary algorithm. Rank is distributed from the best having rank 1 to the worst rank k. Then we compute the Friedman statistic $ \chi_F^2 $:
+\[
+\chi_F^2 =
+\frac{12N}{k(k+1)}
+\left(
+\sum_{j=1}^{k} R_j^2
+-
+\frac{k(k+1)^2}{4}
+\right)
+\]
+where $ R_j = \frac{1}{N}\sum_{i=1}^{N} r_j^i $ and $ N $ i the number of comparison instances. The $ \chi_F^2 $ is then converted to p-value through a combinatorial computation. In reviewed literature it is not common to go over the computational process  explicitily as it maybe quite complex in the variety of aproximations. We will use the implementation in Python library SciPy which cites \cite{statistics}. 
+\subsection{Wilcoxon signed-rank test}
+Introduced in the paper \cite{Wilcoxon1992} in both paired and unpaired version, Wilcoxon signed-rank test enables us to compare two algorithm  without assumptions about the distributions of their tested output.
+We start by computing differences of the algorithms' $ A $ and $ B $ performances in each instance $ i $ of of total of $ N $ like so:
+$$ d_i = A_i - B_i$$
+Unlike in Friendman test where the rank is distribute across algorithms, in Wilcoxon test distributes rank across the absolute value of the differences $ |d_i| $.  Then we compute sums of ranks testifying for each of the caompared algorithm. $ R^{+} $ is the sum of ranks where algorithm A won ($ d_i > 0 $) while  $ R^{-} $ is the sum of ranks where algorithm B won ($ d_i < 0$). For $ d_i = 0 $ we split the ranks between the two sums \citep{algTesting}.
+\[ 
+R^{+} = \sum_{d_i > 0} rank(d_i) + \frac{1}{2}\sum_{d_i = 0} rank(d_i)
+ \]
+\[ 
+R^{-} = \sum_{d_i < 0} rank(d_i) + \frac{1}{2}\sum_{d_i = 0} rank(d_i)
+\]
 
+According to the paper \cite{algTesting} we then obtain value $$ T = \min(R^{+}, R^{-}) $$.
 
+ The T is then compared to the value of Wilcoxon distribution with $ N $ degrees of freedom. The null hypotesis that both algorithms perform equaly is rejected if the $ T $ is less or equal. 
+Corresponding p-value  is calculated using normal aproximation of Wilcoxon T statistic. \citep{Cureton01091967}
+\subsubsection{Holm's and Hochberg adjustment}
+Since we will be performing number of comparisons between different algorithm instances, we need to take  measures to prevent family-wise error rate (FWER). To do so \cite{algTesting} recommends Holm's and Hochbergs adjustment procedures.
+
+ Holm's procedure orders the obtained p-values so that: $ p_1 \le p_2 \le \dots \le p_{k-1} $. Each p-value $ p_i $, starting with the most significant,  is then compared to $ \frac{\alpha}{k-i} $ where $ \alpha $ is significance threshold. We continue up the chain as long as we can reject the null hypotesis $ H_i $ based on $ \frac{\alpha}{k-i} $. We stop once we cannot reject the null hypotesis and we conclude that all subsequent null-hypoteses hold up. \citep{algTesting}
+ 
+ 
+ In Hochberg's procedure we start from the least significant p-value and work our way down the chain. For the chain $ p_1 \ge p_2 \ge \dots \ge p_{k-1} $ comparing $ p_i $ with $ \frac{\alpha}{i} $. If the null hypoteses hold's up we move on to the next p-value. If it is rejected we consider all subsequent null-hypoteses rejected as well.\citep{algTesting}
