@@ -179,7 +179,7 @@
                 "cr": 0.9000000000000001,
                 "archiving_period": 4,
                 "archive_batch": 5,
-                "ng": 80
+                "ng": 10
             },
             "lambda": {
                 "cross_method": "mean",
