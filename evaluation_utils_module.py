@@ -17,7 +17,7 @@ def task_job(en, alg, container, args, s, out_path):
     print("Finished seed %d of algorithm %s" % (s, alg))
     return fitnesses, pop
 
-def select_minimal_exaples(examples):
+def select_minimal_examples(examples):
     rates = -np.inf
     pop = np.inf
     selected_trials = []
@@ -33,6 +33,27 @@ def select_minimal_exaples(examples):
     refined_trials = []
     refined_trials_index = []       
     for i, t in zip(selected_trials_index, selected_trials):
+        if "lambda" in t:
+            k = t["lambda"]
+            if "mu" in t:
+                k+=t["mu"]
+        elif "pop" in t:
+            k=t["pop"]
+        else: raise NameError(f"wtf")
+        if pop == k:
+            refined_trials.append(t)
+        elif pop > k:
+            pop = k
+            refined_trials = [t]
+            refined_trials_index.append(i)
+    return refined_trials, refined_trials_index
+
+
+def select_minimal_examples_old(examples):
+    pop = np.inf
+    refined_trials = []
+    refined_trials_index = []       
+    for i, t in enumerate(examples):
         if "lambda" in t:
             k = t["lambda"]
             if "mu" in t:
@@ -70,7 +91,7 @@ def load_from_optuna(en, container, alg):
     study_name = relevant_study_names[container][alg][en]
 
     new_study = optuna.load_study(study_name=study_name,storage=storage)
-    most_promising, indexes = select_minimal_exaples([t.params for t in new_study.best_trials])
+    most_promising, indexes = select_minimal_examples([t.params for t in new_study.best_trials])
 
     return most_promising, indexes
 
