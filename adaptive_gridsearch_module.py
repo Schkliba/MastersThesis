@@ -1,4 +1,4 @@
-from evaluation_utils_module import task_job, rename, select_minimal_exaples
+from evaluation_utils_module import task_job, rename, select_minimal_examples
 import itertools
 import concurrent.futures
 import constants as Cs
@@ -312,7 +312,7 @@ def adaptive_grid_search(en, alg, run_name, container, hops = 3, out_path="./Dat
     study_name = relevant_study_names[container][alg][en]
 
     new_study = optuna.load_study(study_name=study_name,storage=storage)
-    most_promising, mi = select_minimal_exaples([t.params for t in new_study.best_trials])
+    most_promising, mi = select_minimal_examples([t.params for t in new_study.best_trials])
     selected_trial = new_study.best_trials[mi[0]]
     most_promising_args = rename(most_promising[0])
     most_fitness, most_diversity = evaluation_of_setup(
