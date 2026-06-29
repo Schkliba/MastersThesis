@@ -1,4 +1,4 @@
-OUTPUT="server_try1" 
+OUTPUT="server_try3" 
 
 declare -a arr=("fit_archiving" "elite_archiving")
 

@@ -1,4 +1,4 @@
-OUTPUT="server_try2" 
+OUTPUT="server_try3" 
 
 declare -a arr=("add_novelty" "sub_novelty" "novelty_limit" "novelty_archiving")
 #declare -a arr=("fitness" "fit_archiving" "elite_archiving")
