@@ -1,4 +1,4 @@
-OUTPUT="./Data/grid_search/fourth_try" 
+OUTPUT="./Data/grid_search/server_try2" 
 
 #python adaptive_gridsearch.py -e cartpole -a lambda -c fitness -o $OUTPUT -r bash_run -H 3
 #python adaptive_gridsearch.py -e cartpole -a diff -c fitness -o $OUTPUT -r bash_run -H 3
@@ -20,6 +20,6 @@ OUTPUT="./Data/grid_search/fourth_try"
 #python adaptive_gridsearch.py -e lunarlander -a diff -c elite_archiving -o $OUTPUT -r bash_run -H 3 &
 #wait
 
-python adaptive_gridsearch.py -e cartpole -a lambda -c elite_archiving -o $OUTPUT -r bash_run -H 3 &
-python adaptive_gridsearch.py -e cartpole -a diff -c elite_archiving -o $OUTPUT -r bash_run -H 3 &
+#python adaptive_gridsearch.py -e cartpole -a lambda -c novelty_limit -o $OUTPUT -r bash_run -H 3 &
+python adaptive_gridsearch.py -e lunarlander -a lambda -c fitness -o $OUTPUT -r bash_run -H 3 &
 wait
