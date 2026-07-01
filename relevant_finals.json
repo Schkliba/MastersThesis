@@ -40,24 +40,24 @@
     "elite_archiving": {
         "lunarlander": {
             "diff": {
-                "l": 40,
+                "l": 50,
                 "mr": 0.30000000000000004,
-                "cr": 0.5,
+                "cr": 0.7,
                 "archiving_period": 5,
                 "archive_batch": 4,
-                "ng": 40
+                "ng": 60
             },
             "lambda": {
                 "cross_method": "uniform",
                 "l": 70,
-                "m": 70,
-                "mr": 0.01,
-                "cr": 0.9000000000000001,
+                "m": 85,
+                "mr": 0.11000000000000001,
+                "cr": 0.8000000000000002,
                 "mutation_sigma": 2.5,
                 "archiving_period": 4,
                 "archive_batch": 2,
                 "cross_uni": 0.8,
-                "ng": 25
+                "ng": 15
             }
         },
         "cartpole": {
@@ -220,15 +220,15 @@
         "lunarlander": {
             "lambda": {
                 "cross_method": "uniform",
-                "l": 50,
-                "m": 70,
-                "mr": 0.01,
+                "l": 80,
+                "m": 85,
+                "mr": 0.11000000000000001,
                 "cr": 1.0,
                 "mutation_sigma": 2.5,
                 "archiving_period": 2,
                 "archive_batch": 4,
                 "cross_uni": 0.6,
-                "ng": 15
+                "ng": 35
             },
             "diff": {
                 "l": 40,
