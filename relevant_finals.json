@@ -175,18 +175,18 @@
         "lunarlander": {
             "diff": {
                 "l": 60,
-                "mr": 0.0,
+                "mr": 0.1,
                 "cr": 0.9000000000000001,
                 "archiving_period": 4,
                 "archive_batch": 5,
-                "ng": 10
+                "ng": 25
             },
             "lambda": {
                 "cross_method": "mean",
-                "l": 50,
-                "m": 70,
+                "l": 65,
+                "m": 85,
                 "mr": 0.1,
-                "cr": 1.0,
+                "cr": 0.9,
                 "mutation_sigma": 2.0,
                 "archiving_period": 5,
                 "archive_batch": 3,
@@ -290,7 +290,7 @@
                 "cr": 0.4,
                 "fitness_weight": 0.5,
                 "decay": 4.0,
-                "ng": 15
+                "ng": 20
             },
             "lambda": {
                 "cross_method": "uniform",

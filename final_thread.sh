@@ -4,5 +4,5 @@
 #python final_examination.py  -e cartpole -c fit_archiving -a diff -s 40 -o proof_attempt
 # python final_examination.py  -e cartpole -c novelty -a lambda -s 40 -o proof_attempt
 # python final_examination.py  -e cartpole -c novelty -a diff -s 40 -o proof_attempt
-python final_examination.py  -e lunarlander -c novelty_archiving -a lambda  -o server_try2
+python final_examination.py  -e lunarlander -c novelty_archiving -a diff  -o server_try2
 #python final_examination.py  -e cartpole -c novelty_archiving -a diff -s 40 -o proof_attempt

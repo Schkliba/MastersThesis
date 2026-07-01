@@ -1,7 +1,7 @@
 OUTPUT="./Data/grid_search/server_try2"
 
 #declare -a arr=("add_novelty" "sub_novelty")
-declare -a arr=("fitness" "novelty", "novelty_limit", "fit_archiving")
+declare -a arr=("novelty" "novelty_limit")
 ## loop through above array (quotes are important if your elements may contain spaces)
 for i in "${arr[@]}"
 do

@@ -27,4 +27,4 @@ python generation_examination.py -e lunarlander -a lambda -c fitness -o "server_
 #wait
 # python generation_examination.py -e cartpole -a lambda -c sub_novelty -o "repaired_try" -R grid_search &
 # python generation_examination.py -e cartpole -a diff -c sub_novelty -o "repaired_try" -R grid_search &
-# wait
+wait
