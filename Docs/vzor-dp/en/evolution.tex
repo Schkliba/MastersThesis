@@ -241,10 +241,13 @@ If we do not state otherwise in this thesis novelty will be calculated in relati
 
 
 \subsubsection{Archiving}
-Unlike in fitness described in section \ref{sec:fitness}, we will not use elite archive for the novelty search, instead we will discuss our elitist solution as a combination of fitness and novelty in section \ref{sec:combFitNov}.
+In fitness the random archive had a role of providing variety, which is the main goal of novelty search. Here we actually hope to use the randomness as a stabilising element since reintroduction of old behaviours will propt the new generation to avoid them. This aproach was with success used in \cite{noveltyEmpirical}, outperforming pure novelty and novelty based archive.
 
-
-In fitness the archive had a role of providing variety, which is the main goal of novelty search. Here we actually hope to use the randomness as a stabilising element since reintroduction of old behaviours will propt the new generation to avoid them. This aproach was with success used in \cite{noveltyEmpirical}, outperforming pure novelty and novelty based archive.
+To implement elistist version of archive for novelty we will introduce a  fitness threshold $ T_{f} $ to the random archive so that given a randomly selected batch $ Q_{rand} $ and fitness function $ f $ we screen the selected individuals so that we get actual elite batch $ Q_{elite} $: 
+$$ 
+Q_{elite} = \{i \in Q_{rand}|f(i) \ge T_f\} 
+$$
+Only these screened individuals are then added to the archive. This will help us explore the idea of the archive's stabilisation role.
 \subsection{Combinations of Novelty}
 \label{sec:combFitNov}
 The novelty does not take into account the individual's performance with objective function. Therefore when two individuals with similar behavioural characteristics appear but one of them performs significantly better than the other, pure novelty algorithm can easily select the less performant individual, losing the more performant genome for further generations. To prevent this we want to meaningfully combine novelty with fitness.\\
@@ -274,10 +277,4 @@ $$ W' = W_b e^{-r_D\frac{g}{G}} $$
 
 This will allow us to explore whether the exploratory stage has more meaning at the beggining when it generates diverse population that can later pruned by the shift for fitness or is it better to first evolve the population to certain level and then explore with more adept individuals.
 
-\subsubsection{Limited Novelty Archive}
 
-Another way to combine fitness and novelty is through a special case of archiving such as we proposed in section \ref{sec:novelty} but we introduce a fitness threshold $ T_{f} $ so that given a randomly selected batch $ Q_{rand} $ and fitness function $ f $ we screen the selected individuals so that: 
-$$ 
-Q_{elite} = \{i \in Q_{rand}|f(i) \ge T_f\} 
-$$
-Only these screened individuals are then added to the archive. This will help us explore the idea of the archive's stabilisation role.

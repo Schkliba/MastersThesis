@@ -25,9 +25,10 @@ We can divide the containers on the axis of algorithm to ES containers and DE co
 	
 	
 	\item \textbf{novelty archive} container implements novelty search with random selection archive as described in section \ref{sec:novelty}
+	\item \textbf{limit archive} container implements novelty search with fitness threshold archive as described in section \ref{sec:novelty}
 	\item \textbf{increase novelty} container implements increasing novelty objective as described in as described in section \ref{sec:combFitNov}
 	\item \textbf{increase fitness} container implements increasing fitness objective as described in as described in section \ref{sec:combFitNov}
-	\item \textbf{limit archive} container implements novelty search with fitness threshold archive as described in section \ref{sec:combFitNov}
+	
 \end{itemize}
 Specifically for ES the crossover method is considered a hyperparameter that will be pinpointed druign the bayes search described in section \ref{sec:bayesSearch}.
 \section{Individual hyper-parameter selection}
@@ -216,6 +217,7 @@ Now we will discuss grid searches that are common for all implementations of our
 Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run in these experiments. The parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to select the lowest possible number. For this purpose we will run a grid search comparingdifferential algorithm's performance over different number of generations. Since the Gymnasium environments discussed in chapter \ref{chap:environment}. are based on similair principles we will perform the search only and Cartpole but generalise the results to both. This is done to conserve time for more impactful experiments. 
 
 \subsubsection{Generations grid search}
+\label{sec:preGenSearch}
 During the refining in Bayesian search and Incremental grid search we use fixed number of generations for the optimisations. This mean that we don't know how many generetaions are truly best. We perform a grid search over a range of generations. This will also allow us to compare performances and performance curves based on this parameter.
   
 \subsection{Incremental grid search}
@@ -295,6 +297,7 @@ While all hyperpaarameters interact we claim that theses pairs interact very str
 As we described in section \ref{sec:lambdaGrid} we split the candidate generation even for the differential evolution. First stage alternates only size of the population. Second stage alterantes hyperparameters $ \alpha + \gamma $ or the rescale factor and recombination rate introduced in \ref{alg:diffEv}. The algorithm again cannot terminate prematurely before both stages have been checked for improving solution.
 
 \section{Final comparison}
+\label{sec:prefinalComp}
 In addition to graphical methods suggested in paper  \cite{Beiranvand_2017}
 to examine the results of the test we will use several statistical methods. Following advice in the paper \cite{algTesting}, which is specifically concerned with evolutionary algorithms, we will mainly utilise the non-parametrical tests which we introduce in this section. This enables us to compare results of our algorithm without imposing additional contrainsts. 
 

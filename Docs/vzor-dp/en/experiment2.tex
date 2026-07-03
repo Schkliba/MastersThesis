@@ -1,0 +1,19 @@
+\chapter{Experiments}
+\label{ch:experiments}
+In this chapter we will discuss the experiment and their results. The code for the experiments has been written in Python 3.10 and experiments were conducted on several computers characterised in atachment \ref{atch:computers}. The complete project with data and scripts is available publicly in \href{https://github.com/Schkliba/MastersThesis}{Github repository}.
+
+\section{Bayesian Search}
+As mentioned in section \ref{sec:bayesSearch}, we perform one optimisation run per container, resulting in one relevant study. This is purely practical measure pertaining to time feasibility of the experiments. In each optimisation run we perform fixed number of trials. We use 150 trials as baseline, adding 10-20 trials for more parametrised containers. Because we are dealing with stochastic method this number does not guarantee neither good or bad performance and has been arbitrarily chosen from experience with preliminary experiments.
+The hyperparameter selection for each run is done within limits detailed in table \ref{tab:optunaStart}. The results are presented in tables \ref{tab:optunaRes}
+
+While optuna has internal mechanism for selecting the best trial, sometimes we can obtain number of equivalent trials that are better than all other trials. This concerns mainly Cartpole, where we have on several occasions discovered solving individual for multiple configurations. Threfore in the results we include diversity metric, calculated from normalised distances between trial's hyperparameters. We use min-max normalisation with maximum and minimum values of each hyperparameter from table \ref{tab:optunaStart} as bounds. This may help us assess how diverse the search truly was.
+
+\subsection{Iterative grid search}
+We want to refine the solution obtained during the previous step using our iterative grid search described in section \ref{sec:incgridsearch}. When multiple best trials are available we will select the one which has the highest operation rates $ K $ where $ K = CR + MR $ for ES and $ K = \alpha + \gamma$ for DE. The logic behind this is that supression of exploratory operators leads to greater exploitation of the roll on intial popoulation. Therefore we assume less exploratory algorithm has a higher chance of simply being lucky on the tested random seeds.  If the tie is still not broken we select the random trial from the ones with lowest population score $ S = \mu +\lambda $ for ES and  $ S $ = population size  for DE.
+We present the chosen best trials and the result produced by the interative grid search. A lot of the time might match the original hyperparameter of the selected trial. This mean that the search has confirmed it could not find improving parameters in it's bounds.
+
+\subsection{Generational grid search}
+\section{Final comparison}
+\subsection{Cartpole}
+\subsection{Lunar Lander}
+\section{Discussion}
