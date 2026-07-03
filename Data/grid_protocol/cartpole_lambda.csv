@@ -2,7 +2,7 @@
 ,archive_batch,archiving_period,cr,cross_method,cross_uni,decay,fitness_weight,l,limit,m,mr,mutation_sigma,archive_batch,archiving_period,cr,cross_method,cross_uni,decay,fitness_weight,l,limit,m,mr,mutation_sigma
 fitness,,,0.9,uniform,0.9,,,15,,35,0.09,0.5,,,1.0,uniform,0.9,,,10,,30,0.09,0.5
 novelty,,,1.0,uniform,0.30000000000000004,,,15,,25,0.009999999999999995,0.5,,,1.0,uniform,0.30000000000000004,,,10,,30,0.06,0.5
-add_novelty,,,1.0,mean,,,0.4,10,,10,0.1,1.5,,,1.0,mean,,,0.4,10,,10,0.1,1.5
+add_novelty,,,0.9,mean,,0.5,0.30000000000000004,25,,20,0.1,1.0,,,1.0,mean,,0.5,0.30000000000000004,20,,20,0.1,1.0
 sub_novelty,,,1.0,uniform,0.7000000000000001,1.0,0.4,20,,10,0.09,1.0,,,1.0,uniform,0.7000000000000001,1.0,0.4,10,,20,0.09,1.0
 fit_archiving,1,5,0.9,mean,,,,15,,30,0.09,2.0,1,5,1.0,mean,,,,20,,20,0.09,2.0
 elite_archiving,2,3,0.9,uniform,0.5,,,20,,30,0.08,1.5,2,3,1.0,uniform,0.5,,,20,,30,0.08,1.5
