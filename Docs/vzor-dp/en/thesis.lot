@@ -17,9 +17,9 @@
 \contentsline {table}{\numberline {5.8}{\ignorespaces Lunar Lander DE}}{31}{table.5.8}%
 \contentsline {table}{\numberline {5.9}{\ignorespaces Cartpole DE}}{32}{table.5.9}%
 \contentsline {table}{\numberline {5.10}{\ignorespaces Cartpole ES}}{32}{table.5.10}%
-\contentsline {table}{\numberline {5.11}{\ignorespaces Selection of generations hyperparameter based on performed grid search}}{32}{table.5.11}%
+\contentsline {table}{\numberline {5.11}{\ignorespaces Selection of generations hyperparameter based on performed grid search}}{34}{table.5.11}%
 \contentsline {table}{\numberline {5.12}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Lunar Lander}}{35}{table.5.12}%
 \contentsline {table}{\numberline {5.13}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Cartpole}}{36}{table.5.13}%
-\contentsline {table}{\numberline {5.14}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Cartpole}}{36}{table.5.14}%
+\contentsline {table}{\numberline {5.14}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Cartpole}}{37}{table.5.14}%
 \contentsline {table}{\numberline {5.15}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Lunar Lander}}{37}{table.5.15}%
 \addvspace {10\p@ }

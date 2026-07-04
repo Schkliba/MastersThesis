@@ -9,6 +9,7 @@ poznamky
 !Data/decay_search
 !Data/final
 !Data/grid_protocol
+!Data/bayes_protocol
 
 /Data/Experiments/.ipynb_checkpoints
 /Docs/papers

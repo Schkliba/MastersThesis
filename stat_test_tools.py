@@ -5,11 +5,13 @@ from pathlib import Path
 import json
 import pandas as pd
 import numpy as np
+import seaborn as sns
 from scipy.spatial.distance import pdist
 from evaluation_utils_module import  rename, select_minimal_examples_old
 from constants import LAMBDA_CONTS, DIFF_CONTS, ENIVROMENTS
 from functools import lru_cache
 from itertools import combinations
+import math
 
 def load_gen_direct_data(en, cont, alg, name):
     path = f"./Data/generation_ex/{en}/{cont}/{alg}/{name}"
@@ -101,7 +103,26 @@ def get_protocol_table(en, alg, name):
         table = get_protocol_table2(cont, protocol)
         big_table = pd.concat([big_table, table])
 
-    return big_table.sort_index(axis=1)  
+    return big_table.sort_index(axis=1)
+
+
+def plot_generations(en, alg, name, attr:str):
+    cts = LAMBDA_CONTS if alg == "lambda" else DIFF_CONTS
+    df = pd.DataFrame()
+    for cont in cts:
+        content = load_gen_direct_data(en=en, alg=alg, cont=cont, name=name)
+        temp = gen_extract_values(content)
+        temp["cont"] = cont
+        df = pd.concat([df, temp], axis=0)
+    df = df.reset_index(drop=True)
+    def trim_25(df):
+        q1 = df[attr].quantile(0.25)
+        q3 = df[attr].quantile(0.75)
+        return df[(df[attr] >= q1) & (df[attr] <= q3)]
+
+    dff = df[["seed","ng", attr, "cont"]]
+    filtered = dff.groupby(["ng", "cont"], group_keys=False).apply(trim_25)
+    return sns.lineplot(data=filtered, x="ng", y=attr, hue="cont")  
 
 @lru_cache(maxsize=None)
 def get_final_seed_mapped_value(en, cont, alg, name):
@@ -121,28 +142,54 @@ def get_final_seed_mapped_value(en, cont, alg, name):
 
     return df.groupby("seed").agg({"fitnesses": np.max, "behaviors": lambda x: behavior_diversity(x) })
 
-def friedman_test_total(alg, names, attribute):
-    cts = LAMBDA_CONTS if alg == "lambda" else DIFF_CONTS
+def friedman_test_total_containers(names, attribute):
     big_table = pd.DataFrame()
+    cts = LAMBDA_CONTS
     conts = list(cts.keys())
     for cont in conts:
         values = pd.DataFrame()
-        for en in ENIVROMENTS:
+        for alg in ["lambda", "diff"]:
+            for en in ENIVROMENTS:
+                values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+                values_en.index = values_en.index + str(en) + str(alg)
+                values = pd.concat([values, values_en])
+        table = values[attribute]
+        table.name = cont
+        big_table = pd.concat([big_table, table], axis=1)
+    return friedmanchisquare(*[big_table[col] for col in big_table.columns])
+
+def friedman_test_per_environment_containers(en, names, attribute):
+    big_table = pd.DataFrame()
+    cts = LAMBDA_CONTS
+    conts = list(cts.keys())
+    for cont in conts:
+        values = pd.DataFrame()
+        for alg in ["lambda", "diff"]:
             values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
-            values_en.index = values_en.index + str(en)
+            values_en.index = values_en.index + str(en) + str(alg)
             values = pd.concat([values, values_en])
         table = values[attribute]
         table.name = cont
         big_table = pd.concat([big_table, table], axis=1)
     return friedmanchisquare(*[big_table[col] for col in big_table.columns])
 
+def hodges_lehmann_paired(x, y):
+    d = np.asarray(x) - np.asarray(y)
+    walsh = [(d[i] + d[j]) / 2
+             for i in range(len(d))
+             for j in range(i, len(d))]
+    return np.median(walsh)
 
-def wilcoxon_test_per_environment(en, alg, name, attribute):
-    cts = LAMBDA_CONTS if alg == "lambda" else DIFF_CONTS
+def wilcoxon_test_per_environment_containers(en,names, attribute):
+    cts = LAMBDA_CONTS #if alg == "lambda" else DIFF_CONTS
     big_table = pd.DataFrame()
     conts = list(cts.keys())
     for cont in conts:
-        values = get_final_seed_mapped_value(en, cont, alg, name)
+        values = pd.DataFrame()
+        for alg in ["lambda", "diff"]:
+            values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+            values_en.index = values_en.index + str(en) + str(alg)
+            values = pd.concat([values, values_en])
         table = values[attribute]
         table.name = cont
         big_table = pd.concat([big_table, table], axis=1)
@@ -151,19 +198,77 @@ def wilcoxon_test_per_environment(en, alg, name, attribute):
         selection1 = big_table[duelants[0]]
         selection2 = big_table[duelants[1]]
         stats, p = wilcoxon(selection1, selection2)
-        tests.append((duelants[0], duelants[1], stats, p))
-    return pd.DataFrame(tests, columns=["contestant1", "contestant2", "wilcoxon_T", "p"])
+        direction = hodges_lehmann_paired(selection1, selection2)
+        tests.append((duelants[0], duelants[1], stats, p, direction))
 
-def wilcoxon_test_total(alg, names, attribute):
-    cts = LAMBDA_CONTS if alg == "lambda" else DIFF_CONTS
+    return pd.DataFrame(tests, columns=["contestant1", "contestant2", "wilcoxon_T", "p", "direction"])
+
+def wilcoxon_test_per_env_alg_containers(en,alg, names, attribute):
+    cts = LAMBDA_CONTS #if alg == "lambda" else DIFF_CONTS
+    big_table = pd.DataFrame()
+    conts = list(cts.keys())
+    for cont in conts:
+        values = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+        values.index = values.index + str(en) + str(alg)
+        table = values[attribute]
+        table.name = cont
+        big_table = pd.concat([big_table, table], axis=1)
+    tests = []
+    for duelants in combinations(conts, 2):
+        selection1 = big_table[duelants[0]]
+        selection2 = big_table[duelants[1]]
+        stats, p = wilcoxon(selection1, selection2)
+        direction = hodges_lehmann_paired(selection1, selection2)
+        tests.append((duelants[0], duelants[1], stats, p, direction))
+
+    return pd.DataFrame(tests, columns=["contestant1", "contestant2", "wilcoxon_T", "p", "direction"])
+
+def wilcoxon_test_per_environment_algorithms(en, names, attribute):
+    cts = LAMBDA_CONTS #if alg == "lambda" else DIFF_CONTS
+    big_table = pd.DataFrame()
+    conts = list(cts.keys())
+    for alg in ["lambda", "diff"]:
+        values = pd.DataFrame()
+        for cont in conts:
+            values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+            values_en.index = values_en.index + str(en) + str(cont)
+            values = pd.concat([values, values_en])
+        table = values[attribute]
+        table.name = alg
+        big_table = pd.concat([big_table, table], axis=1)
+    stats, p = wilcoxon(big_table["lambda"], big_table["diff"])
+    direction = hodges_lehmann_paired(big_table["lambda"],  big_table["diff"])
+    print(direction)
+    return stats, p, direction
+
+def wilcoxon_test_total_algorithms(names, attribute):
+    cts = LAMBDA_CONTS #if alg == "lambda" else DIFF_CONTS
+    big_table = pd.DataFrame()
+    conts = list(cts.keys())
+    for alg in ["lambda", "diff"]:
+        values = pd.DataFrame()
+        for cont in conts:
+            for en in ENIVROMENTS:
+                values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+                values_en.index = values_en.index + str(en) + str(cont)
+                values = pd.concat([values, values_en])
+        table = values[attribute]
+        table.name = alg
+        big_table = pd.concat([big_table, table], axis=1)   
+    stats, p = wilcoxon(big_table["lambda"], big_table["diff"])
+    return stats, p
+
+def wilcoxon_test_total_containers(names, attribute):
+    cts = LAMBDA_CONTS #if alg == "lambda" else DIFF_CONTS
     big_table = pd.DataFrame()
     conts = list(cts.keys())
     for cont in conts:
         values = pd.DataFrame()
-        for en in ENIVROMENTS:
-            values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
-            values_en.index = values_en.index + str(en)
-            values = pd.concat([values, values_en])
+        for alg in ["lambda", "diff"]:
+            for en in ENIVROMENTS:
+                values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+                values_en.index = values_en.index + str(en) + str(alg)
+                values = pd.concat([values, values_en])
         table = values[attribute]
         table.name = cont
         big_table = pd.concat([big_table, table], axis=1)
