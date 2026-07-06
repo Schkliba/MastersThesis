@@ -106,7 +106,7 @@ def get_protocol_table(en, alg, name):
     return big_table.sort_index(axis=1)
 
 
-def plot_generations(en, alg, name, attr:str):
+def plot_generations(en, alg, name, attr:str, ax=None):
     cts = LAMBDA_CONTS if alg == "lambda" else DIFF_CONTS
     df = pd.DataFrame()
     for cont in cts:
@@ -122,7 +122,7 @@ def plot_generations(en, alg, name, attr:str):
 
     dff = df[["seed","ng", attr, "cont"]]
     filtered = dff.groupby(["ng", "cont"], group_keys=False).apply(trim_25)
-    return sns.lineplot(data=filtered, x="ng", y=attr, hue="cont")  
+    return sns.lineplot(data=filtered, x="ng", y=attr, hue="cont", ax=ax)  
 
 @lru_cache(maxsize=None)
 def get_final_seed_mapped_value(en, cont, alg, name):

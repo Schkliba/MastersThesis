@@ -53,6 +53,9 @@
 \usepackage{xcolor}         % typesetting in color
 \usepackage{tikz}
 \usepackage{cleveref}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{subcaption}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
 \usepackage[ruled]{algorithm2e}
@@ -165,14 +168,74 @@ Novelty is a novel approach to modelling selection criteria in evolutionary algo
 \appendix
 \chapter{Attachments}
 \section{Full grid search charts}
-\subsection{Generation Grid}
 \label{app:generationGrid}
+\input{../tex/generation_apendix.tex}
 \section{Experiment Data Format}
 \subsection{Single Run Statistics}
 \subsection{Adaptive Grid Search Protocol}
+\begin{lstlisting}
+	{
+		"name": "experiment_1",
+		"parameters": {
+			"population": 100,
+			"mutation_rate": 0.1
+		},
+		"results": [
+		0.82,
+		0.91
+		]
+	}
+\end{lstlisting}
+\newpage
 \subsection{Generations Grid Protocol}
-\subsection{Final Experiment Protocol}
 
+\begin{lstlisting}[tabsize=3]
+	{
+		"fitness": {
+			<# of generations>:{
+			
+				<seed no.>:[
+				[
+					[<fitness>], 
+					[<behavioral_vector>]
+				],
+				...
+				],
+				...
+			},
+			...
+		}
+		"environment":<environment id>,
+		"algorithm":<algorithm id>,
+		"container"<container id>,
+		"arguments":{
+			<hyperparameter id>: <hyperparameter value>,
+			...
+		}
+	}
+\end{lstlisting}
+\subsection{Final Experiment Protocol}
+\begin{lstlisting}[tabsize=3]
+{
+	"fitness": {
+		<seed no.>:[
+			[
+				[<fitness>], 
+				[<behavioral_vector>]
+			],
+			...
+		],
+		...
+	}
+	"environment":<environment id>,
+	"algorithm":<algorithm id>,
+	"container"<container id>,
+	"arguments":{
+		<hyperparameter id>: <hyperparameter value>,
+		...
+	}
+}
+\end{lstlisting}
 \section{Used Hardware}
 
 \openright

@@ -314,6 +314,7 @@ We compute rankings $ r_j^i  $ of each algorithm $ j $ for each comparison insta
 \]
 where $ R_j = \frac{1}{N}\sum_{i=1}^{N} r_j^i $ and $ N $ i the number of comparison instances. The $ \chi_F^2 $ is then converted to p-value through a combinatorial computation. In reviewed literature it is not common to go over the computational process  explicitly as it maybe quite complex in the variety of approximations. We will use the implementation in Python library SciPy which cites \cite{statistics}. 
 \subsection{Wilcoxon signed-rank test}
+\label{sec:Wilcoxon}
 Introduced in the paper \cite{Wilcoxon1992} in both paired and unpaired version, Wilcoxon signed-rank test enables us to compare two algorithm  without assumptions about the distributions of their tested output.
 We start by computing differences of the algorithms' $ A $ and $ B $ performances in each instance $ i $ of of total of $ N $ like so:
 \begin{equation}

@@ -1,8 +1,20 @@
 \chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
-I have successfully developed and implemented framework for testing evolutionary strategies and differential evolution in several setups, such as fitness, novelty and their respective archivng and a combination of them. I have also proposed behavioral models for both environments Lunar Lander and Cartpole. These behavioral models are a modest success, while Lunar Lander model, unlike Cartpole, does not consistently achieve solution grade score it can help achieve well behaved solution in combination with increasing fitness method. 
+I have successfully developed and implemented framework for testing evolutionary strategies and differential evolution in several setups, such as fitness, novelty and their respective archiving and a combination of them. I have also proposed behavioural models for both environments Lunar Lander and Cartpole. These behavioural models are a modest success, while Lunar Lander model, unlike Cartpole, does not consistently achieve solution grade score it can help achieve well behaved solution in combination with increasing fitness method. 
 
-I have also proposed a hyperparameter searching algorithm based on Bayesian search. While the search itself is rather limited, this reflects the conditions of the used environments, which are time-exhausting to simulate in large numbers. The algorithm allows us to compare the EAs on their performance given hyperparameters found by this search.
+We have also proposed a hyper-parameter searching algorithm based on Bayesian search. While the search itself is rather limited, this reflects the conditions of the used environments, which are time-exhausting to simulate in large numbers. The algorithm allows us to compare the EAs on their performance given hyper-parameters found by this search.
 
-The areas of comparisons were: absolute performance, rate of convergance and diversity of the final populations.
-We have confirmed that both tasks were
+The areas of comparisons were: absolute performance, rate of convergence and diversity of the final populations.
+Concerning diversity the novelty based approaches have produced equally or more diverse population however in raw performance we have confirmed that both tasks were dominated by the fitness utilising methods. Considering we have not selected particularly deceptive tasks (although Lunar Lander in our configuration has deceptive optima), this in line with literature delineating the usefulness of novelty such as  \cite{noveltyarticle} or \cite{notenoughnovelty}.
+
+However in case of Lunar Lander the pure fitness has gotten stuck in false optima. While there are more possible explanations for the phenomenon, we have seen partial alleviation the problem by utilising dynamic combination of fitness and novelty as the objective. But in our case it ultimately did not out-perform fitness based archiving methods. 
+
+Despite, the general approach shows greater promise as we could expect that a more powerful behavioural characteristic might be discovered using automatic methods that were outside of the scope of this thesis. On the other hand there is a limited room to refine the fitness based archive substantially over the version presented in this text without altering its core concept.  
+
+We have also confirmed that dynamics of the search are very important. The elitist version of novelty archive with static threshold could generally not outperform random novelty archive in clear antipattern to the fitness archives while either dynamic combinations of novelty were generally able to outperform both novelty archives. 
+
+The occasional dominance of increasing fitness over increasing novelty also seems conditioned on the structure of the environments with Cartpole rewarding similar behaviour consistently throughout it's episodes  and Lunar Lander having only behavioural bottleneck at the later stage of the episode.
+
+Originally we have also investigated Gymnasium's environment Waterworld where the fitness structure depends on other agents evolving. Ultimately it was deemed out of scope for this thesis but it is an interesting direction of these investigations left for the future works.
+
+

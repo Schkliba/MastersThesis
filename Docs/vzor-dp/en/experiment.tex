@@ -309,39 +309,30 @@ We have searched over the following generation counts:
 
 Because some containers have not been able to reach solving individual in Cartpole in the original scope of the grid search and have exhibited interesting enough behaviour we have extended their gridsearches. The extension generation counts have been marked with * symbol.
 
-We showcase the resulting patterns in \crefrange{fig:fitness1}{fig:fitness4}. 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.8\textwidth]{../img/generations_cartpole_lambda_max_fit.pdf}
-	\caption{Maximal fitness performance characteristic of ES on Cartpole environment.}
-	\label{fig:fitness1}
-\end{figure}
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.8\textwidth]{../img/generations_cartpole_diff_max_fit.pdf}
-	\caption{Maximal fitness performance characteristic of DE in Cartpole environment.}
-	\label{fig:fitness2}
+We showcase the resulting patterns in \cref{fig:fitnessChartCT, fig:fitnessChartLL}. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{../img/generations_cartpole_max_fit.pdf}
+\caption{Fitness/Generation Characteristics for Cartpole environment}
+\label{fig:fitnessChartCT}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[htbp]
+
 	\centering
-	\includegraphics[width=0.8\textwidth]{../img/generations_lunarlander_lambda_max_fit.pdf}
-	\caption{Maximal fitness performance characteristic of ES on LL.}
-	\label{fig:fitness3}
-\end{figure}
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.8\textwidth]{../img/generations_lunarlander_diff_max_fit.pdf}
-	\caption{Maximal fitness performance characteristic of DE on LL.}
-	\label{fig:fitness4}
+	\includegraphics[width=0.9\textwidth]{../img/generations_lunarlander_max_fit.pdf}
+	\caption{Fitness/Generation Characteristics for Lunar Lander environment (ES left, DE right)}
+	\label{fig:fitnessChartLL}
 \end{figure}
 
-\Crefrange{fig:fitness1}{fig:fitness4} however have been pruned for readability and do not represent the full range of values that have been taken into account during the ultimate selection such as the population median or mean. 
+
+\Cref{fig:fitnessChartCT,fig:fitnessChartLL} however have been pruned for readability and do not represent the full range of values that have been taken into account during the ultimate selection such as the population median or mean. 
 The shaded area here represents quantiles $ q_{75}$ and $q_{25} $ other values have been pruned. The actual scope of values considered for each contained is represented by chart that have been for readability sake put into \cref{app:generationGrid}. We evaluated the algorithm on 5 different seeds.
 
 The hand-selected generation counts for the final evaluation are presented in \cref{tab:gridResults}.  
 
-\begin{table}[ht]
+\begin{table}[h]
 	\centering
 	\scriptsize
 	\setlength{\tabcolsep}{4pt}
@@ -374,9 +365,11 @@ We have run the parameterised algorithms on 45 distinct seeds for each environme
 First we will test results of both evolutionary algorithms we have utilised (DE and ES) collected across all containers on each of the environments. Then we will group these methods based on objective used, following the internal divide in section \ref{sec:objFunc}. We will test both internal consistency of the groups and their relationships. 
  Then we will test differences between the objective handling methods granularly.
  Since the groupings of results are different in each case, we claim them to be different test families for the purposes of adjustments to  \textit{FWER}. 
+ 
+ We will implicitly use the significance threshold $\alpha = 0.05$ as is common in publications.
     
 \subsection{EA comparison}
-Since we examine only two distinct EA implementations we have directly performed Wilcoxon test. First we see how the EAs performed on each of the environments separately. On both environments the Wilcoxon test rejects the null hypothesis with p values $ p_{LL} = 3.11 \times 10^{-12} $ and $ p_{CT} = 0.0002$ for Lunar lander and Cartpole respectively. On each of the environments we calculate the direction of the difference  through Hodges–Lehmann estimator over the differences $  d_i = ES_i - DE_i $. 
+Since we examine only two distinct EA implementations we have directly performed Wilcoxon test. First we see how the EAs performed on each of the environments separately. On both environments the Wilcoxon test rejects the null hypothesis with p values $ p_{LL} = 3.11 \times 10^{-12} $ and $ p_{CT} = 0.0002$ for Lunar lander and Cartpole respectively. On each of the environments we calculate the direction of the difference  through Hodges–Lehmann estimator (\cref{sec:Wilcoxon}) over the differences $  d_i = ES_i - DE_i $. 
 Directional values are $ HL_{LL} = -54.22 $ and $ HL_{CT} = 29.12 $ suggesting that DE has been more performant on Lunar lander while ES has been more performant on Cartpole environment.
 %Finally we pool the run from both environments and perform global %Wilcox test. The pooled case also rejects $ H_0 $ ($ W_T = 89642$, $ p = 0.038$).
 
@@ -388,7 +381,7 @@ We would like to compare objective methods as such (fitness, novelty, combinatio
  $p_{DE}$ denotes p-value for test only on differential evolution runs. Analogically with $p_{ES}$. Testing the aggregate of both algorithms we get $p_{Total}$.   
  
  P-values rejecting the null hypoteses are highlighted.
-\begin{table}[ht]
+\begin{table}[h]
 	\centering
 	\scriptsize
 	\setlength{\tabcolsep}{4pt}
@@ -399,8 +392,8 @@ We would like to compare objective methods as such (fitness, novelty, combinatio
 	\caption{Fitness based tests of group difference}
 	\label{tab:groupcohesionFit}
 \end{table}
-We can see that in Cartpole differential evolution the combinations of fitness and novelty are both behaving so similarly, we do not have enough evidence to reject assumption that they might be behaving the same. This is even more pronounced in Lunar Lander but only in terms of produced diversity. The fitness group does not produce enough evidence of internal differences only in Lunar Lander and only in aggregate. It should be noted that while we are using academic standard $\alpha = 0.05$ it is not uncomon to use lower standard $\alpha = 0.1$ which would allow us to reject $H_0$ in several of the aforementioned cases.    
-\begin{table}[ht]
+We can see that in Cartpole differential evolution the combinations of fitness and novelty are both behaving so similarly, we do not have enough evidence to reject assumption that they might be behaving the same. This is even more pronounced in Lunar Lander but only in terms of produced diversity. The fitness group does not produce enough evidence of internal differences only in Lunar Lander and only in aggregate. It should be noted that while we are using academic standard $\alpha = 0.05$ it is not uncommon to use lower standard $\alpha = 0.1$ which would allow us to reject $H_0$ in several of the aforementioned cases.    
+\begin{table}[h]
 	\centering
 	\scriptsize
 	\setlength{\tabcolsep}{4pt}
@@ -460,9 +453,29 @@ In diversity we see that on the level of individual EAs the differences are stat
 
 \subsection{Objective handling comparison}
 Now we want to compare the objective handling methods based on fitness of individuals they have produced.
-Friedman test rejects the null hypothesis for both Lunar Lander ($ \chi_F = 328.39 $, $ p_F = 5.1 \times 10^{-67} $) and Cartpole ($ \chi_F = 326.66 $, $ p_F = 1.21 \times 10^{-66} $). So we proceed to the pairwise Wilcoxon tests on both environments to obtain ordering. 
+Friedman test rejects the null hypothesis for both Lunar Lander ($ \chi_F = 328.39 $, $ p_F = 5.1 \times 10^{-67} $) and Cartpole ($ \chi_F = 326.66 $, $ p_F = 1.21 \times 10^{-66} $). So we proceed to the pairwise Wilcoxon tests on both environments to obtain siginificance of their differences. 
 
-The results are shown in \cref{tab:contWilcoxonLL,tab:contWilcoxonCT} respectively.
+The full results for fitness are shown in \cref{tab:contWilcoxonLL,tab:contWilcoxonCT} respectively. For the cases where the difference wasn't proven significant we do not report the calculated direction.
+We summarise the results of the comparisons in \cref{tab:sumWilcoxCT,tab:sumWilcoxLL}. The results are summarised in format: $$\# \text{of won comparisons}/ \# \text{of lost comparisons}/ \# \text{of ties}$$. We count tie as either statistically insignificant difference or significant difference with value of Hodges-Lehman estimator $HL=0$.(\cref{sec:Wilcoxon}) 
+
+\begin{table}[ht]
+	\centering
+	\scriptsize
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.15}
+	\resizebox{\textwidth}{!}{%
+		\input{../tables/lunarlander_wilcoxon_summary}
+	}
+	\caption{Wilcoxon comparison summary fo Lunar Lander env.}
+	\label{tab:sumWilcoxLL}
+	\hfil
+	\resizebox{\textwidth}{!}{%
+		\input{../tables/cartpole_wilcoxon_summary}
+	}
+	\caption{Wilcoxon comparison summary fo Lunar Lander env.}
+	\label{tab:sumWilcoxCT}
+\end{table}
+
 We can see that for both environments the pure fitness method dominates with fitness archives being roughly on the same footing. Interestingly pure novelty mostly dominates it's own archival variants. 
 
 Elite archive does not show strong dominance over random fitness archive. Even in Cartpole where the null hypotheses of their relationship was rejected, the direction came out 0 suggesting the difference to be purely about distribution not systematic shift of the distribution. 

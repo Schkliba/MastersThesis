@@ -1,15 +1,29 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Agent and enviroment realtionship}}{4}{figure.1.1}%
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Agent and enviroment realtionship}}{4}{figure.caption.3}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Structure of Carpole agentic network}}{21}{figure.4.1}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Structure of Lunar Lander agentic network}}{22}{figure.4.2}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Structure of Carpole agentic network}}{21}{figure.caption.25}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Structure of Lunar Lander agentic network}}{22}{figure.caption.26}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Maximal fitness performance characteristic of ES on Cartpole environment.}}{35}{figure.5.1}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Maximal fitness performance characteristic of DE in Cartpole environment.}}{36}{figure.5.2}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Maximal fitness performance characteristic of ES on LL.}}{36}{figure.5.3}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Maximal fitness performance characteristic of DE on LL.}}{37}{figure.5.4}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Plot of results of final experiment in Lunar Lander environment.}}{40}{figure.5.5}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Plot of results of final experiment in Cartpole environment.}}{40}{figure.5.6}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Fitness/Generation Characteristics for Cartpole environment}}{33}{figure.caption.46}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Fitness/Generation Characteristics for Lunar Lander environment (ES left, DE right)}}{34}{figure.caption.47}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Plot of results of final experiment in Lunar Lander environment.}}{39}{figure.caption.56}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Plot of results of final experiment in Cartpole environment.}}{39}{figure.caption.57}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Detailed fitness/generation characteristic for fitness on Cartpole env. }}{49}{figure.caption.68}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Detailed fitness/generation characteristic for pure novelty on Cartpole env. }}{49}{figure.caption.69}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Detailed fitness/generation characteristic for inc. fitness on Cartpole env. }}{49}{figure.caption.70}%
+\contentsline {figure}{\numberline {A.4}{\ignorespaces Detailed fitness/generation characteristic for inc. novelty on Cartpole env. }}{50}{figure.caption.71}%
+\contentsline {figure}{\numberline {A.5}{\ignorespaces Detailed fitness/generation characteristic for fit. archive on Cartpole env. }}{50}{figure.caption.72}%
+\contentsline {figure}{\numberline {A.6}{\ignorespaces Detailed fitness/generation characteristic for elite archive on Cartpole env. }}{50}{figure.caption.73}%
+\contentsline {figure}{\numberline {A.7}{\ignorespaces Detailed fitness/generation characteristic for novetly archive on Cartpole env. }}{51}{figure.caption.74}%
+\contentsline {figure}{\numberline {A.8}{\ignorespaces Detailed fitness/generation characteristic for limit archive on Cartpole env. }}{51}{figure.caption.75}%
+\contentsline {figure}{\numberline {A.9}{\ignorespaces Detailed fitness/generation characteristic for fitness on Lunar Lander env. }}{51}{figure.caption.76}%
+\contentsline {figure}{\numberline {A.10}{\ignorespaces Detailed fitness/generation characteristic for pure novelty on Lunar Lander env. }}{52}{figure.caption.77}%
+\contentsline {figure}{\numberline {A.11}{\ignorespaces Detailed fitness/generation characteristic for inc. fitness on Lunar Lander env. }}{52}{figure.caption.78}%
+\contentsline {figure}{\numberline {A.12}{\ignorespaces Detailed fitness/generation characteristic for inc. novelty on Lunar Lander env. }}{52}{figure.caption.79}%
+\contentsline {figure}{\numberline {A.13}{\ignorespaces Detailed fitness/generation characteristic for fit. archive on Lunar Lander env. }}{53}{figure.caption.80}%
+\contentsline {figure}{\numberline {A.14}{\ignorespaces Detailed fitness/generation characteristic for elite archive on Lunar Lander env. }}{53}{figure.caption.81}%
+\contentsline {figure}{\numberline {A.15}{\ignorespaces Detailed fitness/generation characteristic for novetly archive on Lunar Lander env. }}{53}{figure.caption.82}%
+\contentsline {figure}{\numberline {A.16}{\ignorespaces Detailed fitness/generation characteristic for limit archive on Lunar Lander env. }}{54}{figure.caption.83}%
