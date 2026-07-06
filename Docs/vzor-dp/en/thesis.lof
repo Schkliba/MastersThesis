@@ -6,8 +6,10 @@
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Structure of Carpole agentic network}}{21}{figure.4.1}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Structure of Lunar Lander agentic network}}{22}{figure.4.2}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Maximal fitness performance characteristic of DE on LL.}}{32}{figure.5.1}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Maximal fitness performance characteristic of DE in Cartpole environment.}}{33}{figure.5.2}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Maximal fitness performance characteristic of ES on LL.}}{33}{figure.5.3}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Maximal fitness performance characteristic of DE on LL.}}{34}{figure.5.4}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Maximal fitness performance characteristic of ES on Cartpole environment.}}{35}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Maximal fitness performance characteristic of DE in Cartpole environment.}}{36}{figure.5.2}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Maximal fitness performance characteristic of ES on LL.}}{36}{figure.5.3}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Maximal fitness performance characteristic of DE on LL.}}{37}{figure.5.4}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Plot of results of final experiment in Lunar Lander environment.}}{40}{figure.5.5}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Plot of results of final experiment in Cartpole environment.}}{40}{figure.5.6}%
 \addvspace {10\p@ }

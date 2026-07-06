@@ -62,8 +62,8 @@ b_0
 \] is called optimal policy.
 \end{defn}
 The goal of reinforcement learning is then to proximate optimal policy by trial and error, based on the received reward, as accurately as possible. 
-This can be done utilising various online or ffline methods such as Q-learning. 
-In the literature  and specifically in the cited \cite{DBLP:journals/corr/RossPPC14} the the definition \ref{def:optpoc} features $ \gamma $ as an discounting factor for the reward. This is a crucial parameter for reinforcement learning algorithms that require continuous rewards. However as we will discuss further in this chapter and chapter \ref{chap:evolution}, in evolutionary algorithms we evaluate the policy as a whole and are only presented with final value calculated. Therefore it is not nessessary to know or discover particular value of $ \gamma $ for the environments presented in this thesis. 
+This can be done utilising various online or offline methods such as Q-learning. 
+In the literature  and specifically in the cited \cite{DBLP:journals/corr/RossPPC14} the the definition \ref{def:optpoc} features $ \gamma $ as an discounting factor for the reward. This is a crucial parameter for reinforcement learning algorithms that require continuous rewards. However as we will discuss further in this chapter and chapter \ref{chap:evolution}, in evolutionary algorithms we evaluate the policy as a whole and are only presented with final value calculated. Therefore it is not necessary to know or discover particular value of $ \gamma $ for the environments presented in this thesis. 
 
 Note that since in this thesis we are only concerned with simple reflexive agents, the belief state is not explicitly calculated statistic but is nonetheless reflected in the learned reactions to observation.
  
@@ -72,7 +72,7 @@ We intend to set our agents into environments provided by Gymnasium project whic
 
 While Gymnasium provides wide range of environments, quite a number of them if not most do not provide their outputs in structured form. Instead the resulting screen has to be processed by user defined visual processor to extract information crucial for completing the task. 
 
-This introduces a layer of complexity that is outside of the scope of this thesis. Therefore we have decided to narrow our selection only to environments which do provide structured output. We describe the loop of recieving and providing feedback between agent and environment in algorithm \ref{alg:envloop}.
+This introduces a layer of complexity that is outside of the scope of this thesis. Therefore we have decided to narrow our selection only to environments which do provide structured output. We describe the loop of receiving and providing feedback between agent and environment in algorithm \ref{alg:envloop}.
 \begin{algorithm}[h]
 	\caption{Environment Interaction Loop}
 	\label{alg:envloop}
@@ -113,7 +113,7 @@ The goal is to keep the pole balanced on top of the cart. The reward is calculat
 	An agent that achieves score 500 in Cartpole is called solution or solving individual.
 \end{defn}
 \subsubsection{Observation space}
-Cartpole observation space is expressed as a 4-dimensional vector. We deliniate possible values of the vector in \ref{tab:cartpole_state_space}. Note that for Cartpole enviroment this observation space reflects full state of the enviroment in the given moment and therefore it could be characterised as MDP rather than POMDP.
+Cartpole observation space is expressed as a 4-dimensional vector. We delineate possible values of the vector in \ref{tab:cartpole_state_space}. Note that for Cartpole enviroment this observation space reflects full state of the environment in the given moment and therefore it could be characterised as MDP rather than POMDP.
 \begin{table}[h]
 	\centering
 	\begin{tabular}{|c|l|c|c|}
@@ -145,8 +145,8 @@ The action space is discrete with only two values possible as presented in the t
 	\label{tab:cartpole_actions}
 \end{table}
 \subsection{Lunar Lander}
-The other environment we have selected is Lunar Lander where the agent controls descend of a landing shuttle on rugged planetary (or the Moon's) surface with the help of oddly placed rockets. The points are subtracted for staying in the air or for getting the shuttle into a spin. Bonus points awarded for landing in the center of the  The shuttle has infinite fuel so the game ends only when the shuttle lands safely or crushes into the ground. Luckily we can at least limit the number of steps for which the environment is allowed to go on. For a neural network training this however poses a specific kind of problem. Firstly very narrow behavioral window that can achieve positive total reward. But mainly as opposed to the Cartpole environment (\ref{env:cartpole}), now the unsuccesful runs may take significantly longer time than the successful ones. This means experiments are particularly costly for slowly converging algorithms. The upper limit of sum total reward is 200, the lower would possibly be $-\inf$, depending on the lenght limitation imposed. 
-We therefore differntiate between several stages of obtaining successful agent.
+The other environment we have selected is Lunar Lander where the agent controls descend of a landing shuttle on rugged planetary (or the Moon's) surface with the help of oddly placed rockets. The points are subtracted for staying in the air or for getting the shuttle into a spin. Bonus points awarded for landing in the centre of the  The shuttle has infinite fuel so the game ends only when the shuttle lands safely or crushes into the ground. Luckily we can at least limit the number of steps for which the environment is allowed to go on. For a neural network training this however poses a specific kind of problem. Firstly very narrow behavioural window that can achieve positive total reward. But mainly as opposed to the Cartpole environment (\ref{env:cartpole}), now the unsuccessful runs may take significantly longer time than the successful ones. This means experiments are particularly costly for slowly converging algorithms. The upper limit of sum total reward is 200, the lower would possibly be $-\inf$, depending on the length limitation imposed. 
+We therefore differentiate between several stages of obtaining successful agent.
 \begin{defn}
 	An agent that achieves score 200 in Lunar lander is called solution or solving individual.
 \end{defn}
@@ -160,7 +160,7 @@ We therefore differntiate between several stages of obtaining successful agent.
 \end{defn}
  Definition \ref{def:wellbehaved} stems from the fact that it can only be achieved if the agent does not crash the shuttle as doing so yields a penalisation of -100 points while not obtaining a boost of +100 points for safe landing, driving even a possible solution with score 200 to 0. Similairly for definition \ref{def:verywellbehaved}, it is highly unlikely to average score over 100 without at least once landing with perfect score 200.
 \subsubsection{Observation space}
-The observation space of Lunar Lander is represented as  8 dimensional vector. Deliniation of its values can be found in the table \ref{tab:lander_state_space}. Note that while the observation space is quite descirptive it does not capture all the information about enviroment's state directly such as wind velocity or proximity to the ground. Because the landscape (except for a landing pad in the center) might be different in each episode, we can only infer their parameters from the observations (such as velocity and leg contact with ground) indirectly. For simplicity we do not allow wind in our episodes as is the default setting of the environment. This means that the distiction between observation and true state becomes most tangible in low altitudes where agent risks either collision with unexpected hill or infinite hovering above unpercieved valley, forgoing the +100 point reward. 
+The observation space of Lunar Lander is represented as  8 dimensional vector. Delineation of its values can be found in the table \ref{tab:lander_state_space}. Note that while the observation space is quite descriptive it does not capture all the information about environment’s state directly such as wind velocity or proximity to the ground. Because the landscape (except for a landing pad in the centre) might be different in each episode, we can only infer their parameters from the observations (such as velocity and leg contact with ground) indirectly. For simplicity we do not allow wind in our episodes as is the default setting of the environment. This means that the distinction between observation and true state becomes most tangible in low altitudes where agent risks either collision with unexpected hill or infinite hovering above unperceived valley, forgoing the +100 point reward. 
 \begin{table}[h]
 	\centering
 	\begin{tabular}{|c|l|c|c|}

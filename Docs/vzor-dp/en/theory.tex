@@ -11,7 +11,7 @@ Let E be environment where agent G is located. G is equipped with actuators A an
 Then function $ G: obss_P(E)\rightarrow A(E) $ is called an agent function, defining behaviour of the agent G in environment E.
 \end{defn}
 
-We ilustrate relationship of these concepts in the diagram \ref{fig:generalagent}. Note that provided definition if agent policy is characteristic to deterministic agents. For agents in stochastic environments we need to reframe the agent function as probabilistic policy. We will discuss this reframing further in section \ref{sec:RL}.
+We illustrate relationship of these concepts in the diagram \ref{fig:generalagent}. Note that provided definition if agent policy is characteristic to deterministic agents. For agents in stochastic environments we need to reframe the agent function as probabilistic policy. We will discuss this reframing further in section \ref{sec:RL}.
 
  
 \begin{figure}
@@ -41,13 +41,13 @@ We ilustrate relationship of these concepts in the diagram \ref{fig:generalagent
   \caption{Agent and enviroment realtionship}
 \end{figure}
 
-Because we want our agents to solve some tasks in their respective enviroments with certain efficiency i.e. we want them to be intelligent, we need to define a notion of rationality that can help us better capture what we mean by intelligence. First however we need to measure how usefull or detrimental a situation can be for our agent.
+Because we want our agents to solve some tasks in their respective environments with certain efficiency i.e. we want them to be intelligent, we need to define a notion of rationality that can help us better capture what we mean by intelligence. First however we need to measure how useful or detrimental a situation can be for our agent.
 \begin{defn}[\citep{russell2021}]
-Be that E is an enviroment and  $ seq(E) $ is a space of all possible sequences of states within E.
+Be that E is an environment and  $ seq(E) $ is a space of all possible sequences of states within E.
 Then function $ f: seq(E)\rightarrow \textbf{R} $ is a performance measure of some agent operating in E.
 \end{defn}
 \begin{defn}[\cite{russell2021}]
-For each possible percept sequence, a rational agent should select an action that is expected to maximize its performance measure, given the evidence provided by the percept sequence and whatever built-in knowledge the agent has.
+For each possible percept sequence, a rational agent should select an action that is expected to maximise its performance measure, given the evidence provided by the percept sequence and whatever built-in knowledge the agent has.
 \end{defn}
 We should note that in the real-world applications the rationality of an agents can often be limited by their capacity to store the evidence gathered from percepts, by the lack of their built-in knowledge or the computational capacity to estimate action sequence that can be expected to achieve global maximum of the agent's performance measure. \\
 This is often characterised as a capacity to form  \textit{belief}. With that we expand on the notion of agent policy 
@@ -57,7 +57,7 @@ An agent is called simple reflex agent if it takes into account only the current
 \end{defn}
 
 \section{Neural Network Agent}
-The concept of neural networks (NN) comes from an area of machine learning called deep learning that was concieved to attempt to model biological neuron activity. Since it has become one of the most successful branches of machine learning (\cite{russell2021}).  
+The concept of neural networks (NN) comes from an area of machine learning called deep learning that was conceived to attempt to model biological neuron activity. Since it has become one of the most successful branches of machine learning (\cite{russell2021}).  
 The neural networks consist of neurons organised in layers.
 \begin{defn}
 Let $ W \in R^{m x n} $ and $ b\in R^{n}$ and let $ f:R^{n} \rightarrow R$.Then we call W the weights of a neuron layer with $ n $ neurons, b the bias of the layer and f the activation function of the layer when given an input vector $ x \in R^{m} $ we calculate the output of the layer as $ f(W^{T}x+b)$. Two layers have directional connection when the output of first layer is used as input of the subsequent layer.

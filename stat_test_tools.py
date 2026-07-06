@@ -176,8 +176,8 @@ def friedman_test_per_environment_containers(en, names, attribute):
 def hodges_lehmann_paired(x, y):
     d = np.asarray(x) - np.asarray(y)
     walsh = [(d[i] + d[j]) / 2
-             for i in range(len(d))
-             for j in range(i, len(d))]
+              for i in range(len(d))
+              for j in range(i, len(d))]
     return np.median(walsh)
 
 def wilcoxon_test_per_environment_containers(en,names, attribute):

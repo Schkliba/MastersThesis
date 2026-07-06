@@ -1,4 +1,4 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{20}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -88,6 +88,14 @@ Jorge Gomes, Pedro Mariano, and Anders~Lyhne Christensen.
 \newblock ISBN 9781450334723.
 \newblock \doi{10.1145/2739480.2754736}.
 \newblock URL \url{https://doi.org/10.1145/2739480.2754736}.
+
+\bibitem[Jr. and Lehmann(1963)]{Hodges}
+J.~L.~Hodges Jr. and E.~L. Lehmann.
+\newblock {Estimates of Location Based on Rank Tests}.
+\newblock \emph{The Annals of Mathematical Statistics}, 34\penalty0
+  (2):\penalty0 598 -- 611, 1963.
+\newblock \doi{10.1214/aoms/1177704172}.
+\newblock URL \url{https://doi.org/10.1214/aoms/1177704172}.
 
 \bibitem[Kaelbling et~al.(1998)Kaelbling, Littman, and
   Cassandra]{KAELBLING199899}

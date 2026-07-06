@@ -7,19 +7,26 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Hyperparameters for bayesian search ES}}{29}{table.5.1}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Hyperparameters for bayesian search DE}}{29}{table.5.2}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Bayesian Search results Cartpole ES}}{30}{table.5.3}%
-\contentsline {table}{\numberline {5.4}{\ignorespaces Bayesian Search results Cartpole DE}}{30}{table.5.4}%
-\contentsline {table}{\numberline {5.5}{\ignorespaces Bayesian Search results for Lunar Lander ES}}{30}{table.5.5}%
-\contentsline {table}{\numberline {5.6}{\ignorespaces Bayesian Search results for Lunar Lander DE}}{31}{table.5.6}%
-\contentsline {table}{\numberline {5.7}{\ignorespaces Lunarlander ES}}{31}{table.5.7}%
-\contentsline {table}{\numberline {5.8}{\ignorespaces Lunar Lander DE}}{31}{table.5.8}%
-\contentsline {table}{\numberline {5.9}{\ignorespaces Cartpole DE}}{32}{table.5.9}%
-\contentsline {table}{\numberline {5.10}{\ignorespaces Cartpole ES}}{32}{table.5.10}%
-\contentsline {table}{\numberline {5.11}{\ignorespaces Selection of generations hyperparameter based on performed grid search}}{34}{table.5.11}%
-\contentsline {table}{\numberline {5.12}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Lunar Lander}}{35}{table.5.12}%
-\contentsline {table}{\numberline {5.13}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Cartpole}}{36}{table.5.13}%
-\contentsline {table}{\numberline {5.14}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Cartpole}}{37}{table.5.14}%
-\contentsline {table}{\numberline {5.15}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Lunar Lander}}{37}{table.5.15}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Evaluation episode selection table}}{30}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Hyper-parameters limits for Bayesian search ES}}{31}{table.5.2}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Hyperparameters limits for bayesian search DE}}{31}{table.5.3}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Bayesian Search results Cartpole ES}}{31}{table.5.4}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Bayesian Search results Cartpole DE}}{32}{table.5.5}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Bayesian Search results for Lunar Lander ES}}{32}{table.5.6}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Bayesian Search results for Lunar Lander DE}}{33}{table.5.7}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Delta table of hyperparameters for ES on Lunar Lander after IGS step}}{33}{table.5.8}%
+\contentsline {table}{\numberline {5.9}{\ignorespaces Delta table of hyper-parameters for DE on Lunar Lander environment after IGS step}}{34}{table.5.9}%
+\contentsline {table}{\numberline {5.10}{\ignorespaces Delta table of hyper-parameters for DE on Cartpole environment after IGS step}}{34}{table.5.10}%
+\contentsline {table}{\numberline {5.11}{\ignorespaces Delta table of hyper-parameters for ES on Cartpole environment after IGS step}}{35}{table.5.11}%
+\contentsline {table}{\numberline {5.12}{\ignorespaces Selection of generations hyper-parameter based on performed grid search}}{37}{table.5.12}%
+\contentsline {table}{\numberline {5.13}{\ignorespaces Fitness based tests of group difference}}{38}{table.5.13}%
+\contentsline {table}{\numberline {5.14}{\ignorespaces Diversity based tests of group difference}}{38}{table.5.14}%
+\contentsline {table}{\numberline {5.15}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on Lunar Lander environment}}{39}{table.5.15}%
+\contentsline {table}{\numberline {5.16}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on Lunar Lander environment}}{39}{table.5.16}%
+\contentsline {table}{\numberline {5.17}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on Cartpole environment}}{39}{table.5.17}%
+\contentsline {table}{\numberline {5.18}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on Cartpole environment}}{39}{table.5.18}%
+\contentsline {table}{\numberline {5.19}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Lunar Lander}}{41}{table.5.19}%
+\contentsline {table}{\numberline {5.20}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Cartpole}}{41}{table.5.20}%
+\contentsline {table}{\numberline {5.21}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Cartpole}}{42}{table.5.21}%
+\contentsline {table}{\numberline {5.22}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Lunar Lander}}{42}{table.5.22}%
 \addvspace {10\p@ }
