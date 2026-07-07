@@ -7,3 +7,4 @@ for i in "${arr[@]}"
 do
     python generation_examination.py -e lunarlander -a diff -c $i -o $OUTPUT  -R grid_search &
 done
+wait
