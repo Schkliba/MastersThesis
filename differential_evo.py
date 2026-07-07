@@ -39,7 +39,7 @@ def add_novelty_mutation(pop, toolbox:base.Toolbox):
     new_ids = []
     for j in range(len(pop)):
         candidates = [candidate for i,candidate in enumerate(pop) if i != j]
-        a, b, c = tools.selRandom(candidates, 3)
+        a, b, c = random.sample(candidates, k=3)
         new_ind = toolbox.triOp(a, b, c)
         new_ids.append(new_ind)
     trials = list(map(lambda x: toolbox.recombine(x[0], x[1]), zip(pop, new_ids)))
