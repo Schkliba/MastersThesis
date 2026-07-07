@@ -6,14 +6,14 @@ To compare different types of objective functions fairly, we have to select crit
 Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective environments, getting more comprehensive picture then from a single run. This will be mainly reflected in the seed for random numbers generator of the environment. Since the promise of the novelty approach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced by the algorithm runs\\
 However we also have to take into account the hyper-parameters with which these populations have been achieved. This is especially (but not limited to) population size and number of generations, hyper-parameters responsible for most of the computational complexity of a evolutionary algorithm run. 
 \section{Containers}
-While we have reviewed evolutionary algorithms and proposed different objective functions in chapter \ref{chap:evolution}, we now have to somehow refer to the combination of the two. For this purpose we propose the term \textbf{container}.
+While we have reviewed evolutionary algorithms and proposed different objective functions in chapter \ref{chap:evolution}, we now have to somehow refer to the combination of the two. We use the term \textbf{container} to denote a concrete combination of an evolutionary algorithm, objective-handling method.
 We can divide the containers on the axis of algorithm to ES containers and DE container. And we can divide them on basis of objective function handling:
 \begin{itemize}
-	\item \textbf{fitness} container implements pure fitness aproach as described 
+	\item \textbf{fitness} container implements pure fitness approach as described 
 	
 	in section \ref{sec:fitness}
 	
-	\item \textbf{novelty} container implements pure novelty aproach as described 
+	\item \textbf{novelty} container implements pure novelty approach as described 
 	
 	in section \ref{sec:novelty}
 	
@@ -30,16 +30,16 @@ We can divide the containers on the axis of algorithm to ES containers and DE co
 	\item \textbf{increase fitness} container implements increasing fitness objective as described in as described in section \ref{sec:combFitNov}
 	
 \end{itemize}
-Specifically for ES the crossover method is considered a hyperparameter that will be pinpointed druign the bayes search described in section \ref{sec:bayesSearch}.
+Specifically for ES the crossover method is considered a hyperparameter that will be pinpointed during the Bayes search described in section \ref{sec:bayesSearch}.
 \section{Individual hyper-parameter selection}
 The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. 
 
 \subsection{NN Structure}
-As discussed in chapter \ref{ch:agents} as a choice we are making our agents to be simple feed-forward neural networks. This choice is on account of simplicty but also on account of adequacy as the bigger the neural network is the more resources need to be spend on optimising it. The NN structures are depicted on figures \ref{fig:cartpoleNN} and \ref{fig:lunarlanderNN} for Cartpole and Lunarlander respectively. 
+As discussed in chapter \ref{ch:agents} as a choice we are making our agents to be simple feed-forward neural networks. This choice is on account of simplicity but also on account of adequacy as the bigger the neural network is the more resources need to be spend on optimising it. The NN structures are depicted on figures \ref{fig:cartpoleNN} and \ref{fig:lunarlanderNN} for Cartpole and Lunar Lander respectively. 
 
 Both structures have been selected on account of preliminary experience with the environments. Shapes of input and output layer are determined by the respective observation and action space. 
 
-The genom of evolving individual consists purely of the weight and bias matrices of the hidden layers nothing else is subject to evolution. For the purposes of this thesis and in relation to the descriptions of evolutionary mechanics given so far we should think about these matrices as flattened to a single long vector. In the case of Lunar lander with multiple layer the vectors are concatenated.  
+The genome of evolving individual consists purely of the weight and bias matrices of the hidden layers nothing else is subject to evolution. For the purposes of this thesis and in relation to the descriptions of evolutionary mechanics given so far we should think about these matrices as flattened to a single long vector. In the case of Lunar lander with multiple layer the vectors are concatenated.  
 \begin{figure}[h]
 	\centering
 	
@@ -165,10 +165,10 @@ We have reviewed hyperparamets of each algorithm in the chapter \ref{chap:evolut
 \subsection{Bayesian Search}
 \label{sec:bayesSearch}
 Because we are faced with multiple 
-Bayesian search is an algorithm where we stochastically delineate where a possibly good solution may lie and then try to exploit this delineation. Because the specific workings of Bayesian search are time-consuming to implement ad hoc (and also such implementation is out of the scope of this thesis) We will utilise library Optuna for the purpose.
+Bayesian search is an algorithm where we stochastically delineate where a possibly good solution may lie and then try to exploit this delineation. Because the specific workings of Bayesian search are time-consuming to implement ad hoc (and also such implementation is out of the scope of this thesis) We will utilise library Optuna.
 
 \subsubsection{Optuna}
-Just as in our case a lot of machine-learning techniques need for their proper function to obtain adequate hyperparameters first. Optuna is a Python library designed for this purpose. The library itself is multifaceted, so we will only discuss algortihms and terms pertaining to the subject of this thesis.
+Just as in our case a lot of machine-learning techniques need for their proper function to obtain adequate hyperparameters first. Optuna is a Python library designed for this purpose \citep{akiba2019optuna}. The library itself is multifaceted, so we will only discuss algorithms and terms pertaining to the subject of this thesis.
 \begin{defn}
 	By Optuna trial or just trial we mean one run of the evolutionary algorithm with one chosen set of hyperparameters and the results of this run.
 \end{defn}
@@ -180,7 +180,7 @@ Just as in our case a lot of machine-learning techniques need for their proper f
 \end{defn}
 Note that study maybe composed of multiple optimisation runs. In this thesis we have only done one study per container and one optimisation run per study if not for anything than to mind our computational time.
 
-As the optimisation algorithm we have selected Tree-structured Parzen Estimator (TPE) due to the fairly low complexity and efectivness, wasting no trials as we want to conserve as much actual runtime as possible.
+As the optimisation algorithm we have selected Tree-structured Parzen Estimator (TPE) due to the fairly low complexity and effectiveness, wasting no trials as we want to conserve as much actual runtime as possible.
 \subsubsection{TPE}
 In this section we will use information from paper \cite{bergstra2011algorithms}.
 The Tree-structured Parzen Estimator (TPE) used in Optuna is a sequential model-based optimisation method for hyperparameter tuning. It models probability $p(x|y)$ where $x$ is a set of hyperparameters and $y=f(x)$ is observed value of objective function.  

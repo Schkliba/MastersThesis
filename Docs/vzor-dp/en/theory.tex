@@ -4,18 +4,18 @@
 To understand the reasoning guiding this work we have to first look at the fundamental subject of our efforts - the artificial agents.\\
 We will look at their structure, guiding principles, practical implementation and nor last nor least, their use.
 \section{Agents and environment}
-All agents exists in environments that provide context to their agency. An agent gets information about the \textbf{environment} it find itself in (e.i. \textbf{percepts}) through \textbf{sensors} and acts on the environment through \textbf{actuators}. Both actuators and sensors are usually characteristics of the agent. Another characteristic of an agent would be setup of its internal machinations.
+All agents exist in environments that provide context to their agency. An agent gets information about the \textbf{environment} it find itself in (i.e. \textbf{percepts}) through \textbf{sensors} and acts on the environment through \textbf{actuators}. Both actuators and sensors are usually characteristics of the agent. Another characteristic of an agent would be setup of its internal machinations.
 \begin{defn}[\cite{russell2021}]
 \label{dfn:actuators}
 Let E be environment where agent G is located. G is equipped with actuators A and sensors P and so we can identify $ obss_P(E) $, a space of all possible sequences of percepts available to G within E and $ A(E) $ space of available actions in E.
 Then function $ G: obss_P(E)\rightarrow A(E) $ is called an agent function, defining behaviour of the agent G in environment E.
 \end{defn}
 
-We illustrate relationship of these concepts in the diagram \ref{fig:generalagent}. Note that provided definition if agent policy is characteristic to deterministic agents. For agents in stochastic environments we need to reframe the agent function as probabilistic policy. We will discuss this reframing further in section \ref{sec:RL}.
+We illustrate relationship of these concepts in the diagram \ref{fig:generalagent}. Note that provided definition of agent policy is characteristic to deterministic agents. For agents in stochastic environments we need to reframe the agent function as probabilistic policy. We will discuss this reframing further in section \ref{sec:RL}.
 
  
 \begin{figure}
-\label{fig:generalagent}
+
 	\begin{tikzpicture}[
 		>=latex,
 		node distance=5cm,
@@ -38,10 +38,11 @@ We illustrate relationship of these concepts in the diagram \ref{fig:generalagen
 		node[below] {Actions} (env);
 		
 	\end{tikzpicture}
-  \caption{Agent and enviroment realtionship}
+  \caption{Agent and environment relationship}
+  \label{fig:generalagent}
 \end{figure}
 
-Because we want our agents to solve some tasks in their respective environments with certain efficiency i.e. we want them to be intelligent, we need to define a notion of rationality that can help us better capture what we mean by intelligence. First however we need to measure how useful or detrimental a situation can be for our agent.
+Because we want our agents to solve some tasks in their respective environments with certain efficiency meaning we want them to be intelligent, we need to define a notion of rationality that can help us better capture what we mean by intelligence. First however we need to measure how useful or detrimental a situation can be for our agent.
 \begin{defn}[\citep{russell2021}]
 Be that E is an environment and  $ seq(E) $ is a space of all possible sequences of states within E.
 Then function $ f: seq(E)\rightarrow \textbf{R} $ is a performance measure of some agent operating in E.

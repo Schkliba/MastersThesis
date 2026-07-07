@@ -85,10 +85,10 @@ Selection in evolutionary algorithms can be realised by various means such as ro
 
 \begin{algorithm}[h]
 	
-	\caption{Evolutionary Strategy $  \lambda + \mu $}
+	\caption{Evolutionary Strategy $  \mu + \lambda $}
 	\label{alg:lambdaPlus}
 	\SetAlgoNoEnd
-	\KwIn{Population size $\lambda$, new generation pool size $\mu$, crossover rate $CR$, mutation rate $ MR $, objective function $f(x)$, crossover operator $CrossOp(x)$, mutation power $ \sigma $, number of generations $G$}
+	\KwIn{Population size $\mu$, new generation pool size $\lambda$, crossover rate $CR$, mutation rate $ MR $, objective function $f(x)$, crossover operator $CrossOp(x)$, mutation power $ \sigma $, number of generations $G$}
 	Initialise population $\{x_i^0\}_{i=1}^\mu$\;
 	
 	Evaluate $f(x_i^0)$ for all $i$\;
@@ -141,7 +141,7 @@ Because of these benefits it is a popular technique in the field of neuroevoluti
 We detail the whole process in algorithm \ref{alg:diffEv}.
 The algorithm for resolving a single generation happens in a single loop with the familiar stages which we detail in algorithm $ \ref{alg:diffEv} $.
 \subsubsection{Selection}
-Unlike in evolutionary strategies described in  section \ref{sec:ES}, slection is done on individual basis to enhance parallelisation capabilities of the algorithm. This means that for each individual $ x_i $ we either select it or it's proposed replacement $ v_i $ based on the values of objective function for each of them. Of course we keep the more successful one. 
+Unlike in evolutionary strategies described in  section \ref{sec:ES}, selection is done on individual basis to enhance parallelisation capabilities of the algorithm. This means that for each individual $ x_i $ we either select it or it's proposed replacement $ v_i $ based on the values of objective function for each of them. Of course we keep the more successful one. 
 
 \subsubsection{Mutation}
 While Evolutionary strategies introduce stochasticity in explicit and controlled manner, differential evolution relies on a special form of contextual mutation where three individuals from the population are drafted and combined. This means that we do not have to search for optimal value of $ \sigma $. 
@@ -227,7 +227,7 @@ Let E be environment and $ h_t $ be a history up to a time $ t $ and let $ d(x,y
 For the purposes of this thesis the observer function is implemented through the $ agg(x) $ and $ trasnform(x) $ functions used in algorithm \ref{alg:envloop}. 
 
 \begin{defn}[adapted from \citep{noveltyarticle}]
-Let P be a population of individuals within EA and (B, d) be a behavioural space. Then for each individual $ a $ we define novelty:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d(a,b)}{|P|-1} $$ 
+Let P be a population of individuals within EA and (B, d) be a behavioural space. Then for each individual $ a $ we define novelty:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d\left[\omega_B(a),\omega_B(b)\right]}{|P|-1} $$ 
 \end{defn}
 With novelty as objective function the selection process incentivises diversification of behaviour among the population. This allows the evolutionary search to retain variety within the population across generations, leveraging the crossover as well as mutations to leave local optima.
 

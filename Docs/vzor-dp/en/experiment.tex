@@ -209,14 +209,14 @@ We can see that there was a room for improving almost all of the proposed hyper-
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{lcccc}
 		\toprule
-		{} &   cr &   $\mu$ & $\lambda$ &    mr \\
+		{} &   $\Delta_{CR}$ &   $\Delta_{\mu}$ & $\Delta_{\lambda}$ &    $\Delta_{MR}$ \\
 		\midrule
 		pure novelty    & -0.1 &       - &         - &     - \\
-		inc. fitness    &    - &   15.00 &         - &     - \\
-		inc. novelty    &  0.1 &       - &    -15.00 &  0.05 \\
-		fit. archive    &    - &   30.00 &     15.00 &   0.1 \\
-		elite archive   & -0.1 &       - &     15.00 &   0.1 \\
-		novetly archive & -0.1 &   15.00 &     15.00 &     - \\
+		inc. fitness    &    - &   +15.00 &         - &     - \\
+		inc. novelty    &  +0.1 &       - &    -15.00 &  +0.05 \\
+		fit. archive    &    - &   +30.00 &     +15.00 &   +0.1 \\
+		elite archive   & -0.1 &       - &     +15.00 &   +0.1 \\
+		novetly archive & -0.1 &   +15.00 &     +15.00 &     - \\
 		limit archive   &  0.1 &  -15.00 &         - &     - \\
 		\bottomrule
 	\end{tabular}
@@ -232,15 +232,15 @@ We can see that there was a room for improving almost all of the proposed hyper-
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{lccc}
 		\toprule
-		{} &   cr & $\mu$ &   mr \\
+		{} &   $\Delta_{CR}$ & $\Delta_{pop}$ &   $\Delta_{MR}$ \\
 		\midrule
-		pure novelty    &  0.1 & -10.0 & -0.1 \\
-		inc. fitness    &    - &  10.0 &    - \\
-		inc. novelty    &  0.1 &     - &    - \\
+		pure novelty    &  +0.1 & -10.0 & -0.1 \\
+		inc. fitness    &    - &  +10.0 &    - \\
+		inc. novelty    &  +0.1 &     - &    - \\
 		fit. archive    & -0.1 &     - & -0.1 \\
-		elite archive   &  0.2 &  10.0 &    - \\
-		novetly archive &    - &     - &  0.1 \\
-		limit archive   &    - &  10.0 &  0.1 \\
+		elite archive   &  +0.2 &  +10.0 &    - \\
+		novetly archive &    - &     - &  +0.1 \\
+		limit archive   &    - &  +10.0 &  +0.1 \\
 		\bottomrule
 	\end{tabular}
 
@@ -255,16 +255,16 @@ We can see that there was a room for improving almost all of the proposed hyper-
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{lcccccccccccccccc}
 		\toprule
-		{} &     $\gamma$ &      pop &     $\alpha$ \\
+		{} &     $\Delta_{\gamma}$ &     $\Delta{pop}$ &     $\Delta{\alpha}$ \\
 		\midrule
-		fitness           &  - &  5.000 &  - \\
-		novelty           &  0.200 & 10.000 & -0.100 \\
-		add\_novelty       & -0.100 & 10.000 & -0.100 \\
-		sub\_novelty       &  - &  5.000 &  - \\
-		fit\_archiving     & -0.100 &  0.000 & -0.200 \\
-		elite\_archiving   &  - &  5.000 &  0.200 \\
-		novelty\_archiving & -0.100 & -5.000 & -0.100 \\
-		novelty\_limit     & -0.100 & 10.000 & -0.100 \\
+		fitness           &  - &  +5.000 &  - \\
+		novelty           &  0.200 & +10.000 & -0.100 \\
+		inc. fitness       & -0.100 & +10.000 & -0.100 \\
+		inc. novelty       &  - &  +5.000 &  - \\
+		fit. archive     & -0.100 &  - & -0.200 \\
+		elite archive   &  - &  +5.000 &  +0.200 \\
+		novetly archive & -0.100 & -5.000 & -0.100 \\
+		limit archive     & -0.100 & +10.000 & -0.100 \\
 		\bottomrule
 	\end{tabular}
 	
@@ -279,15 +279,15 @@ We can see that there was a room for improving almost all of the proposed hyper-
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{lcccccccccccccccccccccccc}
 		\toprule
-		{} &     cr &   $\mu$ &   $\lambda$ &     mr \\
+		{} &     $\Delta{CR}$ &   $\Delta{\mu}$ &   $\Delta{\lambda}$ &     $\Delta{mr}$ \\
 		\midrule
-		fitness           & -0.100 &   5 &   5 &  - \\
-		novelty           &  - &   5 &  -5 & -0.050 \\
-		sub\_novelty       &  - &  10 & -10 &  - \\
-		fit\_archiving     & -0.100 &  -5 &  10 &  - \\
-		elite\_archiving   & -0.100 &   0 &   0 &  0.000 \\
-		novelty\_archiving & -0.100 &   5 &   5 & -0.050 \\
-		novelty\_limit     &  - &   5 &   0 & -0.050 \\
+		fitness           & -0.100 &   +5 &   +5 &  - \\
+		novelty           &  - &   +5 &  -5 & -0.050 \\
+		inc. novelty       &  - &  +10 & -10 &  - \\
+		fit. archive     & -0.100 &  -5 &  +10 &  - \\
+		elite archive   & -0.100 &   - &   - &  0.000 \\
+		novetly archive & -0.100 &   +5 &   +5 & -0.050 \\
+		limit archive     &  - &   +5 &   - & -0.050 \\
 		\bottomrule
 	\end{tabular}
 	
@@ -314,7 +314,7 @@ We showcase the resulting patterns in \cref{fig:fitnessChartCT, fig:fitnessChart
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.9\textwidth]{../img/generations_cartpole_max_fit.pdf}
-\caption{Fitness/Generation Characteristics for Cartpole environment}
+\caption{Fitness/Generation Characteristics for Cartpole environment (ES up, DE down)}
 \label{fig:fitnessChartCT}
 \end{figure}
 
@@ -322,13 +322,13 @@ We showcase the resulting patterns in \cref{fig:fitnessChartCT, fig:fitnessChart
 
 	\centering
 	\includegraphics[width=0.9\textwidth]{../img/generations_lunarlander_max_fit.pdf}
-	\caption{Fitness/Generation Characteristics for Lunar Lander environment (ES left, DE right)}
+	\caption{Fitness/Generation Characteristics for Lunar Lander environment (ES up, DE down)}
 	\label{fig:fitnessChartLL}
 \end{figure}
 
 
 \Cref{fig:fitnessChartCT,fig:fitnessChartLL} however have been pruned for readability and do not represent the full range of values that have been taken into account during the ultimate selection such as the population median or mean. 
-The shaded area here represents quantiles $ q_{75}$ and $q_{25} $ other values have been pruned. The actual scope of values considered for each contained is represented by chart that have been for readability sake put into \cref{app:generationGrid}. We evaluated the algorithm on 5 different seeds.
+The shaded area here represents quantiles $ q_{25}$ and $q_{75} $ other values have been pruned. The actual scope of values considered for each contained is represented by chart that have been for readability sake put into \cref{app:generationGrid}. We evaluated the algorithm on 5 different seeds.
 
 The hand-selected generation counts for the final evaluation are presented in \cref{tab:gridResults}.  
 
@@ -553,14 +553,14 @@ We have 16 container identified by the combination of objective handling method 
 Based on these final experiments we can assess the differences between EAs used, objective handling methods and their groupings. 
 
 \subsection{Algorithms}
-We have found out that each EA dominates different task in performance. This is not completely unexpected as the ES in our case is quite limited with the static sigma and therefore cannot adjust to the needs of the population during it's run on more complex task (Lunar Lander). On the other hand we get this adjustment automatically with DE algorithm without specifying any hyper-parameter. From the performance characteristics in \crefrange{fig:fitness1}{fig:fitness4} we can see that the perforamnce difference may be mostly attributable to the spread of results rather than performance at the top.
+We have found out that each EA dominates different task in performance. This is not completely unexpected as the ES in our case is quite limited with the static sigma and therefore cannot adjust to the needs of the population during it's run on more complex task (Lunar Lander). On the other hand we get this adjustment automatically with DE algorithm without specifying any hyper-parameter. From the performance characteristics in \cref{fig:fitnessChartCT,fig:fitnessChartLL} we can see that the performance difference may be mostly attributable to the spread of results rather than performance at the top.
 
 This is supported by the fact that in Lunar Lander task the differential evolution clearly produced more diverse populations than ES.
 
 \subsection{Objective functions}
 As stated before the fitness objective handling methods dominate the tasks. From \cref{tab:groupcohesionFit,tab:groupcohesionDiv} we can also see that their results are also generally more homogenous than the other groups (evidenced by mostly greater p-values). 
 
-Although this is true for both environments we claim that in each the causes of the observation are different: in Cartpole the fitness based algorithms reach solving individual and therefore go through a similar process of distribution of this result into the population. On the other hand in Lunar Lander we have unfortunately not been able to achieve solving individual using any of the algorithms or methods. However from the \cref{fig:fitness3,fig:fitness4} we can see that the maximum achieved fitness tends to flatline between well-behaved and very well behaved solution with pure fitness dropping even below this threshold. This indicates presence of false local optima our algorithms have been getting stuck on. This is in line with our idea that Lunar Lander is more complex environment than Cartpole and the driving idea of novelty search \citep{noveltyarticle}. 
+Although this is true for both environments we claim that in each the causes of the observation are different: in Cartpole the fitness based algorithms reach solving individual and therefore go through a similar process of distribution of this result into the population. On the other hand in Lunar Lander we have unfortunately not been able to achieve solving individual using any of the algorithms or methods. However from the \cref{fig:fitnessChartCT,fig:fitnessChartLL} we can see that the maximum achieved fitness tends to flatline between well-behaved and very well behaved solution with pure fitness dropping even below this threshold. This indicates presence of false local optima our algorithms have been getting stuck on. This is in line with our idea that Lunar Lander is more complex environment than Cartpole and the driving idea of novelty search \citep{noveltyarticle}. 
 
 However we do not observe significant improvement in performance for novelty based methods nor for methods combining fitness with novelty. The biggest improvement is provided by increasing fitness method in ES algorithm (\cref{tab:contWilcoxonLL}) where it provides more reliable results (\cref{fig:boxplot1}). We propose that in this instance the combination of fitness with novelty does help break out of false optima.
 

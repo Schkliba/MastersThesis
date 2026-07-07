@@ -18,17 +18,17 @@
 \contentsline {table}{\numberline {5.9}{\ignorespaces Delta table of hyper-parameters for DE on Lunar Lander environment after IGS step}}{34}{table.caption.43}%
 \contentsline {table}{\numberline {5.10}{\ignorespaces Delta table of hyper-parameters for DE on Cartpole environment after IGS step}}{35}{table.caption.44}%
 \contentsline {table}{\numberline {5.11}{\ignorespaces Delta table of hyper-parameters for ES on Cartpole environment after IGS step}}{35}{table.caption.45}%
-\contentsline {table}{\numberline {5.12}{\ignorespaces Selection of generations hyper-parameter based on performed grid search}}{36}{table.caption.48}%
-\contentsline {table}{\numberline {5.13}{\ignorespaces Fitness based tests of group difference}}{36}{table.caption.50}%
-\contentsline {table}{\numberline {5.14}{\ignorespaces Diversity based tests of group difference}}{36}{table.caption.51}%
-\contentsline {table}{\numberline {5.15}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on Lunar Lander environment}}{37}{table.caption.53}%
-\contentsline {table}{\numberline {5.16}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on Lunar Lander environment}}{37}{table.caption.53}%
-\contentsline {table}{\numberline {5.17}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on Cartpole environment}}{37}{table.caption.54}%
-\contentsline {table}{\numberline {5.18}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on Cartpole environment}}{37}{table.caption.54}%
-\contentsline {table}{\numberline {5.19}{\ignorespaces Wilcoxon comparison summary fo Lunar Lander env.}}{38}{table.caption.55}%
-\contentsline {table}{\numberline {5.20}{\ignorespaces Wilcoxon comparison summary fo Lunar Lander env.}}{38}{table.caption.55}%
-\contentsline {table}{\numberline {5.21}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Lunar Lander}}{40}{table.caption.58}%
-\contentsline {table}{\numberline {5.22}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Cartpole}}{41}{table.caption.59}%
+\contentsline {table}{\numberline {5.12}{\ignorespaces Selection of generations hyper-parameter based on performed grid search}}{38}{table.caption.48}%
+\contentsline {table}{\numberline {5.13}{\ignorespaces Fitness based tests of group difference}}{38}{table.caption.50}%
+\contentsline {table}{\numberline {5.14}{\ignorespaces Diversity based tests of group difference}}{39}{table.caption.51}%
+\contentsline {table}{\numberline {5.15}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on Lunar Lander environment}}{39}{table.caption.53}%
+\contentsline {table}{\numberline {5.16}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on Lunar Lander environment}}{39}{table.caption.53}%
+\contentsline {table}{\numberline {5.17}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on Cartpole environment}}{40}{table.caption.54}%
+\contentsline {table}{\numberline {5.18}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on Cartpole environment}}{40}{table.caption.54}%
+\contentsline {table}{\numberline {5.19}{\ignorespaces Wilcoxon comparison summary fo Lunar Lander env.}}{41}{table.caption.55}%
+\contentsline {table}{\numberline {5.20}{\ignorespaces Wilcoxon comparison summary fo Lunar Lander env.}}{41}{table.caption.55}%
+\contentsline {table}{\numberline {5.21}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Lunar Lander}}{41}{table.caption.58}%
+\contentsline {table}{\numberline {5.22}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Cartpole}}{42}{table.caption.59}%
 \contentsline {table}{\numberline {5.23}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Cartpole}}{42}{table.caption.61}%
-\contentsline {table}{\numberline {5.24}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Lunar Lander}}{42}{table.caption.62}%
+\contentsline {table}{\numberline {5.24}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Lunar Lander}}{43}{table.caption.62}%
 \addvspace {10\p@ }
