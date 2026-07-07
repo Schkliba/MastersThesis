@@ -112,13 +112,27 @@ def tri_op(base:Player, diff1:Player, diff2:Player, alpha:float):
     n = [(a[i] + alpha * (b[i] - c[i])) for i in range(len(a))]
     return n
 
+# def recombine(ind:Player, mats, prob_filter):
+#     newind = []
+#     og = ind.get_agent_weights()
+#     for i, mat in enumerate(mats):
+#         cpoints = np.random.random(mat.shape) < prob_filter
+#         n = np.where(cpoints, mat, og[i])
+#         newind.append(n)
+#     ind.set_agent_weights(newind)
+#     return ind
+
 def recombine(ind:Player, mats, prob_filter):
     newind = []
     og = ind.get_agent_weights()
     for i, mat in enumerate(mats):
         cpoints = np.random.random(mat.shape) < prob_filter
+        # Pick a random element
+        idx = np.unravel_index(np.random.randint(cpoints.size), cpoints.shape)
+
+        # Set it to True
+        cpoints[idx] = True
         n = np.where(cpoints, mat, og[i])
         newind.append(n)
     ind.set_agent_weights(newind)
     return ind
-
