@@ -10,8 +10,8 @@ from lunarlander import LunarLanderAgent
 
 TEST_EVAL_EPS = 5
 SEEDS = [101,102,103]
-en = "lunarlander"
-filename = "/home/schkliba/git/MastersThesis/Data/final/lunarlander/fit_archiving/lambda/2026-06-01_14-54-10_fit_archiving_cross_method: uniform|l: 70|m: 70|mr: 0.01|cr: 0.9000000000000001|mutation_sigma: 2.5|archiving_period: 4|archive_batch: 2|cross_uni: 0.8|ng: 15.plk"
+en = "cartpole"
+filename = "/home/schkliba/git/MastersThesis/Data/final/cartpole/fitness/diff/server_try0/2026-06-23_05-08-04_fitness_l: 20|mr: 0.5|cr: 1.0|ng: 10.plk"
 
 with open(filename, "rb") as f:
     pops = pickle.load(f)
