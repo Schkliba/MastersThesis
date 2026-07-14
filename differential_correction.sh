@@ -6,5 +6,17 @@ declare -a arr=( "add_novelty" "novelty" "fitness" "sub_novelty" "fit_archiving"
 for i in "${arr[@]}"
 do
     python generation_examination.py -e lunarlander -a diff -c $i -o $OUTPUT  -R grid_search &
+    pids+=($!)
+
+    count=$((count + 1))
+
+    if (( count % 2 == 0 )); then
+        for pid in "${pids[@]}"; do
+            wait "$pid"
+        done
+        pids=()
+    fi
 done
-wait
+for pid in "${pids[@]}"; do
+    wait "$pid"
+done
