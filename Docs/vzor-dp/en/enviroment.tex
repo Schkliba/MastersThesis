@@ -19,7 +19,7 @@ Let P be a probability measure over the states of the environment. We define Mar
 To tie this into the information from chapter \ref{ch:agents} $ A=A(E)$, $ R $ is performance measure of an agent solving the MDP and the percepts have bijection to real states of the environment. This would not be the case for partially observable MDP.
 \begin{defn}[\cite{KAELBLING199899}]
 Let P be a probability measure over the states of the environment.	
-We define Partialy Observable Markov’s decision problem (POMDP) by a six-tuple (S, A, $\Omega$, T, O, r) where:
+We define Partially Observable Markov’s decision problem (POMDP) by a six-tuple (S, A, $\Omega$, T, O, r) where:
 \begin{itemize}
 	\item S is a set of all possible (true) states of the system, or state space
 	\item A is a set of all possible actions available in the system or action space
@@ -31,7 +31,7 @@ We define Partialy Observable Markov’s decision problem (POMDP) by a six-tuple
 	\item $ r: S\times A\times S \rightarrow \boldsymbol{R} $ is reward function same as in MDP.
 \end{itemize}
 \end{defn}
-Now that we have characterised the environments we can apply to them concepts we have revied in the chapter \ref{ch:agents}. We begin by specifying the notion of percept sequence space from definition \ref{dfn:actuators}.
+Now that we have characterised the environments we can apply to them concepts we have reviewed in the chapter \ref{ch:agents}. We begin by specifying the notion of percept sequence space from definition \ref{dfn:actuators}.
 \begin{defn}[\cite{DBLP:journals/corr/RossPPC14}]
 	Let $ \Omega $ the space of all observations ($ \Omega \cong S $ for MDP), A be the action space, $ o_t \in \Omega $ be observation at time $ t $ and $ a_t \in A $ action taken by the agent in time $ t $. Then $$ h_t = (a_0, o_1,...,a_{t-1},o_t) $$ is a history at time $ t $.
 \end{defn}
@@ -100,20 +100,28 @@ This introduces a layer of complexity that is outside of the scope of this thesi
 \end{algorithm}
 
 
- As mentioned in the introduction the selected environments are called Cartpole and Lunar Lander. 
+ As mentioned in the introduction the selected environments are called CartPole and Lunar Lander. 
  
  We will discuss the full purpose of $ agg $ and $ transform $ in the section \ref{sec:novelty} and section \ref{sec:behavioralSpace}.
 
-\subsection{Cartpole}
+\subsection{CartPole}
 \label{env:cartpole}
 
-Cartpole is one of the most used benchmark environments in the Gymnasium library. It's a simple environment where the agent controls a cart rolling on flat surface with a pole on top.
-The goal is to keep the pole balanced on top of the cart. The reward is calculated every step depending on the angle of the stick. This means we have bounded total reward between 0 and 500 points.
+CartPole is one of the most used benchmark environments in the Gymnasium library. It's a simple environment where the agent controls a cart rolling on flat surface with a pole on top.
+The goal is to keep the pole balanced on top of the cart. The reward is calculated every step depending on the angle of the stick. When the stick is kept in the angle $\pm0.418\text{ rad}$ for vertical position the agent receives +1 point.  Since there are maximum 500 steps this means we have bounded total reward between 0 and 500 points.
 \begin{defn}
-	An agent that achieves score 500 in Cartpole is called solution or solving individual.
+	An agent that achieves score 500 in CartPole is called solution or solving individual.
 \end{defn}
+
+ \begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../img/cartpole_img.png}
+	\caption{CartPole environment}
+	
+\end{figure}
+
 \subsubsection{Observation space}
-Cartpole observation space is expressed as a 4-dimensional vector. We delineate possible values of the vector in \ref{tab:cartpole_state_space}. Note that for Cartpole enviroment this observation space reflects full state of the environment in the given moment and therefore it could be characterised as MDP rather than POMDP.
+CartPole observation space is expressed as a 4-dimensional vector. We delineate possible values of the vector in \ref{tab:cartpole_state_space}. Note that for CartPole environment this observation space reflects full state of the environment in the given moment and therefore it could be characterised as MDP rather than POMDP.
 \begin{table}[h]
 	\centering
 	\begin{tabular}{|c|l|c|c|}
@@ -126,7 +134,7 @@ Cartpole observation space is expressed as a 4-dimensional vector. We delineate 
 		3 & Pole angular velocity & $-\infty$ & $\infty$ \\
 		\hline
 	\end{tabular}
-	\caption{Observation space of Cartpole}
+	\caption{Observation space of CartPole}
 	\label{tab:cartpole_state_space}
 \end{table}
 \subsubsection{Action space}
@@ -141,24 +149,37 @@ The action space is discrete with only two values possible as presented in the t
 		1 & Push cart to the right \\
 		\hline
 	\end{tabular}
-	\caption{Cartpole Action Space.}
+	\caption{CartPole Action Space.}
 	\label{tab:cartpole_actions}
 \end{table}
 \subsection{Lunar Lander}
-The other environment we have selected is Lunar Lander where the agent controls descend of a landing shuttle on rugged planetary (or the Moon's) surface with the help of oddly placed rockets. The points are subtracted for staying in the air or for getting the shuttle into a spin. Bonus points awarded for landing in the centre of the  The shuttle has infinite fuel so the game ends only when the shuttle lands safely or crushes into the ground. Luckily we can at least limit the number of steps for which the environment is allowed to go on. For a neural network training this however poses a specific kind of problem. Firstly very narrow behavioural window that can achieve positive total reward. But mainly as opposed to the Cartpole environment (\ref{env:cartpole}), now the unsuccessful runs may take significantly longer time than the successful ones. This means experiments are particularly costly for slowly converging algorithms. The upper limit of sum total reward is 200, the lower would possibly be $-\inf$, depending on the length limitation imposed. 
+The other environment we have selected is Lunar Lander where the agent controls descend of a landing shuttle on rugged planetary (or the Moon's) surface with the help of oddly placed rockets. The points are subtracted for staying in the air or for getting the shuttle into a spin. Bonus points are awarded for staying close in the centre of the arena.  The shuttle has infinite fuel so the game ends only when the shuttle lands safely or crashes into the ground. Luckily we can at least limit the number of steps for which the environment is allowed to go on. We set the limit to 120 steps. The limit has been chosen empirically during preliminary experiments. After setting of the limit the measured performance was not negatively affected. 
+
+
+
+For a neural network training this however poses a specific kind of problem. Firstly very narrow behavioural window that can achieve positive total reward. But mainly as opposed to the CartPole environment (\ref{env:cartpole}), now the unsuccessful runs may take significantly longer time than the successful ones. This means experiments are particularly costly for slowly converging algorithms. The upper limit of sum total reward is 200, the lower would possibly be $-\inf$, depending on the length limitation imposed. 
 We therefore differentiate between several stages of obtaining successful agent.
+
 \begin{defn}
-	An agent that achieves score 200 in Lunar lander is called solution or solving individual.
+	An agent that achieves score 200 in Lunar Lander is called solution or solving individual.
 \end{defn}
 \begin{defn}
 	\label{def:wellbehaved}
-	An agent that achieves positive score  in Lunar lander is called well-behaved.
+	An agent that achieves positive score  in Lunar Lander is called well-behaved.
 \end{defn}
 \begin{defn}
 	\label{def:verywellbehaved}
-	An agent that achieves average score over 100 in Lunar lander is called very well-behaved.
+	An agent that achieves average score over 100 in Lunar Lander is called very well-behaved.
 \end{defn}
  Definition \ref{def:wellbehaved} stems from the fact that it can only be achieved if the agent does not crash the shuttle as doing so yields a penalisation of -100 points while not obtaining a boost of +100 points for safe landing, driving even a possible solution with score 200 to 0. Similairly for definition \ref{def:verywellbehaved}, it is highly unlikely to average score over 100 without at least once landing with perfect score 200.
+ 
+ \begin{figure}[H]
+ 	\centering
+ 	\includegraphics[width=0.8\textwidth]{../img/lunarlander_img.png}
+ 	\caption{Lunar Lander environment}
+ 	
+ \end{figure}
+ 
 \subsubsection{Observation space}
 The observation space of Lunar Lander is represented as  8 dimensional vector. Delineation of its values can be found in the table \ref{tab:lander_state_space}. Note that while the observation space is quite descriptive it does not capture all the information about environment’s state directly such as wind velocity or proximity to the ground. Because the landscape (except for a landing pad in the centre) might be different in each episode, we can only infer their parameters from the observations (such as velocity and leg contact with ground) indirectly. For simplicity we do not allow wind in our episodes as is the default setting of the environment. This means that the distinction between observation and true state becomes most tangible in low altitudes where agent risks either collision with unexpected hill or infinite hovering above unperceived valley, forgoing the +100 point reward. 
 \begin{table}[h]
@@ -181,7 +202,7 @@ The observation space of Lunar Lander is represented as  8 dimensional vector. D
 	\label{tab:lander_state_space}
 \end{table}
 \subsubsection{Action space}
-Action space for Lunar Lander can come in two shapes. First is discrete where we the agent chooses a number representing one of the engines to ignite. Second is continuous where agent has continuous control over the ignition of the main engine and one of the side engines. This variant allows for more precision during the flight but at the same time makes the policy the agent needs to learn significantly more complex, requiring more resources during the learning phase. To preserve compatibility with Cartpole setup and considering feasibility of multiple experiments ahead we will work with the discrete version of the action space outlined in table \ref{tab:llactionspace}.\\
+Action space for Lunar Lander can come in two shapes. First is discrete where we the agent chooses a number representing one of the engines to ignite. Second is continuous where agent has continuous control over the ignition of the main engine and one of the side engines. This variant allows for more precision during the flight but at the same time makes the policy the agent needs to learn significantly more complex, requiring more resources during the learning phase. To preserve compatibility with CartPole setup and considering feasibility of multiple experiments ahead we will work with the discrete version of the action space outlined in table \ref{tab:llactionspace}.\\
 .
 \begin{table}[h]
 	\centering

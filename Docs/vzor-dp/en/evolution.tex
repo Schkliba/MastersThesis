@@ -58,7 +58,7 @@ We base information in the section mainly on the \citep{evoStrategy} paper.
 Evolutionary strategies (ES) are very direct incarnation of algorithm \ref{generalEvo} into the realm of real numbers. 
 
 
-We recognise two types of evolutionary strategies: $ \mu + \lambda $ and $  \mu , \lambda$. $ \mu $ denotes size of already existing population while $\lambda$ denotes size of new population pool. In $  \mu + \lambda $ selection happens from the existing population pool and the new population pool at the same time while the $  \mu , \lambda  $ variant only ever selects from the new population pool. This makes the evolution $  \lambda + \mu $ more stable as established successful individuals have a bigger chance to pass to the next generation unless a more successful individual has been found. That said, for some problems this approach risks stagnation and it is preferable to use $ \mu, \lambda $. However the experience with our selected environments from chapter \ref{chap:environment} clearly showed dominance of $ \mu + \lambda $ as even for the Cartpole, simpler of the environments, improving mutations were too costly to be lost on an unlucky new generation. 
+We recognise two types of evolutionary strategies: $ \mu + \lambda $ and $  \mu , \lambda$. $ \mu $ denotes size of already existing population while $\lambda$ denotes size of new population pool. In $  \mu + \lambda $ selection happens from the existing population pool and the new population pool at the same time while the $  \mu , \lambda  $ variant only ever selects from the new population pool. This makes the evolution $  \lambda + \mu $ more stable as established successful individuals have a bigger chance to pass to the next generation unless a more successful individual has been found. That said, for some problems this approach risks stagnation and it is preferable to use $ \mu, \lambda $. However the experience with our selected environments from chapter \ref{chap:environment} clearly showed dominance of $ \mu + \lambda $ as even for the CartPole, simpler of the environments, improving mutations were too costly to be lost on an unlucky new generation. 
 
 Therefore all further discussion of evolutionary strategies will be focused on $  \mu + \lambda$. We detail the procedural aspects of $  \mu + \lambda$ in the algorithm \ref{alg:lambdaPlus}.
 \subsubsection{Mutation}
@@ -80,7 +80,7 @@ We will discuss mainly two kinds of cross-over:
 We do not consider position based cross-over methods as they might become quite difficult to manage for the neuroevolution purposes.
 \subsubsection{Tournament selection}
 \label{subsec:tournament}
-Selection in evolutionary algorithms can be realised by various means such as roulette selection where each individual $ i $ has likelihood of passing into the next generation $ p_i $ as follows: $ p_i = \frac{f(i)}{f(pop)}$, where $ f(i) $ is objective function value for the individual $ i $ and $ f(pop) $ is sum of objective value of all individuals. This however works only for objective functions that give out only either negative or positive numbers. As we have described in chapter \ref{chap:environment} environments explored in this thesis can give out rewards with value negative or positive based on the agent's performance. Therefore we will utilise tournament selection described in \cite{GOLDBERG199169}. Tournament selection works on simple principle where we select pool of individuals, size of which is called \textit{tournament size}. From them we then select the one with the most optimal objective function value \citep{GOLDBERG199169}. We detail the workings of tournament selection in algorithm \ref{alg:lambdaPlus}. Note that for the purposes of this thesis we have selected \textit{tournament size} = 3, or ternary tournament. Bigger tournament size provides greater stability to the search as the more optimal individual are given more chances to be selected. The ternary tournament has been selected on empirical basis specifically for our environments.
+Selection in evolutionary algorithms can be realised by various means such as roulette selection where each individual $ i $ has likelihood of passing into the next generation $ p_i $ as follows: $ p_i = \frac{f(i)}{f(pop)}$, where $ f(i) $ is objective function value for the individual $ i $ and $ f(pop) $ is sum of objective value of all individuals. This however works only for objective functions that give out only either negative or positive numbers. As we have described in chapter \ref{chap:environment} environments explored in this thesis can give out rewards with value negative or positive based on the agent's performance. Therefore we will utilise tournament selection described in \cite{GOLDBERG199169}. Tournament selection works on simple principle where we select pool of individuals, size of which is called \textit{tournament size}. From them we then select the one with the most optimal objective function value \citep{GOLDBERG199169}. We detail the workings of tournament selection in algorithm \ref{alg:lambdaPlus}. Note that for the purposes of this thesis we have selected \textit{tournament size} = 3, or ternary tournament. During preliminary experiments using binary tournament we have often lost valuable individual to the instability of the selection. Ternary tournament provided more stability of the evolution while maintaining the indeterministic nature of the algorithm. 
  
 
 \begin{algorithm}[h]
@@ -151,7 +151,7 @@ We select three individuals $ x_a, x_b, x_c $ distinct from $ x_i $ and compute 
 Although the scaling factor $ \alpha $ does not have probabilistic interpretation, in some sense it corresponds to mutation rate in ES as the grater it is, the more stochasticity affects the system.
 
 \subsubsection{Recombination}
-During recombination we decide for each vector component of the newly forming individual $ x_i' $ whether we will source it from  the already mutated version $ x_i' $ or the original $ x_i $ based on recombination rate $ \gamma $. Recombination is rough translation of the concept of crossover for the purposes of single easily parallelised loop and recombination rate could be likened to the uniform crossover cross-rate $ R_U $.
+During recombination we decide for each vector component of the newly forming individual $ x_i' $ whether we will source it from  the already mutated version $ x_i' $ or the original $ x_i $ based on recombination rate $ \gamma $. This implementation differs from the standard formulation of Differential Evolution in that the recombination does not enforce transfer of at least one component from the mutated vector. Consequently, there is a non-zero probability that the recombined vector is identical to the target vector. This may have negative effect on the ability of the search to generate diverse individuals and consequently make it less effective. Since the choice of algorithms is mostly arbitrary this does not affect validity of this thesis but it should  taken into consideration when interpreting the results. All experimental results presented in this thesis were obtained using this implementation.    Recombination is rough translation of the concept of crossover for the purposes of single easily parallelised loop and recombination rate could be likened to the uniform crossover cross-rate $ R_U $.
 
 \begin{algorithm}[h]
 	\caption{Differential Evolution}
@@ -166,7 +166,7 @@ During recombination we decide for each vector component of the newly forming in
 		
 		\For{$i = 1$ \KwTo $N$}{
 			\tcp{Mutation:}
-			Select random inidividuals $a, b, c \neq i$\;
+			Select random individuals $a, b, c \neq i$\;
 			\[
 			v_i = x_{a}^g + \alpha (x_{b}^g - x_{c}^g)
 			\]
@@ -224,20 +224,19 @@ In its introductory paper novelty \cite{noveltyarticle} is conceived as a guide 
 Let E be environment and $ h_t $ be a history up to a time $ t $ and let $ d(x,y) $ be a metric over set $ B $ . Then (B, d) is a behavioural space if there is  a function $ \omega_B: h_t\rightarrow B $, called observer function. 
 \end{defn}
 
-For the purposes of this thesis the observer function is implemented through the $ agg(x) $ and $ trasnform(x) $ functions used in algorithm \ref{alg:envloop}. 
+For the purposes of this thesis the observer function is implemented through the $ agg(x) $ and $ transform(x) $ functions used in algorithm \ref{alg:envloop}. 
 
 \begin{defn}[adapted from \citep{noveltyarticle}]
-Let P be a population of individuals within EA and (B, d) be a behavioural space. Then for each individual $ a $ we define novelty:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d\left[\omega_B(a),\omega_B(b)\right]}{|P|-1} $$ 
+\label{def:novetly}
+Let P be a population of individuals (their histories) within EA and (B, d) be a behavioural space. Then for each individual $ a $ we define novelty:  $$ N(a) =\frac{\sum_{b\in P, b\neq a}d\left[\omega_B(a),\omega_B(b)\right]}{|P|-1} $$ 
 \end{defn}
-With novelty as objective function the selection process incentivises diversification of behaviour among the population. This allows the evolutionary search to retain variety within the population across generations, leveraging the crossover as well as mutations to leave local optima.
 
+With novelty as objective function the selection process incentivises diversification of behaviour among the population. This allows the evolutionary search to retain variety within the population across generations, leveraging the crossover as well as mutations to leave local optima.
 
 Downside of this approach might be in the ambiguity in the choice of behavioural space. Incorporating too many environment variables will lead to faux-exploration in variables completely orthogonal to fitness. On the other hand leaving out an important variable means the algorithm will not retain diversity where it matters, making novelty pointless. This means the behavioural function and space have to be selected empirically for given problem.
 
-
+Our implementation of novelty is different from the original paper in that we compute the average of distance to the whole reference population. This is done to simplify the computation as the size of populations in this thesis are not particularly large ($< 100$).
 If we do not state otherwise in this thesis novelty will be calculated in relation to the upcoming generation $ g+1 $ During the unrecorded preliminary experiments we have not found any significant advantage to other methods of computation.
-
-
 
 
 \subsubsection{Archiving}
@@ -255,14 +254,15 @@ The novelty does not take into account the individual's performance with objecti
 Taking inspiration from \cite{notenoughnovelty}, we will try to combine novelty with fitness in the most straight-forward way - linear combination with decaying weights.
 However first we need to address some issues such as the disproportion in scale of fitness to scale of novelty. This mean we require normalisation for the two. Again taking inspiration from \cite{notenoughnovelty}, we will normalise with the maximum and minimum of both fitness and novelty in the currently existing population for each individual $ i $: 
 $$
-\hat{f}_{i}=
-\frac{f_i-f_{\min}}
-{f_{\max}-f_{\min}},
+\hat{f}_{i} =
+	\frac{f_i-f_{\min}}{f_{\max}-f_{\min}} \mid f_{\min} \neq f_{\max}
+,  
 \qquad
-\hat{n}_{i}=
-\frac{n_i-n_{\min}}
-{n_{\max}-n_{\min}}
+\hat{n}_{i}=\frac{n_i-n_{\min}}
+	{n_{\max}-n_{\min}} \mid n_{\min} \neq n_{\max}
 $$
+In other the case where minimum and maximum are equal we set the respective value to 0. This is done so that homogenous populations can be more easily disrupted by the algorithm.
+
 
 Both maximum and minimum are easy to obtain as they are one O(n) while other methods such as z-score might be computationally more demanding in the multiplicative constant.
 Then we get combination:

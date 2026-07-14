@@ -1,13 +1,17 @@
 \chapter{Experiments}
 \label{ch:experiments}
-In this chapter we will discuss the experiment and their results. The code for the experiments has been written in Python 3.10 and experiments were conducted on several computers characterised in attachment \ref{atch:computers}. The complete project with data and scripts is available publicly in \href{https://github.com/Schkliba/MastersThesis}{Github repository}.
+In this chapter we will discuss the experiment and their results. The code for the experiments has been written in Python 3.10 and experiments were conducted on several computers characterised in  \cref{app:computers}. The complete project with data and scripts is available publicly in \href{https://github.com/Schkliba/MastersThesis}{Github repository}.
 \section{Episode Grid Search}
-As we have described in the \cref{sec:evalEps} we have performed a grid search on the Cartpole environment using the pure fitness method on both evolutionary algorithms (ES and DE).
+A goal of this experiment is to obtain number of episodes for which we should evaluate an individual on the environment.
 
-The generations ans episodes over which the search was conducted are  $$g\in\left\lbrace 3, 7, 10 15, 20, 30\right\rbrace$$
+As we have described in the \cref{sec:evalEps} to do so we have performed a grid search on the CartPole environment using the pure fitness method on both evolutionary algorithms (ES and DE). We have performed the experiment on various numbers 
+
+The generations and episodes over which the search was conducted are  $$g\in\left\lbrace 3, 7, 10, 15, 20, 30\right\rbrace$$
 $$s\in\left\lbrace 1,2,3,4,5,6,7\right\rbrace$$
+\subsection{Results}
+The aggregated results based on the calculation introduced in \cref{sec:evalEps} are presented in \cref{tab:epsEval}, number of episodes on the left and calculated benefit/cost ration on the other.
 
-The aggregated results based on the calculation introduced in \cref{sec:evalEps} are presented in \cref{tab:epsEval}. Based on the results we have selected 3 episodes for internal evaluation within the evolutionary algorithm. For evaluation of produced population at the end of EA's run we will use 5 episodes.
+
 \begin{table}[h]
 	\centering
 	\scriptsize
@@ -27,17 +31,22 @@ The aggregated results based on the calculation introduced in \cref{sec:evalEps}
 	7   &  0.000359 \\
 	\bottomrule
 \end{tabular}
-\caption{Evaluation episode selection table}
+\caption{Evaluation episode selection table. Left is episode count, right is the calculated utility value as per maximising expression in \ref{sec:evalEps}}
 \label{tab:epsEval}
-\end{table}   
+\end{table}  
+
+\subsection{Discussion}
+ Based on on our calculation we have selected 3 episodes for internal evaluation within the evolutionary algorithm. The calculation is expression of our preferences within this situation so while greater episode counts might yield better results they are not better enough to justify the slowdown of the algorithm run. Most of the algorithm run is constituted by evaluation of the environment.  For evaluation of produced population at the end of EA's run we will use 5 episodes as the operation is done only once at the end of an run and the concern for the time cost is not as punishing. 
 \section{Bayesian Search}
 \label{sec:bayesianSearchExec}
-As mentioned in section \ref{sec:bayesSearch}, we perform one optimisation run per container, resulting in one relevant study. This is purely practical measure pertaining to time feasibility of the experiments. In each optimisation run we perform fixed number of trials. We use 150 trials as baseline, adding 10-20 trials for more parametrised containers. Because we are dealing with stochastic method this number does not guarantee neither good or bad performance and has been arbitrarily chosen from experience with preliminary experiments.
-The hyper-parameter selection for each run is done within limits detailed in table \cref{tab:optunaStart1,tab:optunaStart2}. The hyper-parameters found are presented in tables \crefrange{tab:optunaRes1}{tab:optunaRes4}.
+The goal of this experiment is to obtain a set of optimised hyper-parameters specific to the algorithm and objective handling method for each container. 
+As mentioned in section \ref{sec:bayesSearch}, we perform one optimisation run per container, resulting in one relevant study. This is purely practical measure pertaining to time feasibility of the experiments. In each optimisation run we perform fixed number of trials. We use 150 trials as baseline, adding 10-50 trials for more parametrised containers. The actual number of trials for a container is reflected in the study \cref{tab:studiesBS}. 
+The optimisation objective is the maximum final fitness achieved across three runs with different random seeds. Each algorithm run optimises for 15 generations flat.   
+Because we are dealing with stochastic method this number does not guarantee neither good or bad performance and has been arbitrarily chosen from experience with preliminary experiments.
+\subsection{Results}
+The hyper-parameter selection for each run is done within limits detailed in table \cref{tab:optunaStart1,tab:optunaStart2}. We present the limits in the form where we disclose minimum (Min) value the search engine will consider for the parameter, maximum considered value (Max) and recommended step that the search engine is meant to adhere to when tuning the value. The only exception is presentation of the method of crossover in ES, a categorical variable of two possible values. Not to break the patter we present the values in the Min Max columns arbitrarily. 
 
-The shorthand arch. T mean period of archiving in generations. $W_0$ is starting value of $W$ or $W'$ in increasing fitness or increasing novelty respectively. Rate of decay is labelled $r_D$. Other parameters should be explained by the notation in \cref{chap:evolution}.
-
-
+The shorthand arch. T mean period of archiving in generations. $W_0$ is starting value of $W$ or $W'$ in increasing fitness or increasing novelty respectively. Rate of decay is labelled $r_D$. Parameters $\alpha$ and $\gamma$ for DE are respectively scaling factor and recombination rate. For ES we label mutation rate \emph{mr} and crossover rate \emph{cr}. By $\sigma$ we mean scale of mutation. Parameters $\mu$ and $\lambda$ are populations as described in \cref{sec:ES}. Parameter \emph{pop} is population of DE.
  
 \begin{table}[ht]
 	\centering
@@ -46,7 +55,7 @@ The shorthand arch. T mean period of archiving in generations. $W_0$ is starting
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{l||ccc|cccc}
 		\toprule
-		 & \multicolumn{3}{l}{cartpole} & \multicolumn{3}{l}{lunarlander} \\
+		 & \multicolumn{3}{l}{CartPole} & \multicolumn{3}{l}{Lunar Lander} \\
 		Parameter &      Min &  Max & Step &         Min &  Max & Step \\
 		\midrule
 		method &  uniform & artithm. &    - &     uniform & artithm. &    - \\
@@ -74,26 +83,41 @@ The shorthand arch. T mean period of archiving in generations. $W_0$ is starting
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{l||ccc|cccc}
 		\toprule
-		Parameter & \multicolumn{3}{l}{cartpole} & \multicolumn{3}{l}{lunarlander} \\
+		Parameter & \multicolumn{3}{l}{CartPole} & \multicolumn{3}{l}{Lunar Lander} \\
 		&      Min &    Max &  Step &         Min &    Max &  Step \\
 		\midrule
 		pop &     5.00 &  20.00 &  5.00 &       40.00 &  70.00 & 10.00 \\
-		mutation\_rate &     0.00 &   1.00 &  0.10 &        0.00 &   1.00 &  0.10 \\
-		cross\_rate &     0.30 &   1.00 &  0.10 &        0.30 &   1.00 &  0.10 \\
-		archiving\_period &     2.00 &   5.00 &  1.00 &        2.00 &   5.00 &  1.00 \\
-		archive\_batch &     1.00 &   5.00 &  1.00 &        1.00 &   5.00 &  1.00 \\
+		$\alpha$ &     0.00 &   1.00 &  0.10 &        0.00 &   1.00 &  0.10 \\
+		$\gamma$ &     0.30 &   1.00 &  0.10 &        0.30 &   1.00 &  0.10 \\
+		arch. T &     2.00 &   5.00 &  1.00 &        2.00 &   5.00 &  1.00 \\
+		arch. batch &     1.00 &   5.00 &  1.00 &        1.00 &   5.00 &  1.00 \\
 		limit &   200.00 & 300.00 & 10.00 &     -200.00 & -50.00 & 10.00 \\
-		start\_fit\_w &     0.20 &   1.00 &  0.10 &        0.20 &   1.00 &  0.10 \\
-		decay &     0.50 &   5.00 &  0.50 &        0.50 &   5.00 &  0.50 \\
+		$W_0$ &     0.20 &   1.00 &  0.10 &        0.20 &   1.00 &  0.10 \\
+		$r_D$ &     0.50 &   5.00 &  0.50 &        0.50 &   5.00 &  0.50 \\
 		\bottomrule
 	\end{tabular}
 	\caption{Hyperparameters limits for bayesian search DE}
 	\label{tab:optunaStart2}
 \end{table}
-While optuna has internal mechanism for selecting the best trial, sometimes we can obtain number of equivalent trials that are better than all other trials. This concerns mainly Cartpole, where we have on several occasions discovered solving individual for multiple configurations. 
+
+Running the optimisation we have obtained studies with the parameters described in \cref{tab:studiesBS}. The table features score of the best performing individual, total number of trials performed in the course of the study and number of trials achieving the best score.
+
+\begin{table}[ht]
+	\centering
+	\scriptsize
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.15}
+	\resizebox{\textwidth}{!}{%
+		\input{../tables/optuna_table}
+	}
+	\caption{Performed Optuna studies for each container - Best score = maximum achieved fitness, Trials = total trial count, Best trials = no. trials achieving the maximum fitness, DE and ES are names of the EAs}
+	\label{tab:studiesBS}
+\end{table}
+
+While Optuna has internal mechanism for selecting the best trial, sometimes we can obtain number of equivalent trials that are better than all other trials. This concerns mainly CartPole, where we have on several occasions discovered solving individual for multiple configurations. 
 
 When multiple best trials are available we will select the one which has the highest operation rates $ K $ where $ K = CR + MR $ for ES and $ K = \alpha + \gamma$ for DE. The logic behind this is that suppression of exploratory operators leads to greater exploitation of the roll on initial population. Therefore we assume less exploratory algorithm has a higher chance of simply being lucky on the tested random seeds.  If the tie is still not broken we select the random trial from the ones with lowest population score $ S = \mu +\lambda $ for ES and  $ S $ = population size  for DE.
-
+The final hyper-parameters found are presented in tables \crefrange{tab:optunaRes1}{tab:optunaRes4}.
 \begin{table}[ht]
 	\centering
 	\scriptsize
@@ -114,7 +138,7 @@ When multiple best trials are available we will select the one which has the hig
 		\bottomrule
 	\end{tabular}
 	
-	\caption{Bayesian Search results Cartpole ES}
+	\caption{Bayesian Search results CartPole ES}
 	\label{tab:optunaRes1}
 \end{table}
 
@@ -138,7 +162,7 @@ When multiple best trials are available we will select the one which has the hig
 		\bottomrule
 	\end{tabular}
 	
-	\caption{Bayesian Search results Cartpole DE}
+	\caption{Bayesian Search results CartPole DE}
 		\label{tab:optunaRes2}
 \end{table}
 
@@ -173,7 +197,7 @@ When multiple best trials are available we will select the one which has the hig
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{lcccccccc}
 		\toprule
-		{} & arch. batch & arch. T &   cr & $r_D$ & $W_0$ & pop &  limit &   mr \\
+		{} & arch. batch & arch. T &   $\gamma$ & $r_D$ & $W_0$ & pop &  limit &   $\alpha$ \\
 		\midrule
 		fitness         &           - &       - & 0.30 &     - &     - & 40.00 &      - & 0.06 \\
 		pure novelty    &           - &       - & 0.40 &     - &     - & 40.00 &      - & 0.15 \\
@@ -189,18 +213,22 @@ When multiple best trials are available we will select the one which has the hig
 	\caption{Bayesian Search results for Lunar Lander DE}
 		\label{tab:optunaRes4}
 \end{table}
+\subsection{Discussion}
+We have obtained optimised hyperparameter sets for each container. While the optimisation is stochastic and therefore not stable it allows us to explore relationships between the hyperparameters more efficiently than straight grid search which would require several hundreds of runs with the same setting. 
+Particularly interesting are the results of ES where the uniform method of crossover completely dominates both task, accompanied with quite skewed values of parameter $p_U$. We can assume that one of the reasons for this dominance is that the $p_U$ is in our case adjustable to the needs of the objective handling method, while in arithmetic crossover the  redistribution of values is fixed. 
+We can also observe differences between the algorithms - DE requires much less population to function similarly. Also quite expectedly CartPole environment is less demanding on population than Lunar Lander where some containers have reached the preset limit. Interestingly while the mutation rates for ES are similar on both environments, BS on Lunar Lander generally utilised a lesser fraction of the allowed range. On the other hand it consistently produced greater values of $\sigma$. We can conclude that the Lunar Lander requires non-frequent but more impactful mutations.
 
-Particularly interesting are the results of ES where the uniform method of crossover completely dominates both task, despite quite skewed values of parameter $p_U$.
-
-\subsection{Iterative grid search}
+\subsection{Incremental grid search}
 \label{sec:igs}
-We want to refine the solution obtained during the \cref{sec:bayesianSearchExec} using our iterative grid search described in \cref{sec:incgridsearch}. 
+The goal of this experiment is refining the hyperparamters obtained in the Bayesian search in the most directly + components.
+We want to refine the solution obtained during the \cref{sec:bayesianSearchExec} using our incremental grid search described in \cref{sec:incgridsearch}. 
 
-To avoid duplication we present the results of the iterative grid search (IGS) in delta \cref{tab:deltaLL1,tab:deltaLL2,tab:deltaCT1,tab:deltaCT2} derived for hyper-parameter $i$ like so:
-$$\delta_i = F_i - O_i$$
-where $F_i$ is the found value of hyper-parameter and $O_i$ is the original value passed from step \ref{sec:bayesianSearchExec}. This way we  can simply add the contents of the delta table to the original to get the final outcome.
+\subsection{Results}
+To avoid duplication we present the results of the incremental grid search (IGS) in delta \cref{tab:deltaLL1,tab:deltaLL2,tab:deltaCT1,tab:deltaCT2} derived for hyper-parameter $i$ like so:
+$$\Delta_i = F_i - O_i$$
+where $F_i$ is the value of hyper-parameter at the finish of the grid search and $O_i$ is the original value passed from step \ref{sec:bayesianSearchExec}. This way we  can simply add the contents of the delta table to the original to get the final outcome.
+We denote the hyperparamters of ES as CR for crossover, MR for mutation rate, $\mu$ and $\lambda$ correspond to the ES parametrs of the same name. In DE we denote scaling factor as $\alpha$, $\gamma$ as recombination and population as pop.  
 
-We can see that there was a room for improving almost all of the proposed hyper-parameter sets in all of the hyper-parameters subject to refinement. 
 
 \begin{table}[ht]
 	\centering
@@ -220,7 +248,7 @@ We can see that there was a room for improving almost all of the proposed hyper-
 		limit archive   &  0.1 &  -15.00 &         - &     - \\
 		\bottomrule
 	\end{tabular}
-	\caption{Delta table of hyperparameters for ES on Lunar Lander  after IGS step}
+	\caption{Delta table of hyperparameters for ES on Lunar Lander  after IGS step. Table shows difference in crossover rate, population, new generation pool and mutation rate}
 	\label{tab:deltaLL1}
 \end{table}
 
@@ -232,7 +260,7 @@ We can see that there was a room for improving almost all of the proposed hyper-
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{lccc}
 		\toprule
-		{} &   $\Delta_{CR}$ & $\Delta_{pop}$ &   $\Delta_{MR}$ \\
+		{} &   $\Delta_{\gamma}$ & $\Delta_{pop}$ &   $\Delta_{\alpha}$ \\
 		\midrule
 		pure novelty    &  +0.1 & -10.0 & -0.1 \\
 		inc. fitness    &    - &  +10.0 &    - \\
@@ -244,7 +272,7 @@ We can see that there was a room for improving almost all of the proposed hyper-
 		\bottomrule
 	\end{tabular}
 
-	\caption{Delta table of hyper-parameters for DE  on Lunar Lander environment after IGS step}
+	\caption{Delta table of hyper-parameters for DE  on Lunar Lander environment after IGS step. Table shows difference in recombination rate, population and scaling factor.}
 	\label{tab:deltaLL2}
 \end{table}
 
@@ -268,7 +296,7 @@ We can see that there was a room for improving almost all of the proposed hyper-
 		\bottomrule
 	\end{tabular}
 	
-	\caption{Delta table of hyper-parameters for DE on Cartpole environment after IGS step}
+	\caption{Delta table of hyper-parameters for DE on CartPole environment after IGS step. Table shows difference in recombination rate, population and scaling factor.}
 	\label{tab:deltaCT1}
 \end{table}
 
@@ -279,7 +307,7 @@ We can see that there was a room for improving almost all of the proposed hyper-
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{lcccccccccccccccccccccccc}
 		\toprule
-		{} &     $\Delta{CR}$ &   $\Delta{\mu}$ &   $\Delta{\lambda}$ &     $\Delta{mr}$ \\
+		{} &     $\Delta{CR}$ &   $\Delta{\mu}$ &   $\Delta{\lambda}$ &     $\Delta{MR}$ \\
 		\midrule
 		fitness           & -0.100 &   +5 &   +5 &  - \\
 		novelty           &  - &   +5 &  -5 & -0.050 \\
@@ -291,30 +319,34 @@ We can see that there was a room for improving almost all of the proposed hyper-
 		\bottomrule
 	\end{tabular}
 	
-	\caption{Delta table of hyper-parameters for ES on Cartpole environment after IGS step}
+	\caption{Delta table of hyper-parameters for ES on CartPole environment after IGS step. Table shows difference in crossover rate, population, new generation pool and mutation rate}
 	\label{tab:deltaCT2}
 \end{table}
-
-
+\subsection{Discussion}
+We can see that there was a room for improving almost all of the proposed hyper-parameter sets in all of the hyper-parameters subject to refinement. In some instances we sewe that the algorithm shrank the population related parameters such as $\mu$ or $\lambda$. This is likely result of the secondary diversity maximisation policy where the algorithm didn't find better performing solution but found one producing more diverse population. We assume this because lowering the population pool can only limit the exploitation of already generated individuals but it increases the diversity denser population implicitly lowers this statistic.
+ 
 \subsection{Generational grid search}
+\label{sec:generationsExperiment}
+The goal of this experiment is obtaining an optimised length of the search, given the refined hyper-parameters. 
 Given the refined hyper-parameters obtained in \cref{sec:igs} we now search for the optimal number of generation for which the evolution should go on.  We perform the grid search as described in \cref{sec:preGenSearch}. 
 
   It should be noted that to obtain the results we have not made a single long algorithm run with sampling of population on the specified generation but every generation count represents it's own  generation run. While this strategy is significantly less efficient it is required as some objective handling methods, particularly combinations of novelty and fitness (\ref{sec:combFitNov}) have aspects that rely on total number of generation. 
-  
+  We evaluate each generation count of the algorithm on 5 different seeds.
 We have searched over the following generation counts:
 \begin{itemize}
-	\item For Cartpole $g\in\left\lbrace5, 10, 15, 20, 25, 30*, 40*, 50*\right\rbrace$
+	\item For CartPole $g\in\left\lbrace5, 10, 15, 20, 25, 30*, 40*, 50*\right\rbrace$
 	\item For Lunar Lander $g\in\left\lbrace10, 15, 25, 35, 50, 60, 80\right\rbrace$
 \end{itemize}
 
-Because some containers have not been able to reach solving individual in Cartpole in the original scope of the grid search and have exhibited interesting enough behaviour we have extended their gridsearches. The extension generation counts have been marked with * symbol.
+Because some containers have not been able to reach solving individual in CartPole in the original scope of the grid search and have exhibited interesting enough behaviour, we have extended their gridsearches. The extension generation counts have been marked with * symbol.
 
-We showcase the resulting patterns in \cref{fig:fitnessChartCT, fig:fitnessChartLL}. 
+\subsection{Results}
+We showcase the resulting patterns in \cref{fig:fitnessChartCT,fig:fitnessChartLL}. 
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.9\textwidth]{../img/generations_cartpole_max_fit.pdf}
-\caption{Fitness/Generation Characteristics for Cartpole environment (ES up, DE down)}
+\caption{Fitness/Generation Characteristics for CartPole environment (ES up, DE down)}
 \label{fig:fitnessChartCT}
 \end{figure}
 
@@ -328,7 +360,7 @@ We showcase the resulting patterns in \cref{fig:fitnessChartCT, fig:fitnessChart
 
 
 \Cref{fig:fitnessChartCT,fig:fitnessChartLL} however have been pruned for readability and do not represent the full range of values that have been taken into account during the ultimate selection such as the population median or mean. 
-The shaded area here represents quantiles $ q_{25}$ and $q_{75} $ other values have been pruned. The actual scope of values considered for each contained is represented by chart that have been for readability sake put into \cref{app:generationGrid}. We evaluated the algorithm on 5 different seeds.
+The shaded area here represents quantiles $ q_{25}$ and $q_{75} $ other values have been pruned. The actual scope of values considered for each contained is represented by chart that have been for readability sake put into \cref{app:generationGrid}. 
 
 The hand-selected generation counts for the final evaluation are presented in \cref{tab:gridResults}.  
 
@@ -339,7 +371,7 @@ The hand-selected generation counts for the final evaluation are presented in \c
 	\renewcommand{\arraystretch}{1.15}
 	\begin{tabular}{l||cc|cc}
 		\toprule
-		{} & \multicolumn{2}{l}{Lunar Lander} & \multicolumn{2}{l}{Cartpole} \\
+		{} & \multicolumn{2}{l}{Lunar Lander} & \multicolumn{2}{l}{CartPole} \\
 		{} &           DE &  ES &       DE &  ES \\
 		\midrule
 		fitness         &           35 &  25 &       15 &  10 \\
@@ -357,26 +389,29 @@ The hand-selected generation counts for the final evaluation are presented in \c
 	\label{tab:gridResults}
 \end{table}
 
-\section{Final Results}
-After obtaining what we believe to be best performing available hyper-parameters for all containers, we apply this to the final round of tests. 
+\subsection{Discussion}
+In CartPole environment we have been able to pinpoint hyperparamter settings converging to solving individuals. In both algorithms (ES and DE), the fitness based methods have converged, however novelty is able to produced solving individuals mainly in DE. On the other hand increasing novelty converges in ES but not DE where it is surpassed by pure novelty. This might be linked ot the fact that in DE new individual always has to replace only one predetermined individual, making this process less reliable with the shifts in interpolation between two objectives. This difference in performance of increasing novelty is also replicated in Lunar Lander environment, it is therefore unlikely simply result of bad hyperparameter optimisation.
 
-We have run the parameterised algorithms on 45 distinct seeds for each environment from which we collected data about the last population. We have subjected the colect data to the statistical tests described in section \ref{sec:prefinalComp}. We will now go over the application methods.
- 
-First we will test results of both evolutionary algorithms we have utilised (DE and ES) collected across all containers on each of the environments. Then we will group these methods based on objective used, following the internal divide in section \ref{sec:objFunc}. We will test both internal consistency of the groups and their relationships. 
- Then we will test differences between the objective handling methods granularly.
+In Lunar Lander we can again see domination of fitness base methods. Interestingly for ES increasing fitness dominates pure fitness. We can infer from the stability of the fitness results that the fitness search has reached false optimum that the archival versions and increasing fitness have been able to break out of. These three methods are able to reliably achieve well behaved individuals, almost very-well behaved individuals. However we never reach true solution with either. Replays of successful individuals produced by these methods show tendency to stop the descend right above the landing pad in a hover. This could be caused by several factors. Firstly it might be the skill to land, requiring controlled shutdown of engines, is substantially different from the successful navigation in the sky, where slowing of descend is imperative and we have reached stochastic bottleneck too narrow for our search and agent architecture. Secondly we have selected discrete version of the environment so since the agent is unaware of the previous state the shuttle cannot learn to gradually suspend the engines but is stuck at last position that resolves to engine fire. Third factor is that we have limited length of one episode to 120 steps, possibly eliminating solutions that would ultimately achieve better performance on account of being too slow. While it seems unlikely that this would be the only factor it could certainly be contributing to the stalemate.
+
+\section{Final Experiment}
+In the previous experiments we have conducted, we had to limit the variety of initial conditions represented by random seed on which they were evaluated. The goal of this experiment is to obtain data on large variety of initial condition with the optimised hyperparameters to perform comprehensive analysis of the relationships between utilised containers. 
+
+To do so we have run the parameterised algorithms on 45 distinct seeds for each environment from which we collected data about the last population. The data is ploted in \cref{fig:boxplot1,fig:boxplot2}. We have subjected the colect data to the statistical tests described in section \ref{sec:prefinalComp}. We will now go over the application methods.
+First we will group results of both evolutionary algorithms we have utilised (DE and ES) collected across all containers on each of the environments. Then we will analyse groups based on objective used, following the internal divide in section \ref{sec:objFunc}. We will analyse both internal consistency of the groups and their relationships. 
+ Then we will analyse differences between the objective handling methods granularly.
  Since the groupings of results are different in each case, we claim them to be different test families for the purposes of adjustments to  \textit{FWER}. 
- 
  We will implicitly use the significance threshold $\alpha = 0.05$ as is common in publications.
-    
-\subsection{EA comparison}
-Since we examine only two distinct EA implementations we have directly performed Wilcoxon test. First we see how the EAs performed on each of the environments separately. On both environments the Wilcoxon test rejects the null hypothesis with p values $ p_{LL} = 3.11 \times 10^{-12} $ and $ p_{CT} = 0.0002$ for Lunar lander and Cartpole respectively. On each of the environments we calculate the direction of the difference  through Hodges–Lehmann estimator (\cref{sec:Wilcoxon}) over the differences $  d_i = ES_i - DE_i $. 
-Directional values are $ HL_{LL} = -54.22 $ and $ HL_{CT} = 29.12 $ suggesting that DE has been more performant on Lunar lander while ES has been more performant on Cartpole environment.
-%Finally we pool the run from both environments and perform global %Wilcox test. The pooled case also rejects $ H_0 $ ($ W_T = 89642$, $ p = 0.038$).
 
-We also investigate the diversity in the final populations produced by our algorithms. On Cartpole the difference is not supported with $ p_{CT} = 0.49 $ but for Lunar Lander environment the difference is supported $ p_{LL} < 0.0001 $ and skews slightly for the differential evolution $ HL_{LL} = -0.122 $.
-\subsection{Group comparison}
+\subsection{EA comparison}
+Since we examine only two distinct EA implementations we can directly perform Wilcoxon test. For comparability reasons we analyse EAs performed on each of the environments separately. On each environment the Wilcoxon test rejects the null hypothesis with p values $ p_{LL} = 3.11 \times 10^{-12} $ and $ p_{CT} = 0.0002$ for Lunar lander and CartPole respectively. On each of the environments we calculate the direction of the difference  through Hodges–Lehmann estimator (\cref{sec:Wilcoxon}) over the differences $  d_i = ES_i - DE_i $. 
+Directional values are $ HL_{LL} = -54.22 $ and $ HL_{CT} = 29.12 $ suggesting that DE has been more performant on Lunar lander while ES has been more performant on CartPole environment.
+
+We also investigate the diversity in the final populations produced by our algorithms. On CartPole the $H_0$ is supported with $ p_{CT} = 0.49 $ but for Lunar Lander environment the difference is supported $ p_{LL} < 0.0001 $, rejecting $H_0$. The difference skews slightly for the differential evolution $ HL_{LL} = -0.122 $.
+
+\subsection{Group comparison analysis}
 We would like to compare objective methods as such (fitness, novelty, combination of both). To do so we have grouped the objective handling methods according to the division in \cref{sec:objFunc}.
-\subsubsection{Internal Differences}
+\subsubsection{Internal difference analysis}
  For that we want to assess the group internal differences by the means of Friedman test for groups of 3 and Wilcoxon for the group of 2. We do this separately for each environment. The results are presented in the \cref{tab:groupcohesionFit,tab:groupcohesionDiv}.
  $p_{DE}$ denotes p-value for test only on differential evolution runs. Analogically with $p_{ES}$. Testing the aggregate of both algorithms we get $p_{Total}$.   
  
@@ -392,7 +427,7 @@ We would like to compare objective methods as such (fitness, novelty, combinatio
 	\caption{Fitness based tests of group difference}
 	\label{tab:groupcohesionFit}
 \end{table}
-We can see that in Cartpole differential evolution the combinations of fitness and novelty are both behaving so similarly, we do not have enough evidence to reject assumption that they might be behaving the same. This is even more pronounced in Lunar Lander but only in terms of produced diversity. The fitness group does not produce enough evidence of internal differences only in Lunar Lander and only in aggregate. It should be noted that while we are using academic standard $\alpha = 0.05$ it is not uncommon to use lower standard $\alpha = 0.1$ which would allow us to reject $H_0$ in several of the aforementioned cases.    
+We can see that in CartPole differential evolution the combinations of fitness and novelty are both behaving so similarly, we do not have enough evidence to reject assumption that they might be behaving the same. This is even more pronounced in Lunar Lander but only in terms of produced diversity. The fitness group does not produce enough evidence of internal differences only in Lunar Lander and only in aggregate. It should be noted that while we are using academic standard $\alpha = 0.05$ it is not uncommon to use lower standard $\alpha = 0.1$ which would allow us to reject $H_0$ in several of the aforementioned cases.    
 \begin{table}[h]
 	\centering
 	\scriptsize
@@ -405,10 +440,10 @@ We can see that in Cartpole differential evolution the combinations of fitness a
 	\label{tab:groupcohesionDiv}
 \end{table}
 
-\subsubsection{Intergroup differences}
+\subsubsection{Intergroup difference analysis}
 Having assessed how the groups behave internally, we now compare the groups between each other for each of the environments with Wilcoxon test. When pairing the performance we pair median value of the values achieved by the group members on particular initial seed using a particular algorithm. 
 
-The results are presented in \cref{tab:groupWilcoxLL,tab:groupWilcoxLLDiv} for Lunar Lander environment and  in \cref{tab:groupWilcoxCT,tab:groupWilcoxCTDiv} for Cartpole environment. 
+The results are presented in \cref{tab:groupWilcoxLL,tab:groupWilcoxLLDiv} for Lunar Lander environment and  in \cref{tab:groupWilcoxCT,tab:groupWilcoxCTDiv} for CartPole environment. 
 \begin{table}[ht]
 	\centering
 	\scriptsize
@@ -417,13 +452,13 @@ The results are presented in \cref{tab:groupWilcoxLL,tab:groupWilcoxLLDiv} for L
 	\resizebox{\textwidth}{!}{%
 		\input{../tables/lunarlander_wilcoxon_group_fit_conts}
 	}
-		\caption{Fitness based Wilcoxon tests of between objective groups on Lunar Lander environment}
+		\caption{Fitness based Wilcoxon tests of between objective groups on Lunar Lander environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisosn from both ES and DE}
 		\label{tab:groupWilcoxLL}
 	\vspace{0.5cm}
 	\resizebox{\textwidth}{!}{%
 		\input{../tables/lunarlander_wilcoxon_group_div_conts}
 	}
-	\caption{Diversity based Wilcoxon tests of between objective groups on Lunar Lander environment}
+	\caption{Diversity based Wilcoxon tests of between objective groups on Lunar Lander environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisosn from both ES and DE}
 		\label{tab:groupWilcoxLLDiv}
 	
 \end{table}
@@ -437,13 +472,13 @@ The results are presented in \cref{tab:groupWilcoxLL,tab:groupWilcoxLLDiv} for L
 	\resizebox{\textwidth}{!}{%
 		\input{../tables/cartpole_wilcoxon_group_fit_conts}
 	}
-	\caption{Fitness based Wilcoxon tests of between objective groups on Cartpole environment}
+	\caption{Fitness based Wilcoxon tests of between objective groups on CartPole environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisosn from both ES and DE}
 	\label{tab:groupWilcoxCT}
 	\vspace{0.5cm}
 	\resizebox{\textwidth}{!}{%
 		\input{../tables/cartpole_wilcoxon_group_div_conts}
 	}
-	\caption{Diversity based Wilcoxon tests of between objective groups on Cartpole environment}
+	\caption{Diversity based Wilcoxon tests of between objective groups on CartPole environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisosn from both ES and DE}
 	\label{tab:groupWilcoxCTDiv}
 	
 \end{table}
@@ -451,9 +486,10 @@ The results are presented in \cref{tab:groupWilcoxLL,tab:groupWilcoxLLDiv} for L
 Performance wise the fitness group dominates both environments. We can see that combinations dominate over novelty group. 
 In diversity we see that on the level of individual EAs the differences are statistically significant but in aggregate test the differences may cancel out.    
 
-\subsection{Objective handling comparison}
+\subsection{Objective handling analysis}
+
 Now we want to compare the objective handling methods based on fitness of individuals they have produced.
-Friedman test rejects the null hypothesis for both Lunar Lander ($ \chi_F = 328.39 $, $ p_F = 5.1 \times 10^{-67} $) and Cartpole ($ \chi_F = 326.66 $, $ p_F = 1.21 \times 10^{-66} $). So we proceed to the pairwise Wilcoxon tests on both environments to obtain siginificance of their differences. 
+Friedman test rejects the null hypothesis for both Lunar Lander ($ \chi_F = 328.39 $, $ p_F = 5.1 \times 10^{-67} $) and CartPole ($ \chi_F = 326.66 $, $ p_F = 1.21 \times 10^{-66} $). So we proceed to the pairwise Wilcoxon tests on both environments to obtain siginificance of their differences. 
 
 The full results for fitness are shown in \cref{tab:contWilcoxonLL,tab:contWilcoxonCT} respectively. For the cases where the difference wasn't proven significant we do not report the calculated direction.
 We summarise the results of the comparisons in \cref{tab:sumWilcoxCT,tab:sumWilcoxLL}. The results are summarised in format: $$\# \text{of won comparisons}/ \# \text{of lost comparisons}/ \# \text{of ties}$$. We count tie as either statistically insignificant difference or significant difference with value of Hodges-Lehman estimator $HL=0$.(\cref{sec:Wilcoxon}) 
@@ -466,21 +502,21 @@ We summarise the results of the comparisons in \cref{tab:sumWilcoxCT,tab:sumWilc
 	\resizebox{\textwidth}{!}{%
 		\input{../tables/lunarlander_wilcoxon_summary}
 	}
-	\caption{Wilcoxon comparison summary fo Lunar Lander env.}
+	\caption{Wilcoxon performance comparison summary fo Lunar Lander env. Comparison score - $\#wins/\#loses/\#ties$. Fit. - fitness comparisons on the EA; Div. - diversity comparisons on EA. Sum. = combination of both EAs}
 	\label{tab:sumWilcoxLL}
 	\hfil
 	\resizebox{\textwidth}{!}{%
 		\input{../tables/cartpole_wilcoxon_summary}
 	}
-	\caption{Wilcoxon comparison summary fo Lunar Lander env.}
+	\caption{Wilcoxon performance comparison summary fo CartPole env.Comparison score - $\#wins/\#loses/\#ties$. Fit. - fitness comparisons on the EA; Div. - diversity comparisons on EA. Sum. = combination of both EAs}
 	\label{tab:sumWilcoxCT}
 \end{table}
 
 We can see that for both environments the pure fitness method dominates with fitness archives being roughly on the same footing. Interestingly pure novelty mostly dominates it's own archival variants. 
 
-Elite archive does not show strong dominance over random fitness archive. Even in Cartpole where the null hypotheses of their relationship was rejected, the direction came out 0 suggesting the difference to be purely about distribution not systematic shift of the distribution. 
+Elite archive does not show strong dominance over random fitness archive. Even in CartPole where the null hypotheses of their relationship was rejected, the direction came out 0 suggesting the difference to be purely about distribution not systematic shift of the distribution. 
 
-Novelty archive dominates limit archive in Lunar Lander environment but in Cartpole limit archive dominates novelty archive.   
+Novelty archive dominates limit archive in Lunar Lander environment but in CartPole limit archive dominates novelty archive.   
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../img/finalbox_lunarlander_diff_fitnesses.pdf}
@@ -491,7 +527,7 @@ Novelty archive dominates limit archive in Lunar Lander environment but in Cartp
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../img/finalbox_cartpole_diff_fitnesses.pdf}
-	\caption{Plot of results of final experiment in Cartpole environment.}
+	\caption{Plot of results of final experiment in CartPole environment.}
 	\label{fig:boxplot2}
 \end{figure}
 \begin{table}[ht]
@@ -504,7 +540,7 @@ Novelty archive dominates limit archive in Lunar Lander environment but in Cartp
 	
 	
 	}	
-	\caption{Fitness Wilcoxon test over objectives handlers for Lunar Lander}
+	\caption{Fitness Wilcoxon test over objectives handlers for Lunar Lander ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}
 	\label{tab:contWilcoxonLL}
 \end{table}
 
@@ -516,12 +552,12 @@ Novelty archive dominates limit archive in Lunar Lander environment but in Cartp
 	\resizebox{\textwidth}{!}{%
 	\input{../tables/cartpole_wilcoxon_fit_conts}
 }
-	\caption{Fitness Wilcoxon test over objectives handlers for Cartpole}
+	\caption{Fitness Wilcoxon test over objectives handlers for CartPole ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}
 	\label{tab:contWilcoxonCT}
 \end{table}
-\subsubsection{Diversity Comparison}
+\subsubsection{Diversity Comparison Results}
 Now that we have made the comparison on achieved fitness we want to compare the algorithms also based on the produced diversity.
-The Friedman test rejects the null hypothesis also for diversities both for Lunar Lander ($ \chi_F = 192.23 $, $ p_F = 5 \times 10^{-38} $) and Cartpole ($ \chi_F = 163.918 $, $ p_F = 4.8 \times 10^{-32} $) and so we can safely perform Wilcoxon test on the combinations of objective handling methods. Results are shown in \cref{tab:contWilcoxonCTDiv,tab:contWilcoxonLLDiv}.
+The Friedman test rejects the null hypothesis also for diversities both for Lunar Lander ($ \chi_F = 192.23 $, $ p_F = 5 \times 10^{-38} $) and CartPole ($ \chi_F = 163.918 $, $ p_F = 4.8 \times 10^{-32} $) and so we can safely perform Wilcoxon test on the combinations of objective handling methods. Results are shown in \cref{tab:contWilcoxonCTDiv,tab:contWilcoxonLLDiv}.
 
 \begin{table}[ht]
 	\centering
@@ -532,7 +568,7 @@ The Friedman test rejects the null hypothesis also for diversities both for Luna
 		\input{../tables/cartpole_wilcoxon_div_conts}
 		
 	}
-	\caption{Diversity Wilcoxon test over objectives handlers for Cartpole}
+	\caption{Diversity Wilcoxon test over objectives handlers for CartPole .($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}
 	\label{tab:contWilcoxonCTDiv}
 \end{table}
 
@@ -544,29 +580,42 @@ The Friedman test rejects the null hypothesis also for diversities both for Luna
 	\resizebox{\textwidth}{!}{%
 		\input{../tables/lunarlander_wilcoxon_div_conts}
 	}
-	\caption{Diversity Wilcoxon test over objectives handlers for Lunar Lander}
+	\caption{Diversity Wilcoxon test over objectives handlers for Lunar Lander. ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}
 	\label{tab:contWilcoxonLLDiv}
 \end{table}
-
-\section{Discussion}
-We have 16 container identified by the combination of objective handling method and EA used. For all of these 16 containers we have found and refined a set of hyper-parameters used in the final set of experiments.
-Based on these final experiments we can assess the differences between EAs used, objective handling methods and their groupings. 
-
-\subsection{Algorithms}
-We have found out that each EA dominates different task in performance. This is not completely unexpected as the ES in our case is quite limited with the static sigma and therefore cannot adjust to the needs of the population during it's run on more complex task (Lunar Lander). On the other hand we get this adjustment automatically with DE algorithm without specifying any hyper-parameter. From the performance characteristics in \cref{fig:fitnessChartCT,fig:fitnessChartLL} we can see that the performance difference may be mostly attributable to the spread of results rather than performance at the top.
-
+\subsection{Final Experiment Discussion}
+We have found out that each EA dominates different task in performance. This is not completely unexpected as the ES in our case is quite limited with the static sigma and therefore cannot adjust to the needs of the population during it's run on more complex task (Lunar Lander). On the other hand we get this adjustment automatically with DE algorithm without specifying any hyper-parameter. From the performance chart in \cref{fig:boxplot1,fig:boxplot2} we can see that the performance difference may be mostly attributable to the spread of results rather than performance at the top.
 This is supported by the fact that in Lunar Lander task the differential evolution clearly produced more diverse populations than ES.
 
-\subsection{Objective functions}
-As stated before the fitness objective handling methods dominate the tasks. From \cref{tab:groupcohesionFit,tab:groupcohesionDiv} we can also see that their results are also generally more homogenous than the other groups (evidenced by mostly greater p-values). 
 
-Although this is true for both environments we claim that in each the causes of the observation are different: in Cartpole the fitness based algorithms reach solving individual and therefore go through a similar process of distribution of this result into the population. On the other hand in Lunar Lander we have unfortunately not been able to achieve solving individual using any of the algorithms or methods. However from the \cref{fig:fitnessChartCT,fig:fitnessChartLL} we can see that the maximum achieved fitness tends to flatline between well-behaved and very well behaved solution with pure fitness dropping even below this threshold. This indicates presence of false local optima our algorithms have been getting stuck on. This is in line with our idea that Lunar Lander is more complex environment than Cartpole and the driving idea of novelty search \citep{noveltyarticle}. 
+As stated before the fitness objective handling methods dominate the tasks. From \cref{tab:groupcohesionFit,tab:groupcohesionDiv} we can also see that their results are also generally more homogenous than the other groups (evidenced by mostly greater p-values). The combinations of fitness and novelty perform somewhat better than the methods relying on novelty only. 
 
-However we do not observe significant improvement in performance for novelty based methods nor for methods combining fitness with novelty. The biggest improvement is provided by increasing fitness method in ES algorithm (\cref{tab:contWilcoxonLL}) where it provides more reliable results (\cref{fig:boxplot1}). We propose that in this instance the combination of fitness with novelty does help break out of false optima.
+The per-objective-handling-method Wilcoxon tests confirm this with some similarities uncovered between pure novelty and increasing novelty. This is not completely unexpected as the increasing emphasis of novelty diverges the population into similar randomised conditions. 
 
-Archiving is of the most benefit to the fitness methods in ES algorithm in Lunar Lander environment where it improved on the pure fitness performance. The elitist and random solution are barely distinguishable with Wilcoxon null hypothesis being often sustained in the comparison or the direction being of negligent magnitude. On the other hand pure novelty almost exclusively dominates it's archival variants both in raw performance and diversity. This suggests that when archives in novelty do provide a benefit they do so by stabilising the population rather than adding more variety to it. However this is unfortunately not the case for our setup.
+We have also confirmed observation from \cref{sec:generationsExperiment} that increasing fitness dominates pure fitness in Lunar Lander using ES. On \cref{fig:boxplot1} we can however see that the domination is mainly distributional. this would suggest that pure fitness method is able to break out of the false optima but the increasing  fitness is just more reliable in the process.
+ 
+ Archiving provides great benefit to the fitness methods in ES algorithm on Lunar Lander environment. There it improved on the pure fitness performance. The elitist and random solution are barely distinguishable with Wilcoxon null hypothesis being often sustained in the comparison or the direction being of negligent magnitude. On the other hand pure novelty almost exclusively dominates it's archival variants both in raw performance and diversity. This suggests that when archives in novelty do provide a benefit they do so by stabilising the population rather than adding more variety to it. However unfortunately not the case for our setup this did not provide the any performance boost.
+ 
+ Limit archive behaves poorly in Lunar Lander but better than random novelty archive in CartPole. We can see in \cref{fig:boxplot1,fig:boxplot2} that the difference is mainly in distributions of performances rather than achieving strictly better solutions. Therefore propose that the difference lies in how difficult is to reach the respective limits within the environment. Since the limits were optimised for it suggests that simply choosing lower limits does not significantly improve on the performance as lesser quality individuals will now be periodically reinserted back into the population. Seeing the relative success of increasing fitness method we propose shifting threshold would be a better solution. 
 
-Limit archive behaves poorly in Lunar Lander but better than random novelty archive in Cartpole, we therefore propose that the difference lies in how difficult is to reach the respective limits within the environment. Since the limits were optimised for it suggests that simply choosing lower limits does not significantly improve on the performance as lesser quality individuals will now be periodically reinserted back into the population. Seeing the relative success of increasing fitness method we propose shifting threshold would be a better solution. 
+
+\section{Summary Discussion}
+We have 16 container identified by the combination of objective handling method and EA used. For all of these 16 containers we have found and refined a set of hyper-parameters used in the final set of experiments.
+We have identified existence of false optima in Lunar Lander and delineated possible reasons why our evolutionary optimisation has not been able to completely break out of it.
+We have performed comparative tests on the EAs in aggregate and objective handling methods grouped by underlying objective.
+We have uncovered some differences in performances of the algorithms mainly that DE produces slightly more diverse population in Lunar Lander and is more performant on the environment. We attribute it to the implicit dynamics of the DE. On the other hand we are utilising quite static version of ES and propose that more dynamic ES algorithm might be more performant on the Lunar Lander environment as it might be more prepared to tackle the deceptiveness of it.  
+We have also found that fitness based objective handling method dominate in performance across the board. Novelty does not achieve better results even in the more deceptive of the two investigated environments, on the contrary novelty based methods were the weakest performance wise. 
+However it can achieve more diverse populations.
+We propose this is due to the structure of the environments as CartPole never changes the core of the skill utilised for achieving maximum reward while Lunar Lander requires substantial switch in behaviour only at the very end. Therefore in both cases the behavioural space is not compartmentalised enough to trap the novelty exploration in better performing regions. In the case of Lunar Lander we are searching over position on x axis and average velocity of descend. While these are instructive features we can see how only a small fraction of the space would correspond to high achieving individuals with no reason for the search to prefer individuals from the enclave.
+This effect could be mitigated by automated behavioural space selection which may more effectively consider features of the individual alongside the raw observations but application of such algorithm was outside of the scope this thesis.
+
+
+
+
+
+
+
+
 
 
 

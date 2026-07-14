@@ -1,4 +1,4 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{23}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -12,6 +12,25 @@ Takuya Akiba, Shotaro Sano, Takeru Yanase, Tadahiro Ohta, and Masanori Koyama.
 \newblock In \emph{Proceedings of the 25th ACM SIGKDD International Conference
   on Knowledge Discovery \& Data Mining}, pages 2623--2631, 2019.
 \newblock \doi{10.1145/3292500.3330701}.
+
+\bibitem[and Gomes et~al.(2014)and Gomes, Mariano, and Christensen]{SDBC}
+Jorge and Gomes, Pedro Mariano, and Anders Christensen.
+\newblock Systematic derivation of behaviour characterisations in evolutionary
+  robotics.
+\newblock In \emph{Artificial Life 14: Proceedings of the Fourteenth
+  International Conference on the Synthesis and Simulation of Living Systems},
+  ALIFE, page 212–219. The MIT Press, 2014.
+\newblock \doi{10.7551/978-0-262-32621-6-ch036}.
+\newblock URL \url{http://dx.doi.org/10.7551/978-0-262-32621-6-ch036}.
+
+\bibitem[Aubret et~al.(2023)Aubret, Matignon, and Hassas]{Aubret_2023}
+Arthur Aubret, Laetitia Matignon, and Salima Hassas.
+\newblock An information-theoretic perspective on intrinsic motivation in
+  reinforcement learning: A survey.
+\newblock \emph{Entropy}, 25\penalty0 (2):\penalty0 327, February 2023.
+\newblock ISSN 1099-4300.
+\newblock \doi{10.3390/e25020327}.
+\newblock URL \url{http://dx.doi.org/10.3390/e25020327}.
 
 \bibitem[Beiranvand et~al.(2017)Beiranvand, Hare, and Lucet]{Beiranvand_2017}
 Vahid Beiranvand, Warren Hare, and Yves Lucet.
