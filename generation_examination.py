@@ -3,7 +3,7 @@
 import argparse
 
 # Replace this import with the actual module
-from generation_examination_module import make_gen_examination
+from libs.generation_examination_module import make_gen_examination
 
 
 def main():

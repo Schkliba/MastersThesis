@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{27}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -31,6 +31,14 @@ Arthur Aubret, Laetitia Matignon, and Salima Hassas.
 \newblock ISSN 1099-4300.
 \newblock \doi{10.3390/e25020327}.
 \newblock URL \url{http://dx.doi.org/10.3390/e25020327}.
+
+\bibitem[Bahlous-Boldi et~al.(2025)Bahlous-Boldi, Faldor, Grillotti,
+  Janmohamed, Coiffard, Spector, and Cully]{dominated}
+Ryan Bahlous-Boldi, Maxence Faldor, Luca Grillotti, Hannah Janmohamed, Lisa
+  Coiffard, Lee Spector, and Antoine Cully.
+\newblock Dominated novelty search: Rethinking local competition in
+  quality-diversity, 2025.
+\newblock URL \url{https://arxiv.org/abs/2502.00593}.
 
 \bibitem[Beiranvand et~al.(2017)Beiranvand, Hare, and Lucet]{Beiranvand_2017}
 Vahid Beiranvand, Warren Hare, and Yves Lucet.
@@ -153,6 +161,17 @@ Elliot Meyerson, Joel Lehman, and Risto Miikkulainen.
 \newblock \doi{10.1145/2908812.2908929}.
 \newblock URL \url{https://doi.org/10.1145/2908812.2908929}.
 
+\bibitem[Mouret and Clune(2015)]{mapelite}
+Jean-Baptiste Mouret and Jeff Clune.
+\newblock Illuminating search spaces by mapping elites, 2015.
+\newblock URL \url{https://arxiv.org/abs/1504.04909}.
+
+\bibitem[Rakicevic et~al.(2020)Rakicevic, Cully, and Kormushev]{policymanifold}
+Nemanja Rakicevic, Antoine Cully, and Petar Kormushev.
+\newblock Policy manifold search for improving diversity-based neuroevolution.
+\newblock \emph{CoRR}, abs/2012.08676, 2020.
+\newblock URL \url{https://arxiv.org/abs/2012.08676}.
+
 \bibitem[Ross et~al.(2014)Ross, Pineau, Paquet, and
   Chaib{-}draa]{DBLP:journals/corr/RossPPC14}
 St{\'{e}}phane Ross, Joelle Pineau, S{\'{e}}bastien Paquet, and Brahim
@@ -190,6 +209,14 @@ Rainer Storn and Kenneth Price.
 \newblock \emph{Journal of Global Optimization}, 11:\penalty0 341--359, 01
   1997.
 \newblock \doi{10.1023/A:1008202821328}.
+
+\bibitem[Terry et~al.(2021)Terry, Black, Grammel, Jayakumar, Hari, Sullivan,
+  Santos, Perez, Horsch, Dieffendahl, Williams, Lokesh, and Ravi]{pettingzoo}
+J.~K. Terry, Benjamin Black, Nathaniel Grammel, Mario Jayakumar, Ananth Hari,
+  Ryan Sullivan, Luis Santos, Rodrigo Perez, Caroline Horsch, Clemens
+  Dieffendahl, Niall~L. Williams, Yashas Lokesh, and Praveen Ravi.
+\newblock Pettingzoo: Gym for multi-agent reinforcement learning, 2021.
+\newblock URL \url{https://arxiv.org/abs/2009.14471}.
 
 \bibitem[Wilcoxon(1992)]{Wilcoxon1992}
 Frank Wilcoxon.

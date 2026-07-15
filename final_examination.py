@@ -3,7 +3,7 @@
 import argparse
 
 # Replace this import with the actual module
-from final_examination_module import make_final_examination
+from libs.final_examination_module import make_final_examination
 
 
 def main():

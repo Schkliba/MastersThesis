@@ -1,8 +1,7 @@
-import constants as consts
+from libs import constants as consts
 import visualisation
 import libs.agent_infra as ai
 import datetime
-import statconf
 import argparse
 import numpy as np
 import os
@@ -15,9 +14,17 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-g", "--generations", help="Number of generations", type=int, default=10)
 parser.add_argument("-cr", "--cross_rate", help="Rate of crossing individuals", type=float, default=0.6)
 parser.add_argument("-cn", "--container", help="Container type", choices=["fitness", "novelty", "add_novelty", "archiving", "fit_archiving", "novelty_archiving"], default="fitness")
-parser.add_argument("-en", "--enviroment", help="Enviroment type", choices=["cartpole", "lunarlander", "waterworld"], default="cartpole")
+parser.add_argument("-en", "--environment", help="Enviroment type", choices=["cartpole", "lunarlander", "waterworld"], default="cartpole")
 
 parser.add_argument("-fw", "--fit_weight", help="Initial weight given to the fitnes", type=float, default=0.2)
+parser.add_argument("-rd", "--decay", help="Decay of the weight", type=float, default=0.2)
+
+parser.add_argument("-lm", "--limit", help="Limit for limit_archiving", type=int, default=0)
+
+parser.add_argument("-ab", "--archive_batch", help="Batch of the archive", type=int, default=1)
+parser.add_argument("-at", "--archive_period", help="Period of archiving", type=int, default=2)
+
+
 parser.add_argument("-mr", "--mutation_rate", help="Rate of mutation", type=float, default=0.9)
 parser.add_argument("-p", "--pop", help="Base population", type=int, default=7)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
@@ -29,11 +36,8 @@ parser.add_argument("-exp", "--experiment", help="indication if it's experiment"
 def main(args:argparse.Namespace):
     ng, l, cr, mr, seed = args.generations, args.pop, args.cross_rate, args.mutation_rate, args.seed
     container = args.container
-    cross_method = args.cross_method
     environment = args.environment
     episodes = args.episodes
-    cross_uni = args.cross_uni
-    mutation_sigma = args.mutation_sigma
     out_path = args.out_path
     if container == "add_novelty":
         fit_weight = args.fit_weight
@@ -41,9 +45,10 @@ def main(args:argparse.Namespace):
         fit_weight=None
     df, pop = argumented_function(
         env=environment,
-        cross_method=cross_method,
         container=container,
-        ng=ng, l=l, cr=cr, mr=mr, episodes=episodes, cross_uni=cross_uni, mutation_sigma=mutation_sigma,
+        ng=ng, l=l, cr=cr, mr=mr, episodes=episodes, decay=args.decay,
+        archive_batch=args.archive_batch, archiving_period=args.archive_period,
+        limit = args.limit,
         fitness_weight=fit_weight,
         seed=seed,
         out_path=out_path

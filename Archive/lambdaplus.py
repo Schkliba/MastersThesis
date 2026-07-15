@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
 
-import cartpole
+from libs import cartpole
 
 from deap import base
 from deap import creator
