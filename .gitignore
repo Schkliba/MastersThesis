@@ -10,7 +10,7 @@ poznamky
 !Data/final
 !Data/grid_protocol
 !Data/bayes_protocol
-
+!results.ipynb
 /Data/Experiments/.ipynb_checkpoints
 /Docs/papers
 /.metals

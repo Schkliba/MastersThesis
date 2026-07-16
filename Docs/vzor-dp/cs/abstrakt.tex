@@ -4,16 +4,23 @@
 
 \usepackage[a4paper, hmargin=1in, vmargin=1in]{geometry}
 \usepackage[a-2u]{pdfx}
-\usepackage[czech]{babel}
-\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[czech,english]{babel}
+
 \usepackage{lmodern}
 \usepackage{textcomp}
+\usepackage{fontspec}
+\usepackage{polyglossia}
 
+\setmainlanguage{english}
+\setotherlanguage{czech}
 \begin{document}
 
 %% Nezapomeňte upravit abstrakt.xmpdata.
 
-Toto je ukázkový abstrakt.
+Tato práce zkoumá využití novelty v evolučních algoritmech při řešení úloh zpětnovazebního učení. Porovnává selekci založenou na novelty se selekcí založenou na fitness, jejich variantami využívajícími archivy a dynamickými kombinacemi novelty a fitness. Porovnání probíhá na prostředích CartPole a Lunar Lander z knihovny Gymnasium. Pro každé prostředí definujeme interpretovatelnou behaviorální charakteristiku a analyzujeme vliv jednotlivých metod práce s objektivní funkcí na dosaženou fitness a diverzitu populace.
+Výsledky ukazují, že metody založené na fitness představují nejsilnější výchozí přístup z hlediska dosaženého výkonu. Využití novelty zvyšuje diverzitu populace, avšak její přínos závisí na dynamice konkrétní úlohy.
+Práce dále diskutuje citlivost výsledků algoritmů založených na novelty na volbu behaviorálního prostoru a vzájemné interakce mezi prostředím a evolučním algoritmem.
 
 \end{document}

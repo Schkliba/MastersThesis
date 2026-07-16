@@ -46,7 +46,8 @@ def main(args:argparse.Namespace):
     df, pop = argumented_function(
         env=environment,
         container=container,
-        ng=ng, l=l, cr=cr, mr=mr, episodes=episodes, decay=args.decay,
+        ng=ng, l=l, cr=cr, mr=mr, episodes=episodes, 
+        decay=args.decay,
         archive_batch=args.archive_batch, archiving_period=args.archive_period,
         limit = args.limit,
         fitness_weight=fit_weight,

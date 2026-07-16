@@ -1,35 +1,35 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Observation space of CartPole}}{9}{table.caption.7}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces CartPole Action Space.}}{9}{table.caption.9}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Observation space of Lunar Lander}}{11}{table.caption.12}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces Action space definition for the control system.}}{12}{table.caption.14}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Observation space of CartPole}}{10}{table.caption.7}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces CartPole Action Space.}}{10}{table.caption.9}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Observation space of Lunar Lander}}{12}{table.caption.12}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Action space definition for the control system.}}{13}{table.caption.14}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Evaluation episode selection table. Left is episode count, right is the calculated utility value as per maximising expression in \ref {sec:evalEps}}}{32}{table.caption.37}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Hyper-parameters limits for Bayesian search ES}}{34}{table.caption.38}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Hyperparameters limits for Bayesian search DE}}{34}{table.caption.39}%
-\contentsline {table}{\numberline {5.4}{\ignorespaces Performed Optuna studies for each container - Best score = maximum achieved fitness, Trials = total trial count, Best trials = no. trials achieving the maximum fitness, DE and ES are names of the EAs}}{35}{table.caption.40}%
-\contentsline {table}{\numberline {5.5}{\ignorespaces Bayesian Search results CartPole ES}}{36}{table.caption.41}%
-\contentsline {table}{\numberline {5.6}{\ignorespaces Bayesian Search results CartPole DE}}{36}{table.caption.42}%
-\contentsline {table}{\numberline {5.7}{\ignorespaces Bayesian Search results for Lunar Lander ES}}{37}{table.caption.43}%
-\contentsline {table}{\numberline {5.8}{\ignorespaces Bayesian Search results for Lunar Lander DE}}{37}{table.caption.44}%
-\contentsline {table}{\numberline {5.9}{\ignorespaces Delta table of hyperparameters for ES on Lunar Lander after IGS step. Table shows difference in crossover rate, population, new generation pool and mutation rate}}{38}{table.caption.45}%
-\contentsline {table}{\numberline {5.10}{\ignorespaces Delta table of hyper-parameters for DE on Lunar Lander environment after IGS step. Table shows difference in recombination rate, population and scaling factor.}}{38}{table.caption.46}%
-\contentsline {table}{\numberline {5.11}{\ignorespaces Delta table of hyper-parameters for DE on CartPole environment after IGS step. Table shows difference in recombination rate, population and scaling factor.}}{39}{table.caption.47}%
-\contentsline {table}{\numberline {5.12}{\ignorespaces Delta table of hyper-parameters for ES on CartPole environment after IGS step. Table shows difference in crossover rate, population, new generation pool and mutation rate}}{39}{table.caption.48}%
-\contentsline {table}{\numberline {5.13}{\ignorespaces Selection of generations hyper-parameter based on performed grid search}}{42}{table.caption.51}%
-\contentsline {table}{\numberline {5.14}{\ignorespaces Fitness based tests of group difference}}{42}{table.caption.53}%
-\contentsline {table}{\numberline {5.15}{\ignorespaces Diversity based tests of group difference}}{43}{table.caption.54}%
-\contentsline {table}{\numberline {5.16}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on Lunar Lander environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisons from both ES and DE}}{43}{table.caption.56}%
-\contentsline {table}{\numberline {5.17}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on Lunar Lander environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisons from both ES and DE}}{43}{table.caption.56}%
-\contentsline {table}{\numberline {5.18}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on CartPole environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisons from both ES and DE}}{44}{table.caption.57}%
-\contentsline {table}{\numberline {5.19}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on CartPole environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisons from both ES and DE}}{44}{table.caption.57}%
-\contentsline {table}{\numberline {5.20}{\ignorespaces Wilcoxon performance comparison summary fo Lunar Lander env. Comparison score - $\#wins/\#loses/\#ties$. Fit. - fitness comparisons on the EA; Div. - diversity comparisons on EA. Sum. = combination of both EAs}}{45}{table.caption.58}%
-\contentsline {table}{\numberline {5.21}{\ignorespaces Wilcoxon performance comparison summary fo CartPole env.Comparison score - $\#wins/\#loses/\#ties$. Fit. - fitness comparisons on the EA; Div. - diversity comparisons on EA. Sum. = combination of both EAs}}{45}{table.caption.58}%
-\contentsline {table}{\numberline {5.22}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Lunar Lander ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}}{47}{table.caption.61}%
-\contentsline {table}{\numberline {5.23}{\ignorespaces Fitness Wilcoxon test over objectives handlers for CartPole ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}}{48}{table.caption.62}%
-\contentsline {table}{\numberline {5.24}{\ignorespaces Diversity Wilcoxon test over objectives handlers for CartPole .($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}}{48}{table.caption.64}%
-\contentsline {table}{\numberline {5.25}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Lunar Lander. ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}}{49}{table.caption.65}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Evaluation episode selection table. Left is episode count, right is the calculated utility value as per maximising expression in \ref {sec:evalEps}}}{33}{table.caption.37}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Hyper-parameters limits for Bayesian search ES}}{35}{table.caption.38}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Hyperparameters limits for Bayesian search DE}}{35}{table.caption.39}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Performed Optuna studies for each container - Best score = maximum achieved fitness, Trials = total trial count, Best trials = no. trials achieving the maximum fitness, DE and ES are names of the EAs}}{36}{table.caption.40}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Bayesian Search results CartPole ES}}{37}{table.caption.41}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Bayesian Search results CartPole DE}}{37}{table.caption.42}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Bayesian Search results for Lunar Lander ES}}{38}{table.caption.43}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Bayesian Search results for Lunar Lander DE}}{38}{table.caption.44}%
+\contentsline {table}{\numberline {5.9}{\ignorespaces Delta table of hyperparameters for ES on Lunar Lander after IGS step. Table shows difference in crossover rate, population, new generation pool and mutation rate}}{39}{table.caption.45}%
+\contentsline {table}{\numberline {5.10}{\ignorespaces Delta table of hyper-parameters for DE on Lunar Lander environment after IGS step. Table shows difference in recombination rate, population and scaling factor.}}{39}{table.caption.46}%
+\contentsline {table}{\numberline {5.11}{\ignorespaces Delta table of hyper-parameters for DE on CartPole environment after IGS step. Table shows difference in recombination rate, population and scaling factor.}}{40}{table.caption.47}%
+\contentsline {table}{\numberline {5.12}{\ignorespaces Delta table of hyper-parameters for ES on CartPole environment after IGS step. Table shows difference in crossover rate, population, new generation pool and mutation rate}}{40}{table.caption.48}%
+\contentsline {table}{\numberline {5.13}{\ignorespaces Selection of generations hyper-parameter based on performed grid search}}{43}{table.caption.51}%
+\contentsline {table}{\numberline {5.14}{\ignorespaces Fitness based tests of group difference}}{43}{table.caption.53}%
+\contentsline {table}{\numberline {5.15}{\ignorespaces Diversity based tests of group difference}}{44}{table.caption.54}%
+\contentsline {table}{\numberline {5.16}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on Lunar Lander environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisons from both ES and DE}}{44}{table.caption.56}%
+\contentsline {table}{\numberline {5.17}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on Lunar Lander environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisons from both ES and DE}}{44}{table.caption.56}%
+\contentsline {table}{\numberline {5.18}{\ignorespaces Fitness based Wilcoxon tests of between objective groups on CartPole environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisons from both ES and DE}}{45}{table.caption.57}%
+\contentsline {table}{\numberline {5.19}{\ignorespaces Diversity based Wilcoxon tests of between objective groups on CartPole environment. $HL_x$ denotes calculated direction of the difference (A-B) for algorithm $x$, $p_x$ is p value of the test for algorithm $x$. $Total$ denotes collection of comparisons from both ES and DE}}{45}{table.caption.57}%
+\contentsline {table}{\numberline {5.20}{\ignorespaces Wilcoxon performance comparison summary fo Lunar Lander env. Comparison score - $\#wins/\#loses/\#ties$. Fit. - fitness comparisons on the EA; Div. - diversity comparisons on EA. Sum. = combination of both EAs}}{46}{table.caption.58}%
+\contentsline {table}{\numberline {5.21}{\ignorespaces Wilcoxon performance comparison summary fo CartPole env.Comparison score - $\#wins/\#loses/\#ties$. Fit. - fitness comparisons on the EA; Div. - diversity comparisons on EA. Sum. = combination of both EAs}}{46}{table.caption.58}%
+\contentsline {table}{\numberline {5.22}{\ignorespaces Fitness Wilcoxon test over objectives handlers for Lunar Lander ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}}{48}{table.caption.61}%
+\contentsline {table}{\numberline {5.23}{\ignorespaces Fitness Wilcoxon test over objectives handlers for CartPole ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}}{49}{table.caption.62}%
+\contentsline {table}{\numberline {5.24}{\ignorespaces Diversity Wilcoxon test over objectives handlers for CartPole .($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}}{49}{table.caption.64}%
+\contentsline {table}{\numberline {5.25}{\ignorespaces Diversity Wilcoxon test over objectives handlers for Lunar Lander. ($HL_x$ - direction on algorithm x, $p_x$ - p-value on algorithm x)}}{50}{table.caption.65}%
 \addvspace {10\p@ }
