@@ -1,6 +1,5 @@
 import numpy as np
 from deap import tools
-import typing
 
 STAT_LIST = ["min","avg","max","std"]
 

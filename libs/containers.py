@@ -4,8 +4,6 @@ import libs.statconf as statconf
 import libs.archiving as archiving
 from libs import evolutionary_strategy as es, differential_evo as de
 
-from deap import algorithms
-from deap import base
 from deap import tools
 
 

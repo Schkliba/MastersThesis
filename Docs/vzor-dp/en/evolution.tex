@@ -43,7 +43,7 @@ Let us review the meaning of the aforementioned operators.
 	EA without crossover would be more akin to a random walk algorithm.
 	\item selection then is about filtering the resulting individuals based on the objective function of the algorithm. It might be performed deterministically or with varying degree of stochasticity as elaborated in section \ref{continuousOpt}.
 \end{itemize}
-It should be noted that the order of mutation and cross-over here are arbitrary and are specific to each particular evolutionary technique.  
+It should be noted that the order of mutation and crossover here are arbitrary and are specific to each particular evolutionary technique.  
 For further discussion of selection process we need to introduce a few terms specific to evolutionary algorithm that have been borrowed from their counterpart in biology.
 
 
@@ -68,7 +68,7 @@ For our purposes this however introduces two problems. Firstly it complicates in
 For these reasons we opt for a global $ \sigma $ that does not change during the run of the evolution.
 \subsubsection{Crossover Methods}
 Crossover is a  method of combining values from two selected individuals. Based on 
-We will discuss mainly two kinds of cross-over:
+We will discuss mainly two kinds of crossover:
  \begin{itemize}
  	\item \textbf{Arithmetic} crossover where we combine genotype vectors $ x_1, x_2 $ into a new genotype $ x' $ as follows: $$ x' = \frac{x_1 + x_2}{2} $$
  	\item \textbf{Uniform} crossover where iterate over components of two parent genotype vectors $ x,y $ through index $ i \in 1\dots d$ where $ d $ is the size of the genotype (we assume both parents are the same length). Then with parameter $ p_u $ we produce new individual's genotype $ v $ like so: $$ v_i = \begin{cases}
@@ -77,7 +77,7 @@ We will discuss mainly two kinds of cross-over:
  	\end{cases}$$.
  \end{itemize}
 
-We do not consider position based cross-over methods as they might become quite difficult to manage for the neuroevolution purposes.
+We do not consider position based crossover methods as they might become quite difficult to manage for the neuroevolution purposes.
 \subsubsection{Tournament selection}
 \label{subsec:tournament}
 Selection in evolutionary algorithms can be realised by various means such as roulette selection where each individual $ i $ has likelihood of passing into the next generation $ p_i $ as follows: $ p_i = \frac{f(i)}{f(pop)}$, where $ f(i) $ is objective function value for the individual $ i $ and $ f(pop) $ is sum of objective value of all individuals. This however works only for objective functions that give out only either negative or positive numbers. As we have described in chapter \ref{chap:environment} environments explored in this thesis can give out rewards with value negative or positive based on the agent's performance. Therefore we will utilise tournament selection described in \cite{GOLDBERG199169}. Tournament selection works on simple principle where we select pool of individuals, size of which is called \textit{tournament size}. From them we then select the one with the most optimal objective function value \citep{GOLDBERG199169}. We detail the workings of tournament selection in algorithm \ref{alg:lambdaPlus}. Note that for the purposes of this thesis we have selected \textit{tournament size} = 3, or ternary tournament. During preliminary experiments using binary tournament we have often lost valuable individual to the instability of the selection. Ternary tournament provided more stability of the evolution while maintaining the indeterministic nature of the algorithm. 
@@ -211,10 +211,10 @@ In this section we will discuss possible objective functions for the evolutionar
 Using objective function as the utility function of the algorithm is the most direct way of establishing relationship between the solution we want and the individuals in the evolving population.
 
 
-Though this approach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can in easily become stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyper-parameters to favour random exploration, it may come to point where the benefits of evolutionary approach are made void.
+Though this approach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can in easily become stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyperparameters to favour random exploration, it may come to point where the benefits of evolutionary approach are made void.
 
 \subsubsection{Archiving}
-As stated in section \ref{sec:archives} for fitness the two main reasons for introducing archive into an fitness based EA is either to promote diversity by randomly preserving part of the population which might have been eradicated to the detriment of the overall evolution or on the contrary to preserve the best performing individuals so they may not be accidentally selected out of the gene pool. 
+As stated in section \ref{sec:archives} for fitness the two main reasons for introducing archive into an fitness-based EA is either to promote diversity by randomly preserving part of the population which might have been eradicated to the detriment of the overall evolution or on the contrary to preserve the best performing individuals so they may not be accidentally selected out of the gene pool. 
 
 \subsection{Novelty}
 \label{sec:novelty}
@@ -261,10 +261,10 @@ $$
 \hat{n}_{i}=\frac{n_i-n_{\min}}
 	{n_{\max}-n_{\min}} \mid n_{\min} \neq n_{\max}
 $$
-In other the case where minimum and maximum are equal we set the respective value to 0. This is done so that homogenous populations can be more easily disrupted by the algorithm.
+In the case where minimum and maximum are equal we set the respective value to 0. This is done so that homogenous populations can be more easily disrupted by the algorithm.
 
 
-Both maximum and minimum are easy to obtain as they are one O(n) while other methods such as z-score might be computationally more demanding in the multiplicative constant.
+Both maximum and minimum are easy to obtain as they are obtainable in O(n) time. Other methods such as z-score might be computationally more demanding in the multiplicative constant.
 Then we get combination:
 $$ c_i = W\hat{f}_{i} + W'\hat{n}_{i} $$
 

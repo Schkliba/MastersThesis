@@ -2,7 +2,6 @@
 
 import argparse
 
-# Replace this import with the actual module
 from libs.generation_examination_module import make_gen_examination
 
 

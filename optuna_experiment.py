@@ -1,5 +1,4 @@
 
-import optuna
 from optuna.samplers import TPESampler
 from optuna.trial import Trial
 from optuna.study import create_study
@@ -112,7 +111,6 @@ def lambda_objective(trial:Trial):
         fitnesses = [env.evalutation_b(p, 42, TEST_EVAL_EPS) for pop in pops for p in pop ]
 
 
-    #trial.set_user_attr("scores", fitnesses)
     fitnesses = list(map(lambda x:x[0], fitnesses))
     return np.max(fitnesses)
 

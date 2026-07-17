@@ -1,6 +1,5 @@
 from libs import constants as Cs
 import pickle
-import optuna
 
 TEST_EVAL_EPS = 5
 SEEDS = [101,102,103]

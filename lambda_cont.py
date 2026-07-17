@@ -27,8 +27,6 @@ parser.add_argument("-pa", "--out_path", help="Path to store output data", type=
 parser.add_argument("-exp", "--experiment", help="indication if it's experiment", action="store_true", default=False)
 parser.add_argument("-e", "--episodes", help="Seed of the random generator", type=int, default=5)
 parser.add_argument("-fw", "--fit_weight", help="Initial weight given to the fitnes", type=float, default=0.2)
-
-parser.add_argument("-fw", "--fit_weight", help="Initial weight given to the fitnes", type=float, default=0.2)
 parser.add_argument("-rd", "--decay", help="Decay of the weight", type=float, default=0.2)
 
 parser.add_argument("-lm", "--limit", help="Limit for limit_archiving", type=int, default=0)

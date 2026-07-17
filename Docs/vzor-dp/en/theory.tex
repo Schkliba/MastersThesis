@@ -4,7 +4,7 @@
 To understand the reasoning behind this work we first examine the fundamental subject of our efforts - the artificial agents.\\
 We will look at their structure, guiding principles, practical implementation and their application.
 \section{Agents and environment}
-All agents exist in environments that provide context to their agency. An agent receives information about the \textbf{environment} it find itself in (i.e. \textbf{percepts}) through \textbf{sensors} and acts on the environment through \textbf{actuators}. Both actuators and sensors are usually among the defining components of the agent. Another defining component of an agent would be setup of its internal decision-making mechanism.
+All agents exist in environments that provide context to their agency. An agent receives information about the \textbf{environment} it finds itself in (i.e. \textbf{percepts}) through \textbf{sensors} and acts on the environment through \textbf{actuators}. Both actuators and sensors are usually among the defining components of the agent. Another defining component of an agent would be setup of its internal decision-making mechanism.
 \begin{defn}[\cite{russell2021}]
 \label{dfn:actuators}
 Let E be an environment where agent G is located. G is equipped with actuators A and sensors P and so we can identify $ obss_P(E) $, a space of all possible sequences of percepts available to G within E and $ A(E) $ space of available actions in E.
@@ -140,7 +140,7 @@ Then function $ f: seq(E)\rightarrow \textbf{R} $ is a performance measure of so
 For each possible percept sequence, a rational agent should select an action that is expected to maximise its performance measure, given the evidence provided by the percept sequence and whatever built-in knowledge the agent has.
 \end{defn}
 We should note that in the real-world applications the rationality of an agents can often be limited by their capacity to store the evidence gathered from percepts, by the lack of their built-in knowledge or the computational capacity to estimate action sequence that can be expected to achieve global maximum of the agent's performance measure. \\
-This is often characterised as a capacity to form  \textit{belief}. With that we expand on the notion of agent policy 
+This is often characterised as a capacity to form  \textit{belief}. With that we expand on the notion of agent policy. 
 In this thesis we are more concerned with the properties of the evolutionary algorithms rather than evolution of complex agents. Therefore we consider only \textit{reflexive agents}.
 \begin{defn}[\citep{russell2021}]
 An agent is called simple reflex agent if it takes into account only the current percepts, never keeping any history or state information during its run.
@@ -152,7 +152,7 @@ The neural networks consist of neurons organised in layers.
 \begin{defn}
 Let $ W \in R^{m x n} $ and $ b\in R^{n}$ and let $ f:R^{n} \rightarrow R$.Then we call W the weights of a neuron layer with $ n $ neurons, b the bias of the layer and f the activation function of the layer when given an input vector $ x \in R^{m} $ we calculate the output of the layer as $ f(W^{T}x+b)$. Two layers have directional connection when the output of first layer is used as input of the subsequent layer.
 \end{defn}
-The purpose of the activation function is to introduce exploitable non-linearity into the neural system. We recognise several basic activation function.
+The purpose of the activation function is to introduce exploitable non-linearity into the neural system. We recognise several basic activation functions.
 \begin{itemize}
 \item sigmoid
 $$ \sigma (x) = \frac{1}{1+e^{-x}} $$
@@ -164,7 +164,7 @@ $$ ReLU (x) = max(0,x) $$
 \begin{defn}[\cite{russell2021}]  
 A neural network where the connections between layers of neural network form an acyclic graph is called a feed-forward neural network.
 \end{defn}
-Because the feed-forward NN doesn't hold any state or holds onto any previously acquired results and only produces output for a given input, they are ideal for implementation of simple reflex agents. In this thesis we use feed-forward networks exclusively, so any further mention of neural network should be assumed to be feed-forward.
+Because the feed-forward NN does not retain any state or holds onto any previously acquired results and only produces output for a given input, they are ideal for implementation of simple reflex agents. In this thesis we use feed-forward networks exclusively, so any further mention of neural network should be assumed to be feed-forward.
 
 
 
