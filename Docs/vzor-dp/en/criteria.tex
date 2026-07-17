@@ -3,11 +3,11 @@
 \label{ch:setup}
 To compare different types of objective functions fairly, we have to select criteria by which we compare them and establish conditions under which will this comparison take place so that our conclusions are fair.
 \section{General criteria}
-Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective environments, getting more comprehensive picture then from a single run. This will be mainly reflected in the seed for random numbers generator of the environment. Since the promise of the novelty approach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced by the algorithm runs\\
-However we also have to take into account the hyper-parameters with which these populations have been achieved. This is especially (but not limited to) population size and number of generations, hyper-parameters responsible for most of the computational complexity of a evolutionary algorithm run. 
+Since fitness provides direct measure of performance we would like to make our comparison on the fitness of the final population and its distribution in it. To that end we have to perform experiments with variety of initialisations of the respective environments, getting more comprehensive picture than a single run. This will be mainly reflected in the seed of random numbers generator of the environment. Since the main advantage of the novelty approach lies mainly in avoiding the trap of local optima we also want to review statistics of each generation produced during the algorithm runs\\
+However we also have to take into account the hyperparameters with which these populations have been achieved. This is especially (but not limited to) population size and number of generations, hyperparameters responsible for most of the computational complexity of an evolutionary algorithm run. 
 \section{Containers}
 While we have reviewed evolutionary algorithms and proposed different objective functions in chapter \ref{chap:evolution}, we now have to somehow refer to the combination of the two. We use the term \textbf{container} to denote a concrete combination of an evolutionary algorithm, objective-handling method.
-We can divide the containers on the axis of algorithm to ES containers and DE container. And we can divide them on basis of objective function handling:
+We can divide the containers on the axis of algorithm to ES containers and DE containers. And we can divide them on basis of objective function handling:
 \begin{itemize}
 	\item \textbf{fitness} container implements pure fitness approach as described 
 	
@@ -31,15 +31,15 @@ We can divide the containers on the axis of algorithm to ES containers and DE co
 	
 \end{itemize}
 Specifically for ES the crossover method is considered a hyperparameter that will be pinpointed during the Bayes search described in section \ref{sec:bayesSearch}.
-\section{Individual hyper-parameter selection}
-The hyper-parameters characterising individuals are number of layers and the number of neurons in their layers. The choice of these parameters is specific for each task. Generally the more complex is the task the more of either layers or neurons per layer the handling NN requires to be suitable for it. 
+\section{Individual hyperparameter selection}
+The hyperparameters characterising individuals are in essence parameters of the neural networks constituting them: number of layers and number of neurons in the layers. The choice of these parameters is specific for each task. Generally the more complex the task the more of either layers or neurons per layer the handling NN requires to perform well. 
 
 \subsection{NN Structure}
-As discussed in chapter \ref{ch:agents} as a choice we are making our agents to be simple feed-forward neural networks. This choice is on account of simplicity but also on account of adequacy as the bigger the neural network is the more resources need to be spend on optimising it. The NN structures are depicted on figures \ref{fig:cartpoleNN} and \ref{fig:lunarlanderNN} for CartPole and Lunar Lander respectively. 
+As discussed in chapter \ref{ch:agents} we have committed to making our agents be simple feed-forward neural networks. This choice is on account of simplicity but also on account of adequacy. The bigger the neural network is the more resources need to be spent on optimising it. The NN structures are depicted on figures \ref{fig:cartpoleNN} and \ref{fig:lunarlanderNN} for CartPole and Lunar Lander respectively. 
 
 Both structures have been selected on account of preliminary experience with the environments. Shapes of input and output layer are determined by the respective observation and action space. 
 
-The genome of evolving individual consists purely of the weight and bias matrices of the hidden layers nothing else is subject to evolution. For the purposes of this thesis and in relation to the descriptions of evolutionary mechanics given so far we should think about these matrices as flattened to a single long vector. In the case of Lunar lander with multiple layer the vectors are concatenated.  
+The genome of evolving individual consists purely of the weight and bias matrices of the hidden layers. Nothing else is subject to evolution. For the purposes of this thesis and in relation to the descriptions of evolutionary mechanics given so far we should think about these matrices as flattened to a single long vector. In the case of Lunar Lander, which has multiple layers of agent's NN the vectors are concatenated.  
 \begin{figure}[h]
 	\centering
 	
@@ -151,25 +151,25 @@ The genome of evolving individual consists purely of the weight and bias matrice
 \subsection{Behavioural Space}
 \label{sec:behavioralSpace}
 As we can see through the definition of observer function in definition \ref{def:observer}, the choice of transformation from history to behavioural space can be arbitrarily complex.
-Recently there have been proposals of automatic behavioural space extraction like in the paper \cite{behaviorCharML} or \cite{Salehi_2021} . However the original paper \cite{noveltyarticle} emphasises application of domain knowledge to the behavioural space design. Because this thesis is in the core comparative and we are interested in the interpretability of the design as much as raw performance, we have opted for manual design based on our preliminary experiments and experience with the environments. We also take into account the fact that the greatest advantage from an automatic behavioural space extraction is obtained mainly in complex environments \citep{behaviorCharML}. 
+Recently there have been proposals of automatic behavioural space extraction like in the paper \cite{behaviorCharML} or \cite{Salehi_2021} . However the original paper \cite{noveltyarticle} emphasises application of domain knowledge to the behavioural space design. Because this thesis is in the core comparative and we are interested in the interpretability of the design as much as raw performance, we have opted for manual design based on our preliminary experiments and experience with the environments. We also take into account the fact that the greatest advantage from an automatic behavioural space extraction is obtained mainly in more complex environments \citep{behaviorCharML}. 
 
-While we won't specify $ agg $ and $ transform$ functions introduced in algorithm \ref{alg:envloop} explicitly for readability purposes, their definitions are implied by respective definition of observer function $ \omega_B $ and the fact we will only consider the behaviour of the last evaluated episode. While such approach loses some of the information about the evaluated individual it also does not introduce consistency trade-offs of standard aggregations like $ \max $, $ \min $ or $ mean $ applied component-wise. Their solution is out of the scope of this thesis. 
+While we won't specify $ agg $ and $ transform$ functions introduced in algorithm \ref{alg:envloop} explicitly for readability purposes, their definitions are implied by respective definition of observer function $ \omega_B $ and the fact we will only consider the behaviour of the last evaluated episode. While such approach loses some of the information about the evaluated individual it also does not introduce consistency trade-offs of standard aggregations like $ \max $, $ \min $ or $ mean $ applied component-wise. Addressing these trade-offs is beyond the scope of this thesis. 
 \subsubsection{CartPole}
-Let $ h_{Cart} = (a_0,o_1,a_1, \dots, o_T) $ be history of one completed episode of CartPole that lasted $ T $ steps and $ o_T $ is the last observation. Then we define observer function: $$ \omega_B(h_{Cart}) = (pos_X(o_T), \theta(o_T))$$ where $ pos_X(o_T) $ is reported position on  x-axis in observation $o_T$ and $ \theta(o_T) $ is pole angle both normalised to interval $ \left[-1, 1\right] $ through their respective maximal values reported in table \ref{tab:cartpole_state_space}.
+Let $ h_{Cart} = (a_0,o_1,a_1, \dots, o_T) $ be history of one completed episode of CartPole that lasted $ T $ steps and $ o_T $ is the last observation. Then we define observer function: $$ \omega_B(h_{Cart}) = (pos_X(o_T), \theta(o_T))$$ where $ pos_X(o_T) $ is reported position on  x-axis in observation $o_T$ and $ \theta(o_T) $ is pole angle, both normalised to interval $ \left[-1, 1\right] $ through their respective maximal values reported in table \ref{tab:cartpole_state_space}.
 
-The reasoning behind this choice of behavioural space is that the combination of position and pole angle is indicative not only of the past performance but also of the ability to continue the task in the next round. Therefore searching through the space of these behaviour should eventually yield performant individuals.
+The reasoning behind this choice of behavioural space is that the combination of position and pole angle is indicative not only of the past performance but also of the ability to continue the task in the next round. Therefore searching through the space of these behaviours should eventually yield performant individuals.
 \subsubsection{Lunar Lander}
 Let $ h_{Lun} = (a_0,o_1,a_1, \dots, o_T) $ be history of one completed episode of Lunar Lander that lasted $ T $ steps. Then we define observer function: $$ \omega_B(h_{Lun}) = (pos_X(o_T), v_Y(\bar{o}))$$ where $ pos_X(o_T) $ is reported position on  x-axis in observation $o_T$, $ v_Y $ is a reported velocity in y-axis and $ \bar{o} 
  $ is mean of all observations recorded in $ h_{Lun} $.  Both components of behavioural vector again normalised to interval $ \left[-1, 1\right] $ through their respective maximal values reported in table \ref{tab:lander_state_space}.
  
- The reasoning behind this choice of behavioural space is that the combination of average speed of descend and landing position is indicative of the agent's ability to descend safely and control over the descend. Searching over this space should therfore eventually produce performant individual.
+ The reasoning behind this choice of behavioural space is that the combination of average speed of descend and landing position is indicative of the agent's ability to descend safely and control over the descend. Searching over this space should therefore eventually produce performant individual.
 \section{Algorithm hyperparameter selection}
-We have reviewed hyperparameters of each algorithm in the chapter \ref{chap:evolution}. Now we will review the process of their selection. The difficulty of the task lies mainly in the complexity of evaluation. As we will discuss later some of the experiments maybe evaluated over day or even several days on the available hardware even for a 100 limited algorithm runs. For this reason we need to utilise Bayesian search which is able to prune a lot of the redundant space out so that we may not waste time with it. This however has a considerable downside for our purposes as we would like to compare the algorithms on their best footing. Therefore we refine the Bayesian search results with local grid search attempting to deviate from the supposed hyperparameter equilibria.
+We have reviewed hyperparameters of each algorithm in the chapter \ref{chap:evolution}. Now we will review the process of their selection. The difficulty of the task lies mainly in the complexity of evaluation. As we will discuss later some of the experiments maybe evaluated over day or even several days on the available hardware even for a 100 limited algorithm runs. For this reason we need to utilise Bayesian search which is able to eliminate much of the redundant space out so that we may not waste time with it. This however has a considerable downside for our purposes as we would like to compare the algorithms on their best footing. Therefore we refine the Bayesian search results with local grid search attempting to deviate from the supposed hyperparameter equilibria.
 
 \subsection{Bayesian Search}
 \label{sec:bayesSearch}
-Because we are faced with multiple 
-Bayesian search is an algorithm where we stochastically delineate where a possibly good solution may lie and then try to exploit this delineation. Because the specific workings of Bayesian search are time-consuming to implement ad hoc (and also such implementation is out of the scope of this thesis) We will utilise library Optuna.
+Because we are faced with multiple hyperparameters with complex dependencies, we have to utilise search that is able to capture these dependencies without computational explosion.
+Bayesian search is an algorithm where we stochastically delineate where a possibly good solution may lie and then try to exploit this delineation. Because the specific workings of Bayesian search are time-consuming to implement ad hoc (and also such implementation is out of the scope of this thesis) we will utilise the library Optuna.
 
 \subsubsection{Optuna}
 Just as in our case a lot of machine-learning techniques need for their proper function to obtain adequate hyperparameters first. Optuna is a Python library designed for this purpose \citep{akiba2019optuna}. The library itself is multifaceted, so we will only discuss algorithms and terms pertaining to the subject of this thesis.
@@ -177,12 +177,12 @@ Just as in our case a lot of machine-learning techniques need for their proper f
 	By Optuna trial or just trial we mean one run of the evolutionary algorithm with one chosen set of hyperparameters and the results of this run.
 \end{defn}
 \begin{defn}
-	Optuna study a set of related trials with implied continuity of choice. 
+	Optuna study is a set of related trials with implied continuity of choice. 
 \end{defn}
 \begin{defn}
 	Optuna optimisation run describes run of the chosen optimisation algorithm, adding optimised trials to selected study.
 \end{defn}
-Note that study maybe composed of multiple optimisation runs. In this thesis we have only done one study per container and one optimisation run per study if not for anything than to mind our computational time.
+Note that study may be composed of multiple optimisation runs. In this thesis we have only done one study per container and one optimisation run per study if not for no other reason than to mind our computational time.
 
 As the optimisation algorithm we have selected Tree-structured Parzen Estimator (TPE) due to the fairly low complexity and effectiveness, wasting no trials as we want to conserve as much actual runtime as possible.
 \subsubsection{Tree-structured Parzen Estimator}
@@ -203,15 +203,15 @@ These distributions are typically estimated using smooth non-parametric density 
 The next tried set of hyperparameters is chosen according to the rule:
 \[x^* = \arg\max_x \frac{l(x)}{g(x)}.\]
 
-
+\newpage
 \subsection{General Gridsearches}
 Now we will discuss grid searches that are common for all implementations of our EAs. Note that for convenience we do not present these concepts in the temporal order in which they have been evaluated. 
 
 \subsubsection{Evaluation episodes vs. generations}
 \label{sec:evalEps}
-Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run in these experiments. The parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to select the lowest possible number. For this purpose we will run a grid search comparing differential algorithm's performance over different number of generations. Since the Gymnasium environments discussed in chapter \ref{chap:environment}. are based on similar principles we will perform the search only and CartPole but generalise the results to both. This is done to conserve time for more impactful experiments. 
+Before we start other experiments we have to determine how many episodes will be used to evaluate an individual during the algorithm's run in these experiments. The parameter directly influences how much information the algorithm has extracted about the individual, as more episodes will lead to more indicative behavioural descriptors. However since the episodes take up non-trivial part of the computation we want to select the lowest possible number. For this purpose we will run a grid search comparing differential algorithm's performance over different number of generations. Since the Gymnasium environments discussed in chapter \ref{chap:environment} are based on similar principles we will perform the search only and CartPole but generalise the results to both. This is done to conserve time for more impactful experiments. 
 
-Obtaining the values from the grid search we will select the optimal number of episode based on the following rationale:
+Obtaining the values from the grid search we will select the optimal number of episodes based on the following rationale:
 For each episode count tested we define strategies $S$ where $s\in S$ is the corresponding number of episodes.
 We name expected performance of strategy $s$ in run of length $g$ as $\mathbb{E}[V_g(s)]$
 We define gain of strategy $s$ in run of length $g$ as $A_g(s) = \mathbb{E}[V_g(s)] - \mathbb{E}[V_g]$ where $\mathbb{E}[V_g]$ is the total expected performance in generation $g$ across all strategies.
@@ -219,11 +219,13 @@ We then select $$s* = \arg\max_{s\in S}\left(\frac{\mathbb{E}_{g\sim G}[V_g(s)]}
 
 \subsubsection{Generations grid search}
 \label{sec:preGenSearch}
-During the refining in Bayesian search and Incremental grid search we use fixed number of generations for the optimisations. This mean that we don't know how many generations are truly best. We perform a grid search over a range of generations. This will also allow us to compare performances and performance curves based on this parameter.
+During the refining in Bayesian search and Incremental grid search we use fixed number of generations for the optimisations. This means we don't know how many generations are truly best. We perform a grid search over a range of generations. This will also allow us to compare performances and performance curves based on this parameter.
   
 \subsection{Incremental grid search}
 \label{sec:incgridsearch}
-Because we obtained the optimised parameters from Bayesian search stochastically we would like to ensure that there is no easily obtainable set of parameters more performant than the set from BS. All however in time consuming fashion. To this end we have devised an algorithm of incremental grid search where we evaluate possibly useful deviations from the supposed local optima. Upon discovering new optima we recentre the search around it. If we are not successful in finding dominating set of parameters we end the search with the last obtained optima. We also end the search after more than 3 re-centring (hops).  Since this is only refining algorithm of already functional solution we do not expect long searches.
+Because we obtained the optimised parameters from Bayesian search stochastically we would like to ensure that there is no easily obtainable set of parameters more performant than the set from BS which we have missed. 
+
+ To this end we have devised an algorithm of incremental grid search where we evaluate possibly useful deviations from the supposed local optima. Upon discovering new optima we recentre the search around it. If we are not successful in finding dominating set of parameters we end the search with the last obtained optima. We also end the search after more than 3 re-centring (hops).  Since this is only refining algorithm of already functional solution we do not expect long searches.
 
 
 \begin{algorithm}[H]
@@ -285,7 +287,7 @@ Because we obtained the optimised parameters from Bayesian search stochastically
 \end{algorithm}
 
 
-The candidates are generated from neighbourhoods of the selected solution $ x $ in one or more hyperparameter. For hyperparameter $ H $ the neighbourhood is defined by $ \delta_H $. We generate $ x_{-\delta}$, $ x_{+\delta}$, $ x_0 $ such that for  $ x_{-\delta}(H) = x(H) -  \delta_H $ and analogically for $ x_{+\delta}$. The option of $ x_0 $ might not make sense to generate for a single hyperparameter as this is just $ x $ repeated but in combination of two or more hyperparameters this ensures we truly check all combinations consisting the neighbourhood of $ x $ in those hyperparameters.
+The candidates are generated from neighbourhoods of the selected solution $ x $ in one or more hyperparameter. For hyperparameter $ H $ the neighbourhood is defined by $ \delta_H $. We generate $ x_{-\delta}$, $ x_{+\delta}$, $ x_0 $ such that for  $ x_{-\delta}(H) = x(H) -  \delta_H $ and analogously for $ x_{+\delta}$. The option of $ x_0 $ might not make sense to generate for a single hyperparameter as this is just $ x $ repeated but in combination of two or more hyperparameters this ensures we truly check all combinations consisting the neighbourhood of $ x $ in those hyperparameters.
 
 \subsection{$\mu + \lambda$ incremental grid search}
 \label{sec:lambdaGrid}
@@ -306,7 +308,7 @@ The tests represent a null hypotheses $ H_0 $ which may or may not be rejected i
 \subsection{Friedman test}
 We will use description of Friedman test from \cite{algTesting}. 
 There it is described as a statistical test testing $ k $ algorithms. The null hypothesis is that all $ k $ algorithm sample from the same population distribution. If rejected we accept at least one of the $ k $ algorithms samples from a different population distribution from the rest.
-We compute rankings $ r_j^i  $ of each algorithm $ j $ for each comparison instance $ i $. In the case of this thesis comparison instance is a initial conditions set for an particular instance of evolutionary algorithm. Rank is distributed from the best having rank 1 to the worst rank k. Then we compute the Friedman statistic $ \chi_F^2 $:
+We compute rankings $ r_j^i  $ of each algorithm $ j $ for each comparison instance $ i $. In the case of this thesis, comparison instance is a initial-condition setting for an particular instance of evolutionary algorithm. Rank is distributed from the best having rank 1 to the worst rank k. Then we compute the Friedman statistic $ \chi_F^2 $:
 \[
 \chi_F^2 =
 \frac{12N}{k(k+1)}
@@ -324,7 +326,7 @@ We start by computing differences of the algorithms' $ A $ and $ B $ performance
 \begin{equation}
 	 d_i = A_i - B_i \label{eq:WilcoxonDiffs}
 \end{equation}
-Unlike in Friendman test where the rank is distribute across algorithms, in Wilcoxon test distributes rank across the absolute value of the differences $ |d_i| $.  Then we compute sums of ranks testifying for each of the compared algorithm. $ R^{+} $ is the sum of ranks where algorithm A won ($ d_i > 0 $) while  $ R^{-} $ is the sum of ranks where algorithm B won ($ d_i < 0$). For $ d_i = 0 $ we split the ranks between the two sums \citep{algTesting}.
+Unlike in Friedman test where the rank is distribute across algorithms, in Wilcoxon test distributes rank across the absolute value of the differences $ |d_i| $.  Then we compute sums of ranks testifying for each of the compared algorithm. $ R^{+} $ is the sum of ranks where algorithm A won ($ d_i > 0 $) while  $ R^{-} $ is the sum of ranks where algorithm B won ($ d_i < 0$). For $ d_i = 0 $ we split the ranks between the two sums \citep{algTesting}.
 \[ 
 R^{+} = \sum_{d_i > 0} rank(d_i) + \frac{1}{2}\sum_{d_i = 0} rank(d_i)
  \]

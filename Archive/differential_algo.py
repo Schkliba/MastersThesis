@@ -2,10 +2,9 @@
 import keras
 import numpy as np
 
-import cartpole
+from libs import cartpole, differential_evo as de
 import seaborn as sns
 import visualisation as vis
-import differential_evo as de
 
 from deap import base
 from deap import creator

@@ -1,6 +1,6 @@
 import numpy as np
-from constants import EXAMPLE_MAPPING
-import constants as Cs
+from libs.constants import EXAMPLE_MAPPING
+from libs import constants as Cs
 import optuna
 import json
 from pathlib import Path
@@ -70,7 +70,7 @@ def select_minimal_examples_old(examples):
     return refined_trials, refined_trials_index
 
 def load_from_grid_search(en, container, alg):
-    with open("relevant_grid_search.json", "r") as f:
+    with open("../relevant_grid_search.json", "r") as f:
         grid_doc = json.load(f)
     latest = grid_doc[en]
     storage = f"Data/grid_search/{latest}/{en}/{container}/{alg}"
@@ -85,7 +85,7 @@ def load_from_grid_search(en, container, alg):
     return most_promising
 
 def load_from_optuna(en, container, alg):
-    with open("relevant_studies.json", "r") as f:
+    with open("../relevant_studies.json", "r") as f:
         relevant_study_names = json.load(f)
     storage = f"sqlite:///Data/optuna/{en}/{container}/{alg}.db"
     study_name = relevant_study_names[container][alg][en]

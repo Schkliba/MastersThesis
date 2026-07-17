@@ -1,8 +1,6 @@
-import containers
-import cartpole
+from libs import cartpole, containers
 import visualisation
 import datetime
-import statconf
 import argparse
 import numpy as np
 
@@ -26,7 +24,7 @@ creator.create("FitnessNovelty", base.Fitness, weights=(1.0, ))
 #creator.create("Behavior", base.Fitness, weights=(1.0, 1.0)) #end position & angle
 creator.create("FitnessTrue", base.Fitness, weights=(1.0, )) 
 
-creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessNovelty , fitness2=creator.FitnessTrue)#, behaviour=creator.Behavior)
+creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessNovelty, fitness2=creator.FitnessTrue)#, behaviour=creator.Behavior)
 ng, l, cr, mr, seed = args.generations, args.pop, args.cross_rate, args.mutation_rate, args.seed
 rp = lambda x: cartpole.evalutation(x, seed, 1, True)
 
@@ -36,7 +34,7 @@ toolbox.register("triOp", cartpole.cartdiff, alpha=mr)
 toolbox.register("recombine", cartpole.cartrecomb, prob_filter=cr)
 
 
-alg = containers.DiffNoveltyContainer(l,toolbox, seed, ng,creator)
+alg = containers.DiffNoveltyContainer(l, toolbox, seed, ng, creator)
 alg.replay_f = rp
 alg.run()
 df = visualisation.novelty_logbook2pandas(alg.logbook)

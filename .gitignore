@@ -6,11 +6,12 @@ poznamky
 !/Data/optuna
 !Data/grid_search
 !Data/generation_ex
-!Data/decay_search
+!Archive/Data/decay_search
 !Data/final
 !Data/grid_protocol
 !Data/bayes_protocol
-
+!Data/ep_gen
+!results.ipynb
 /Data/Experiments/.ipynb_checkpoints
 /Docs/papers
 /.metals

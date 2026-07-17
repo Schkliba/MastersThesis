@@ -52,10 +52,29 @@
 \usepackage{paralist}       % improved enumerate and itemize
 \usepackage{xcolor}         % typesetting in color
 \usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, shapes.geometric}
 \usepackage{cleveref}
 \usepackage{float}
 \usepackage{listings}
 \usepackage{subcaption}
+\usepackage[edges]{forest}
+
+\forestset{
+	filesystem/.style={
+		for tree={
+			grow'=0,
+			parent anchor=east,
+			child anchor=west,
+			anchor=west,
+			edge={-},
+			font=\ttfamily\small,
+			l sep=10pt,
+			s sep=3pt,
+			inner sep=1pt
+		}
+	}
+}
+\usepackage{dirtree}
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
 \usepackage[ruled]{algorithm2e}
@@ -100,8 +119,8 @@ I would like to thank my supervisor Mgr. Roman Neruda, CSc. for patience and gui
 
 % Abstract (recommended length around 80-200 words; this is not a copy of your thesis assignment!)
 \def\Abstract{%
-This thesis investigates use of novelty in evolutionary algorithms on reinforcement learning tasks. We compare novelty with fitness based selection, their archival variants and dynamic combinations of novelty and fitness on Gymnasium environments CartPole and Lunar Lander. For each environment we define an interpretable behavioural characteristic and observe the how objective handling methods affect the resulting fitness and population diversity.
-The results show the fitness-based methods are most performant under the experiment conditions. The novelty increases population diversity but its benefit is tied to specific task dynamics. 
+This thesis investigates the use of novelty in evolutionary algorithms on reinforcement learning tasks. We compare novelty-based with fitness-based selection, their archival variants and dynamic combinations of novelty and fitness on Gymnasium environments CartPole and Lunar Lander. For each environment we define an interpretable behavioural characteristic and examine how the choice of objective handling method affects the resulting fitness and population diversity.
+The results show the fitness-based methods achieve best performance under the experiment conditions. The novelty increases population diversity but its benefit depends on specific task dynamics. 
 The thesis also discusses sensitivity of novelty search to the choice of behavioural space and interactions between the environment and the evolutionary algorithm. 
 }
 
@@ -114,7 +133,7 @@ The thesis also discusses sensitivity of novelty search to the choice of behavio
 
 % 3 to 5 keywords (recommended), each enclosed in curly braces
 \def\Keywords{%
-{evolution}; {novelty}; {fitness}; {behavioural space}
+{evolution};{novelty}; {fitness}; {behavioural space}
 }
 
 \def\KeywordsCz{%
@@ -187,6 +206,32 @@ The thesis also discusses sensitivity of novelty search to the choice of behavio
 \section{Full grid search charts}
 \label{app:generationGrid}
 \input{../tex/generation_apendix.tex}
+\section{Project structure}
+\begin{figure}[H]
+	\centering
+	\begin{forest}
+		filesystem
+		[Project
+		[Archive/ \hfill {\normalfont\footnotesize Archived experiments and outputs (unfeatured)}]
+		[Data/ \hfill {\normalfont\footnotesize Datasets and generated data}]
+		[Docs/ \hfill {\normalfont\footnotesize Thesis \LaTeX{} files}]
+		[libs/ \hfill {\normalfont\footnotesize Implementations of the algorithms}]
+		[notebooks/ \hfill {\normalfont\footnotesize Helper Jupyter notebooks}]
+		[scripts/ \hfill {\normalfont\footnotesize Automation Bash scripts}]
+		[adaptive\_gridsearch.py \hfill {\normalfont\footnotesize Incremental grid search}]
+		[diff\_cont.py \hfill {\normalfont\footnotesize DE evaluation}]
+		[final\_examination.py \hfill {\normalfont\footnotesize Final evaluation}]
+		[generation\_examination.py \hfill {\normalfont\footnotesize Generation evaluation}]
+		[lambda\_cont.py \hfill {\normalfont\footnotesize ES evaluation}]
+		[optuna\_experiment.py \hfill {\normalfont\footnotesize Optuna experiments}]
+		[view\_episodes.py \hfill {\normalfont\footnotesize Replay}]
+		[visualisation.py \hfill {\normalfont\footnotesize Visualisation utilities}]
+		[README.md \hfill {\normalfont\footnotesize Project documentation}]
+		]
+	\end{forest}
+	\caption{Project directory structure.}
+	\label{fig:project_structure}
+\end{figure}
 \section{Experiment Data Format}
 \subsection{Incremental Grid Search Protocol}
 \begin{lstlisting}[tabsize=3]

@@ -1,8 +1,7 @@
-import constants as consts
+from libs import constants as consts, containers
 import visualisation
 import libs.agent_infra as ai
 import datetime
-import statconf
 import argparse
 import numpy as np
 import os
@@ -25,11 +24,15 @@ parser.add_argument("-p", "--lambdan", help="Base population", type=int, default
 parser.add_argument("-m", "--mu", help="Offspring pool", type=int, default=30)
 parser.add_argument("-s", "--seed", help="Seed of the random generator", type=int, default=42)
 parser.add_argument("-pa", "--out_path", help="Path to store output data", type=str, default="./Data/Junk/")
-parser.add_argument("-exp", "--experiment", help="insication if it's experiment", action="store_true", default=False)
+parser.add_argument("-exp", "--experiment", help="indication if it's experiment", action="store_true", default=False)
 parser.add_argument("-e", "--episodes", help="Seed of the random generator", type=int, default=5)
 parser.add_argument("-fw", "--fit_weight", help="Initial weight given to the fitnes", type=float, default=0.2)
+parser.add_argument("-rd", "--decay", help="Decay of the weight", type=float, default=0.2)
 
+parser.add_argument("-lm", "--limit", help="Limit for limit_archiving", type=int, default=0)
 
+parser.add_argument("-ab", "--archive_batch", help="Batch of the archive", type=int, default=1)
+parser.add_argument("-at", "--archive_period", help="Period of archiving", type=int, default=2)
 
 
 def main(args: argparse.Namespace):
@@ -47,6 +50,10 @@ def main(args: argparse.Namespace):
         cross_method=cross_method,
         container=container,
         ng=ng, l=l, m=m, cr=cr, mr=mr, episodes=episodes, cross_uni=cross_uni, mutation_sigma=mutation_sigma,
+        decay=args.decay,
+        archive_batch=args.archive_batch, archiving_period=args.archive_period,
+        limit = args.limit,
+        fitness_weight=args.fit_weight,
         seed=seed,
         out_path=out_path
     )
@@ -126,7 +133,7 @@ def argumented_function(
     enviroment.prepare_toolbox(toolbox, creator.Individual)
     cont_cls = consts.LAMBDA_CONTS[container]
     if container == "fit_archiving" or container == "novelty_archiving" or container == "elite_archiving":
-        cont_cls :consts.containers.LambdaArchivingContainer
+        cont_cls : containers.LambdaArchivingContainer
         alg = cont_cls(
             l, 
             m, 
@@ -140,7 +147,7 @@ def argumented_function(
             store_batch=archive_batch
         )
     elif container == "novelty_limit":
-        cont_cls :consts.containers.LambdaArchivingLimitNoveltyContainer
+        cont_cls : containers.LambdaArchivingLimitNoveltyContainer
         alg = cont_cls(
             l, 
             m, 

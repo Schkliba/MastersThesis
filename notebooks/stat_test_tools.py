@@ -7,30 +7,30 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 from scipy.spatial.distance import pdist
-from evaluation_utils_module import  rename, select_minimal_examples_old
-from constants import LAMBDA_CONTS, DIFF_CONTS, ENIVROMENTS
+from libs.evaluation_utils_module import  rename, select_minimal_examples_old
+from libs.constants import LAMBDA_CONTS, DIFF_CONTS, ENIVROMENTS
 from functools import lru_cache
 from itertools import combinations
-import math
 
-def load_gen_direct_data(en, cont, alg, name):
-    path = f"./Data/generation_ex/{en}/{cont}/{alg}/{name}"
+
+def load_gen_direct_data(en, cont, alg, name, path="./Data/generation_ex/"):
+    path = f"{path}{en}/{cont}/{alg}/{name}"
     json_files = list(Path(path).glob("*.json"))
     print(f"Found {len(json_files)} files!")
     with open(json_files[0], "r", encoding="utf-8") as f:
         data = json.load(f)
     return data
 
-def load_final_direct_data(en, cont, alg, name):
-    path = f"./Data/final/{en}/{cont}/{alg}/{name}"
+def load_final_direct_data(en, cont, alg, name, path="./Data/final/"):
+    path = f"{path}{en}/{cont}/{alg}/{name}"
     json_files = list(Path(path).glob("*.json"))
     print(f"Found {len(json_files)} files!")
     with open(json_files[0], "r", encoding="utf-8") as f:
         data = json.load(f)
     return data
 
-def load_grid_direct_data(en, cont, alg, name):
-    path = f"./Data/grid_search/{name}/{en}/{cont}/{alg}"
+def load_grid_direct_data(en, cont, alg, name, path="./Data/grid_search/"):
+    path = f"{path}{name}/{en}/{cont}/{alg}"
     json_files = list(Path(path).glob("*.json"))
     print(f"Found {len(json_files)} files!")
     with open(json_files[0], "r", encoding="utf-8") as f:
@@ -95,22 +95,22 @@ def get_protocol_table2(cont, protocol):
     df.columns = pd.MultiIndex.from_tuples(df.columns)
     return df
 
-def get_protocol_table(en, alg, name):
+def get_protocol_table(en, alg, name, path):
     big_table = pd.DataFrame()
     cts = LAMBDA_CONTS if alg == "lambda" else DIFF_CONTS
     for cont in cts:
-        protocol = load_grid_direct_data(en, cont, alg, name)
+        protocol = load_grid_direct_data(en, cont, alg, name, path)
         table = get_protocol_table2(cont, protocol)
         big_table = pd.concat([big_table, table])
 
     return big_table.sort_index(axis=1)
 
 
-def plot_generations(en, alg, name, attr:str, ax=None):
+def plot_generations(en, alg, name, attr:str, ax=None, path=""):
     cts = LAMBDA_CONTS if alg == "lambda" else DIFF_CONTS
     df = pd.DataFrame()
     for cont in cts:
-        content = load_gen_direct_data(en=en, alg=alg, cont=cont, name=name)
+        content = load_gen_direct_data(en=en, alg=alg, cont=cont, name=name,path=path)
         temp = gen_extract_values(content)
         temp["cont"] = cont
         df = pd.concat([df, temp], axis=0)
@@ -124,23 +124,23 @@ def plot_generations(en, alg, name, attr:str, ax=None):
     filtered = dff.groupby(["ng", "cont"], group_keys=False).apply(trim_25)
     return sns.lineplot(data=filtered, x="ng", y=attr, hue="cont", ax=ax)  
 
-@lru_cache(maxsize=None)
-def get_final_seed_mapped_value(en, cont, alg, name):
-    file_content = load_final_direct_data(en, cont , alg, name)
-    df = pd.DataFrame(file_content["fitness"]).melt(
-            var_name="seed", 
-            value_name="population"
-    )
-    df["fitnesses"] = df["population"].apply(lambda x: x[0][0])
-    df["behaviors"] = df["population"].apply(lambda x: x[1])
-    df = df.drop("population", axis=1)
+# @lru_cache(maxsize=None)
+# def get_final_seed_mapped_value(en, cont, alg, name, path):
+#     file_content = load_final_direct_data(en, cont , alg, name, path)
+#     df = pd.DataFrame(file_content["fitness"]).melt(
+#             var_name="seed", 
+#             value_name="population"
+#     )
+#     df["fitnesses"] = df["population"].apply(lambda x: x[0][0])
+#     df["behaviors"] = df["population"].apply(lambda x: x[1])
+#     df = df.drop("population", axis=1)
 
-    def behavior_diversity(x):
-        X = np.array([np.asarray(v) for v in x], dtype=float)
-        X = np.vstack(X)
-        return pdist(X).mean()
+#     def behavior_diversity(x):
+#         X = np.array([np.asarray(v) for v in x], dtype=float)
+#         X = np.vstack(X)
+#         return pdist(X).mean()
 
-    return df.groupby("seed").agg({"fitnesses": np.max, "behaviors": lambda x: behavior_diversity(x) })
+#     return df.groupby("seed").agg({"fitnesses": np.max, "behaviors": lambda x: behavior_diversity(x) })
 
 def friedman_test_total_containers(names, attribute):
     big_table = pd.DataFrame()
@@ -150,7 +150,7 @@ def friedman_test_total_containers(names, attribute):
         values = pd.DataFrame()
         for alg in ["lambda", "diff"]:
             for en in ENIVROMENTS:
-                values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+                values_en = get_final_seed_mapped_value(en, cont, alg, names[en],  path="../Data/final/").copy()
                 values_en.index = values_en.index + str(en) + str(alg)
                 values = pd.concat([values, values_en])
         table = values[attribute]
@@ -165,7 +165,7 @@ def friedman_test_per_environment_containers(en, names, attribute):
     for cont in conts:
         values = pd.DataFrame()
         for alg in ["lambda", "diff"]:
-            values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+            values_en = get_final_seed_mapped_value(en, cont, alg, names[en],  path="../Data/final/").copy()
             values_en.index = values_en.index + str(en) + str(alg)
             values = pd.concat([values, values_en])
         table = values[attribute]
@@ -187,7 +187,7 @@ def wilcoxon_test_per_environment_containers(en,names, attribute):
     for cont in conts:
         values = pd.DataFrame()
         for alg in ["lambda", "diff"]:
-            values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+            values_en = get_final_seed_mapped_value(en, cont, alg, names[en],  path="../Data/final/").copy()
             values_en.index = values_en.index + str(en) + str(alg)
             values = pd.concat([values, values_en])
         table = values[attribute]
@@ -208,7 +208,7 @@ def wilcoxon_test_per_env_alg_containers(en,alg, names, attribute):
     big_table = pd.DataFrame()
     conts = list(cts.keys())
     for cont in conts:
-        values = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+        values = get_final_seed_mapped_value(en, cont, alg, names[en],  path="../Data/final/").copy()
         values.index = values.index + str(en) + str(alg)
         table = values[attribute]
         table.name = cont
@@ -230,7 +230,7 @@ def wilcoxon_test_per_environment_algorithms(en, names, attribute):
     for alg in ["lambda", "diff"]:
         values = pd.DataFrame()
         for cont in conts:
-            values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+            values_en = get_final_seed_mapped_value(en, cont, alg, names[en],  path="../Data/final/").copy()
             values_en.index = values_en.index + str(en) + str(cont)
             values = pd.concat([values, values_en])
         table = values[attribute]
@@ -249,7 +249,7 @@ def wilcoxon_test_total_algorithms(names, attribute):
         values = pd.DataFrame()
         for cont in conts:
             for en in ENIVROMENTS:
-                values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+                values_en = get_final_seed_mapped_value(en, cont, alg, names[en], path="../Data/final/").copy()
                 values_en.index = values_en.index + str(en) + str(cont)
                 values = pd.concat([values, values_en])
         table = values[attribute]
@@ -266,7 +266,7 @@ def wilcoxon_test_total_containers(names, attribute):
         values = pd.DataFrame()
         for alg in ["lambda", "diff"]:
             for en in ENIVROMENTS:
-                values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+                values_en = get_final_seed_mapped_value(en, cont, alg, names[en],  path="../Data/final/").copy()
                 values_en.index = values_en.index + str(en) + str(alg)
                 values = pd.concat([values, values_en])
         table = values[attribute]
@@ -301,7 +301,7 @@ def friedman_test_intergroup_total(alg, names, attribute, groups):
         for cont in groups[g]:
             values = pd.DataFrame()
             for en in ENIVROMENTS:
-                values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+                values_en = get_final_seed_mapped_value(en, cont, alg, names[en],  path="../Data/final/").copy()
                 values_en.index = values_en.index + str(en)
                 values = pd.concat([values, values_en])
             table = values[attribute]
@@ -318,7 +318,7 @@ def friedman_test_intragroup_total(alg, names, attribute, group):
     for cont in group:
         values = pd.DataFrame()
         for en in ENIVROMENTS:
-            values_en = get_final_seed_mapped_value(en, cont, alg, names[en]).copy()
+            values_en = get_final_seed_mapped_value(en, cont, alg, names[en], path="../Data/final/").copy()
             values_en.index = values_en.index + str(en)
             values = pd.concat([values, values_en])
         table = values[attribute]
@@ -327,8 +327,8 @@ def friedman_test_intragroup_total(alg, names, attribute, group):
     return friedmanchisquare(*[big_table[col] for col in big_table.columns])
 
 @lru_cache(maxsize=None)
-def get_final_seed_mapped_value(en, cont, alg, name):
-    file_content = load_final_direct_data(en, cont , alg, name)
+def get_final_seed_mapped_value(en, cont, alg, name, path):
+    file_content = load_final_direct_data(en, cont , alg, name, path)
     df = pd.DataFrame(file_content["fitness"]).melt(
             var_name="seed", 
             value_name="population"

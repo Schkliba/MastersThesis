@@ -1,45 +1,134 @@
 % !TeX spellcheck = en_GB
 \chapter{Introduction to Artificial Agents}
 \label{ch:agents}
-To understand the reasoning guiding this work we have to first look at the fundamental subject of our efforts - the artificial agents.\\
-We will look at their structure, guiding principles, practical implementation and their use.
+To understand the reasoning behind this work we first examine the fundamental subject of our efforts - the artificial agents.\\
+We will look at their structure, guiding principles, practical implementation and their application.
 \section{Agents and environment}
-All agents exist in environments that provide context to their agency. An agent gets information about the \textbf{environment} it find itself in (i.e. \textbf{percepts}) through \textbf{sensors} and acts on the environment through \textbf{actuators}. Both actuators and sensors are usually characteristics of the agent. Another characteristic of an agent would be setup of its internal machinations.
+All agents exist in environments that provide context to their agency. An agent receives information about the \textbf{environment} it finds itself in (i.e. \textbf{percepts}) through \textbf{sensors} and acts on the environment through \textbf{actuators}. Both actuators and sensors are usually among the defining components of the agent. Another defining component of an agent would be setup of its internal decision-making mechanism.
 \begin{defn}[\cite{russell2021}]
 \label{dfn:actuators}
-Let E be environment where agent G is located. G is equipped with actuators A and sensors P and so we can identify $ obss_P(E) $, a space of all possible sequences of percepts available to G within E and $ A(E) $ space of available actions in E.
+Let E be an environment where agent G is located. G is equipped with actuators A and sensors P and so we can identify $ obss_P(E) $, a space of all possible sequences of percepts available to G within E and $ A(E) $ space of available actions in E.
 Then function $ G: obss_P(E)\rightarrow A(E) $ is called an agent function, defining behaviour of the agent G in environment E.
 \end{defn}
 
-We illustrate relationship of these concepts in the diagram \ref{fig:generalagent}. Note that provided definition of agent policy is characteristic to deterministic agents. For agents in stochastic environments we need to reframe the agent function as probabilistic policy. We will discuss this reframing further in section \ref{sec:RL}.
+We illustrate relationship of these concepts in the diagram \ref{fig:generalagent}. Note that provided definition of agent policy is characteristic to deterministic agents. For agents in stochastic environments we need to reframe the agent function as probabilistic policy. We will discuss this formulation further in section \ref{sec:RL}.
 
  
-\begin{figure}
+%\begin{figure}
+%
+%	\begin{tikzpicture}[
+%		>=latex,
+%		node distance=5cm,
+%		block/.style={
+%			rectangle,
+%			draw,
+%			minimum width=3.5cm,
+%			minimum height=1.2cm,
+%			align=center
+%		}
+%		]
+%		
+%		\node[block] (agent) {Agent};
+%		\node[block, right=of agent] (env) {Environment};
+%		
+%		\draw[->] (env) to[bend left=20]
+%		node[above] {Percepts / Observations} (agent);
+%		
+%		\draw[->] (agent) to[bend left=20]
+%		node[below] {Actions} (env);
+%		
+%	\end{tikzpicture}
+%  \caption{Agent and environment relationship}
+%  
+%\end{figure}
 
+
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{0.95\textwidth}{!}{%
 	\begin{tikzpicture}[
-		>=latex,
-		node distance=5cm,
+		node distance=1.4cm and 1.8cm,
+		>=Latex,
 		block/.style={
-			rectangle,
 			draw,
-			minimum width=3.5cm,
+			rounded corners,
+			align=center,
 			minimum height=1.2cm,
-			align=center
+			minimum width=2.7cm
+		},
+		agentblock/.style={
+			block,
+			fill=blue!5
+		},
+		envblock/.style={
+			block,
+			fill=green!8,
+			minimum width=4cm
+		},
+		flow/.style={
+			->,
+			thick
 		}
 		]
 		
-		\node[block] (agent) {Agent};
-		\node[block, right=of agent] (env) {Environment};
+		% Environment
+		\node[envblock] (environment) {
+			\textbf{Environment}
+		};
 		
-		\draw[->] (env) to[bend left=20]
-		node[above] {Percepts / Observations} (agent);
+		% Agent components
+		\node[agentblock, above left=2.2cm and 1.8cm of environment] (sensors) {
+			\textbf{Sensors}
+		};
 		
-		\draw[->] (agent) to[bend left=20]
-		node[below] {Actions} (env);
+		\node[agentblock, right=of sensors, minimum width=4cm] (decision) {
+			\textbf{Internal decision-making}\\
+			\textbf{mechanism}
+		};
+		
+		\node[agentblock, right=of decision] (actuators) {
+			\textbf{Actuators}
+		};
+		
+		\node[
+		draw,
+		rounded corners,
+		dashed,
+		inner sep=0.45cm,
+		fit=(sensors)(decision)(actuators),
+		label=above:\textbf{Agent}
+		] (agent) {};
+		
+
+		\draw[flow]
+		(sensors) --
+		node[above, font=\small] {process}
+		(decision);
+		
+		\draw[flow]
+		(decision) --
+		node[above, font=\small] {control}
+		(actuators);
+		
+
+		\draw[flow]
+		(environment.west)
+		-| node[pos=0.25, above, align=center, font=\small]
+		{percepts}
+		(sensors.south);
+		
+		\draw[flow]
+		(actuators.south)
+		|- node[pos=0.25, left, align=center, font=\small]
+		{application of actions}
+		(environment.east);
 		
 	\end{tikzpicture}
-  \caption{Agent and environment relationship}
-  \label{fig:generalagent}
+	}
+	\caption{Agent and environment relationship}
+	\label{fig:generalagent}
+	
 \end{figure}
 
 Because we want our agents to solve some tasks in their respective environments with certain efficiency meaning we want them to be intelligent, we need to define a notion of rationality that can help us better capture what we mean by intelligence. First however we need to measure how useful or detrimental a situation can be for our agent.
@@ -51,7 +140,7 @@ Then function $ f: seq(E)\rightarrow \textbf{R} $ is a performance measure of so
 For each possible percept sequence, a rational agent should select an action that is expected to maximise its performance measure, given the evidence provided by the percept sequence and whatever built-in knowledge the agent has.
 \end{defn}
 We should note that in the real-world applications the rationality of an agents can often be limited by their capacity to store the evidence gathered from percepts, by the lack of their built-in knowledge or the computational capacity to estimate action sequence that can be expected to achieve global maximum of the agent's performance measure. \\
-This is often characterised as a capacity to form  \textit{belief}. With that we expand on the notion of agent policy 
+This is often characterised as a capacity to form  \textit{belief}. With that we expand on the notion of agent policy. 
 In this thesis we are more concerned with the properties of the evolutionary algorithms rather than evolution of complex agents. Therefore we consider only \textit{reflexive agents}.
 \begin{defn}[\citep{russell2021}]
 An agent is called simple reflex agent if it takes into account only the current percepts, never keeping any history or state information during its run.
@@ -63,7 +152,7 @@ The neural networks consist of neurons organised in layers.
 \begin{defn}
 Let $ W \in R^{m x n} $ and $ b\in R^{n}$ and let $ f:R^{n} \rightarrow R$.Then we call W the weights of a neuron layer with $ n $ neurons, b the bias of the layer and f the activation function of the layer when given an input vector $ x \in R^{m} $ we calculate the output of the layer as $ f(W^{T}x+b)$. Two layers have directional connection when the output of first layer is used as input of the subsequent layer.
 \end{defn}
-The purpose of the activation function is to introduce exploitable non-linearity into the neural system. We recognise several basic activation function.
+The purpose of the activation function is to introduce exploitable non-linearity into the neural system. We recognise several basic activation functions.
 \begin{itemize}
 \item sigmoid
 $$ \sigma (x) = \frac{1}{1+e^{-x}} $$
@@ -75,7 +164,7 @@ $$ ReLU (x) = max(0,x) $$
 \begin{defn}[\cite{russell2021}]  
 A neural network where the connections between layers of neural network form an acyclic graph is called a feed-forward neural network.
 \end{defn}
-Because the feed-forward NN doesn't hold any state or holds onto any previously acquired results and only produces output for a given input, they are ideal for implementation of simple reflex agents. In this thesis we use feed-forward networks exclusively, so any further mention of neural network should be assumed to be feed-forward.
+Because the feed-forward NN does not retain any state or holds onto any previously acquired results and only produces output for a given input, they are ideal for implementation of simple reflex agents. In this thesis we use feed-forward networks exclusively, so any further mention of neural network should be assumed to be feed-forward.
 
 
 

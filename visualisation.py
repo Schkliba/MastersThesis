@@ -4,7 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import statconf
+from libs import statconf
+
 
 def logbook2pandas(logbook:tools.Logbook):
     df = pd.DataFrame()

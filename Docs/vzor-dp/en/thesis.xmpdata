@@ -1,7 +1,9 @@
 % Metadata to be stored in PDF, see documentation of the pdfx package for more details.
 
-\Author{Name Surname}
-\Title{Thesis title}
-\Keywords{keywords\sep more such\sep yet another}
-\Subject{Abstract of thesis}
+\Author{František Dostál}
+\Title{Fitness and novelty in evolutionary reinforcement learning}
+\Keywords{evolution\sep novelty\sep fitness\sep behavioural space}
+\Subject{This thesis investigates use of novelty in evolutionary algorithms on reinforcement learning tasks. We compare novelty with fitness based selection, their archival variants and dynamic combinations of novelty and fitness on Gymnasium environments CartPole and Lunar Lander. For each environment we define an interpretable behavioural characteristic and observe the how objective handling methods affect the resulting fitness and population diversity.
+The results show the fitness-based methods are most performant under the experiment conditions. The novelty increases population diversity but its benefit is tied to specific task dynamics. 
+The thesis also discusses sensitivity of novelty search to the choice of behavioural space and interactions between the environment and the evolutionary algorithm. }
 \Publisher{Charles University}

@@ -1,11 +1,8 @@
-import diff_cont
-import lambda_cont
-import libs.agent_infra as ai
 import os
 import json
 import datetime
 import itertools
-import constants as Cs
+from libs import constants as Cs
 import concurrent.futures
 
 enviroments = ["cartpole"] #, "lunarlander"]

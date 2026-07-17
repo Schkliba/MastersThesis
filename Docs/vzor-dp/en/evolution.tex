@@ -15,10 +15,10 @@ General maximising optimisation problem takes the form:
 where x is the solution vector, f is objective function,\\
 and $g_i, h_j $ are constraints imposed on $ x $ \\ 
 \end{defn}
- Although theoretically it could be also minimising, in this thesis we will not encounter the minimising optimisation and so our concern is mainly with the maximising case.
+ Although theoretically it could be also minimising, in this thesis we will only encounter maximising optimisation and so our concern is mainly with the such case.
 
-Because of this biological connection solution vectors are in the literature often referred to as individuals and we will refer to them this way henceforth as well. Alternatively when emphasising either the numerical form of the vector or  semantic interpretation of this form beyond the optimisation algorithm the individual may be refer to as either a \textbf{genotype} or \textbf{phenotype} respectively.\\  
-Group of individuals representing candidate solutions at a given time is referred to as a population. In general case evolutionary algorithms then evolve the population by applying three operations (operators) to it in a loop until either the population converges to optimum or the limit on number of steps is reached. 
+Because of the biological analogy, solution vectors are in the literature often referred to as \textit{individuals} and we adopt this terminology throughout the thesis. Alternatively when emphasising either the numerical form of the vector or  semantic interpretation of this form beyond the optimisation algorithm the individual may be referred to as either a \textbf{genotype} or \textbf{phenotype} respectively.\\  
+Group of individuals representing candidate solutions at a given time is referred to as a population. In general case evolutionary algorithms then evolve the population by applying three operations (operators) to it in a loop until either the population converges to the optimum or the limit on number of steps is reached. 
 \begin{defn}
 	Let f be objective function in minimisation (resp. maximisation) problem. We call an individual $ i $ more successful than individual $ j $ if value $ f(i) < f(j) $, resp. $ f(i) > f(j) $. 
 \end{defn}
@@ -38,18 +38,18 @@ $pop \gets Select(m)$\;
 
 Let us review the meaning of the aforementioned operators.
 \begin{itemize}
-	\item crossover usually involves recombination of features from two or more individuals from the population. It's purpose is to provide means of exploitation of features beneficial to the population already developed by some individual.
+	\item crossover usually involves recombination of features from two or more individuals from the population. Its purpose is to provide means of exploitation of features beneficial to the population already developed by some individual.
 	\item mutation provides means of exploration by introducing randomness into the individuals
 	EA without crossover would be more akin to a random walk algorithm.
 	\item selection then is about filtering the resulting individuals based on the objective function of the algorithm. It might be performed deterministically or with varying degree of stochasticity as elaborated in section \ref{continuousOpt}.
 \end{itemize}
-It should be noted that the order of mutation and cross-over here are arbitrary and are specific to each particular evolutionary technique.  
+It should be noted that the order of mutation and crossover here are arbitrary and are specific to each particular evolutionary technique.  
 For further discussion of selection process we need to introduce a few terms specific to evolutionary algorithm that have been borrowed from their counterpart in biology.
 
 
 \section{Continuous Optimisation }
 \label{continuousOpt}
-Historically the individuals optimised by EA used be primarily conceived as vectors over binary domain - $\lbrace 0, 1 \rbrace$ . However this approach was  later expanded into the domain of vectors over real numbers. In literature this is referred to as continuous optimisation. In this thesis we are interested in neuro-evolution, a subset of continuous optimisation as neural networks discussed in the chapter \ref{ch:agents} are represented as a series of vectors of real numbers. But since the intend of this thesis is mainly to compare different objective functions we will not delve too deeply into the intricacies of neuro-evolution field and instead approach the following techniques from the more general standpoint of continuous optimisation.
+Historically the individuals optimised by EA used be primarily conceived as vectors over binary domain - $\lbrace 0, 1 \rbrace$ . However this approach was  later expanded into the domain of vectors over real numbers. In literature this is referred to as continuous optimisation. In this thesis we are interested in neuroevolution, a subset of continuous optimisation as neural networks discussed in the chapter \ref{ch:agents} are represented as a series of vectors of real numbers. But since the aim of this thesis is mainly to compare different objective functions we will not delve too deeply into the intricacies of neuroevolution field and instead approach the following techniques from the more general standpoint of continuous optimisation.
 
 In this section we will review the selected evolutionary algorithms and describe them as they are going to be used during the experiments in chapter \ref{ch:experiments}.
 \subsection{Evolutionary Strategies}
@@ -68,7 +68,7 @@ For our purposes this however introduces two problems. Firstly it complicates in
 For these reasons we opt for a global $ \sigma $ that does not change during the run of the evolution.
 \subsubsection{Crossover Methods}
 Crossover is a  method of combining values from two selected individuals. Based on 
-We will discuss mainly two kinds of cross-over:
+We will discuss mainly two kinds of crossover:
  \begin{itemize}
  	\item \textbf{Arithmetic} crossover where we combine genotype vectors $ x_1, x_2 $ into a new genotype $ x' $ as follows: $$ x' = \frac{x_1 + x_2}{2} $$
  	\item \textbf{Uniform} crossover where iterate over components of two parent genotype vectors $ x,y $ through index $ i \in 1\dots d$ where $ d $ is the size of the genotype (we assume both parents are the same length). Then with parameter $ p_u $ we produce new individual's genotype $ v $ like so: $$ v_i = \begin{cases}
@@ -77,7 +77,7 @@ We will discuss mainly two kinds of cross-over:
  	\end{cases}$$.
  \end{itemize}
 
-We do not consider position based cross-over methods as they might become quite difficult to manage for the neuroevolution purposes.
+We do not consider position based crossover methods as they might become quite difficult to manage for the neuroevolution purposes.
 \subsubsection{Tournament selection}
 \label{subsec:tournament}
 Selection in evolutionary algorithms can be realised by various means such as roulette selection where each individual $ i $ has likelihood of passing into the next generation $ p_i $ as follows: $ p_i = \frac{f(i)}{f(pop)}$, where $ f(i) $ is objective function value for the individual $ i $ and $ f(pop) $ is sum of objective value of all individuals. This however works only for objective functions that give out only either negative or positive numbers. As we have described in chapter \ref{chap:environment} environments explored in this thesis can give out rewards with value negative or positive based on the agent's performance. Therefore we will utilise tournament selection described in \cite{GOLDBERG199169}. Tournament selection works on simple principle where we select pool of individuals, size of which is called \textit{tournament size}. From them we then select the one with the most optimal objective function value \citep{GOLDBERG199169}. We detail the workings of tournament selection in algorithm \ref{alg:lambdaPlus}. Note that for the purposes of this thesis we have selected \textit{tournament size} = 3, or ternary tournament. During preliminary experiments using binary tournament we have often lost valuable individual to the instability of the selection. Ternary tournament provided more stability of the evolution while maintaining the indeterministic nature of the algorithm. 
@@ -135,23 +135,23 @@ Selection in evolutionary algorithms can be realised by various means such as ro
 
 
 \subsection{Differential Evolution}
-In the introductory paper \cite{diffEV} on which this section is mostly based, the differential evolution is characterised mainly by it's industrial capabilities such as easy parallelisation and application.
+In the introductory paper \cite{diffEV} on which this section is mostly based, the differential evolution is characterised mainly by its industrial capabilities such as easy parallelisation and application.
 
 Because of these benefits it is a popular technique in the field of neuroevolution.
 We detail the whole process in algorithm \ref{alg:diffEv}.
 The algorithm for resolving a single generation happens in a single loop with the familiar stages which we detail in algorithm $ \ref{alg:diffEv} $.
 \subsubsection{Selection}
-Unlike in evolutionary strategies described in  section \ref{sec:ES}, selection is done on individual basis to enhance parallelisation capabilities of the algorithm. This means that for each individual $ x_i $ we either select it or it's proposed replacement $ v_i $ based on the values of objective function for each of them. Of course we keep the more successful one. 
+Unlike in evolutionary strategies described in  section \ref{sec:ES}, selection is done on individual basis to enhance parallelisation capabilities of the algorithm. This means that for each individual $ x_i $ we either select it or its proposed replacement $ v_i $ based on the values of objective function for each of them. Of course we keep the more successful one. 
 
 \subsubsection{Mutation}
 While Evolutionary strategies introduce stochasticity in explicit and controlled manner, differential evolution relies on a special form of contextual mutation where three individuals from the population are drafted and combined. This means that we do not have to search for optimal value of $ \sigma $. 
 
 We select three individuals $ x_a, x_b, x_c $ distinct from $ x_i $ and compute a new individual: $ x_i' =  x_a + \alpha (x_b - x_c)$ where $ x_a $ is called anchor, $ (x_b - x_c) $ differential and $ \alpha $ is scaling factor. 
 
-Although the scaling factor $ \alpha $ does not have probabilistic interpretation, in some sense it corresponds to mutation rate in ES as the grater it is, the more stochasticity affects the system.
+Although the scaling factor $ \alpha $ does not have probabilistic interpretation, in some sense it corresponds to mutation rate in ES as the greater it is, the more stochasticity affects the system.
 
 \subsubsection{Recombination}
-During recombination we decide for each vector component of the newly forming individual $ x_i' $ whether we will source it from  the already mutated version $ x_i' $ or the original $ x_i $ based on recombination rate $ \gamma $. This implementation differs from the standard formulation of Differential Evolution in that the recombination does not enforce transfer of at least one component from the mutated vector. Consequently, there is a non-zero probability that the recombined vector is identical to the target vector. This may have negative effect on the ability of the search to generate diverse individuals and consequently make it less effective. Since the choice of algorithms is mostly arbitrary this does not affect validity of this thesis but it should  taken into consideration when interpreting the results. All experimental results presented in this thesis were obtained using this implementation.    Recombination is rough translation of the concept of crossover for the purposes of single easily parallelised loop and recombination rate could be likened to the uniform crossover cross-rate $ R_U $.
+During recombination we decide for each vector component of the newly forming individual $ x_i' $ whether we will source it from  the already mutated version $ x_i' $ or the original $ x_i $ based on recombination rate $ \gamma $. This implementation differs from the standard formulation of Differential Evolution in that the recombination does not enforce transfer of at least one component from the mutated vector. Consequently, there is a non-zero probability that the recombined vector is identical to the target vector. This may have negative effect on the ability of the search to generate diverse individuals and consequently make it less effective. Since the choice of algorithms is mostly arbitrary this does not affect validity of this thesis but it should be taken into consideration when interpreting the results. All experimental results presented in this thesis were obtained using this implementation.    Recombination is rough analogue of crossover for the purposes of single easily parallelised loop and recombination rate could be likened to the uniform crossover cross-rate $ R_U $.
 
 \begin{algorithm}[h]
 	\caption{Differential Evolution}
@@ -194,13 +194,13 @@ During recombination we decide for each vector component of the newly forming in
 \end{algorithm}
 \subsection{Archives}
 \label{sec:archives}
-A technique that may enhance the techniques presented in this sections is installing an archive into the algorithm.
-Archive is a long-term storage outside of the optimised population of a certain size where a batch of individuals selected from regular population is added periodically and are being reintroduced  during the selection. This approach can help preserve diversity of individuals or on the contrary to preserve the best solutions found so far. We will distinguish archives intended for the second purpose as \textit{elite archives }.
+A technique that may enhance the techniques presented in this section is incorporating an archive into the algorithm.
+Archive is a long-term storage outside of the optimised population of a certain size where a batch of individuals selected from regular population is added periodically and are reintroduced  during the selection. This approach can help preserve diversity of individuals or on the contrary to preserve the best solutions found so far. We will distinguish archives intended for the second purpose as \textit{elite archives }.
 
 For evolutionary strategy we simply add the archive batch from which a new generation pool is being selected as this will not affect the run of the algorithm in any way. 
 
 For differential evolution we cannot just add the archive to the existing population. We actually have to reintroduce the the archived individuals instead of parts of the population. In this thesis we will do this on basis of random pick from the $ population + archive $.
-
+\newpage
 \section{Objective functions}
 \label{sec:objFunc}
 In this section we will discuss possible objective functions for the evolutionary optimisation search.
@@ -211,10 +211,10 @@ In this section we will discuss possible objective functions for the evolutionar
 Using objective function as the utility function of the algorithm is the most direct way of establishing relationship between the solution we want and the individuals in the evolving population.
 
 
-Though this approach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can in easily get stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyper-parameters to favour random exploration, it may come to point where the benefits of evolutionary approach are made void.
+Though this approach ensures that the most optimal individuals from given population  will generally be selected into the next generation during the evolution it does not guarantee that their potential for evolving is not diminished either. This way the evolution using fitness can in easily become stuck in local optimum of the objective function. While in most cases it might be still possible to reach global optimum on the given problem by changing the hyperparameters to favour random exploration, it may come to point where the benefits of evolutionary approach are made void.
 
 \subsubsection{Archiving}
-As stated in section \ref{sec:archives} for fitness the two main reasons for introducing archive into an fitness based EA is either to promote diversity by randomly preserving part of the population which might have been eradicated to the detriment of the overall evolution or on the contrary to preserve the best performing individuals so they may not be accidentally selected out of the gene pool. 
+As stated in section \ref{sec:archives} for fitness the two main reasons for introducing archive into an fitness-based EA is either to promote diversity by randomly preserving part of the population which might have been eradicated to the detriment of the overall evolution or on the contrary to preserve the best performing individuals so they may not be accidentally selected out of the gene pool. 
 
 \subsection{Novelty}
 \label{sec:novelty}
@@ -252,7 +252,7 @@ Only these screened individuals are then added to the archive. This will help us
 The novelty does not take into account the individual's performance with objective function. Therefore when two individuals with similar behavioural characteristics appear but one of them performs significantly better than the other, pure novelty algorithm can easily select the less performant individual, losing the more performant genome for further generations. To prevent this we want to meaningfully combine novelty with fitness.\\
 \subsubsection{Exponential Decay Weight}
 Taking inspiration from \cite{notenoughnovelty}, we will try to combine novelty with fitness in the most straight-forward way - linear combination with decaying weights.
-However first we need to address some issues such as the disproportion in scale of fitness to scale of novelty. This mean we require normalisation for the two. Again taking inspiration from \cite{notenoughnovelty}, we will normalise with the maximum and minimum of both fitness and novelty in the currently existing population for each individual $ i $: 
+However first we need to address some issues such as the disproportion in scale of fitness to scale of novelty. This means we require normalisation for the two. Again taking inspiration from \cite{notenoughnovelty}, we will normalise with the maximum and minimum of both fitness and novelty in the currently existing population for each individual $ i $: 
 $$
 \hat{f}_{i} =
 	\frac{f_i-f_{\min}}{f_{\max}-f_{\min}} \mid f_{\min} \neq f_{\max}
@@ -261,10 +261,10 @@ $$
 \hat{n}_{i}=\frac{n_i-n_{\min}}
 	{n_{\max}-n_{\min}} \mid n_{\min} \neq n_{\max}
 $$
-In other the case where minimum and maximum are equal we set the respective value to 0. This is done so that homogenous populations can be more easily disrupted by the algorithm.
+In the case where minimum and maximum are equal we set the respective value to 0. This is done so that homogenous populations can be more easily disrupted by the algorithm.
 
 
-Both maximum and minimum are easy to obtain as they are one O(n) while other methods such as z-score might be computationally more demanding in the multiplicative constant.
+Both maximum and minimum are easy to obtain as they are obtainable in O(n) time. Other methods such as z-score might be computationally more demanding in the multiplicative constant.
 Then we get combination:
 $$ c_i = W\hat{f}_{i} + W'\hat{n}_{i} $$
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-from adaptive_gridsearch_module import adaptive_grid_search
+from libs.adaptive_gridsearch_module import adaptive_grid_search
 
 
 

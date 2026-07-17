@@ -1,4 +1,3 @@
-from deap.tools import selBest,selRandom
 import numpy as np
 import random
 from operator import attrgetter

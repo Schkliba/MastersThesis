@@ -4,27 +4,27 @@ import gymnasium as gym
 import libs.agent_infra as ai
 from typing import *
 
-class LunarLanderBehaviorModel:
-    norm_cnst = {
-            "x": 1.5,
-            "y": 1.5,
-            "x_v": 5,
-            "y_v": 5,
-            "angle": 3.142,
-            "angular_v": 5,
+# class LunarLanderBehaviorModel:
+#     norm_cnst = {
+#             "x": 1.5,
+#             "y": 1.5,
+#             "x_v": 5,
+#             "y_v": 5,
+#             "angle": 3.142,
+#             "angular_v": 5,
 
-    }
-    def __init__(self):
-        self.reset()
+#     }
+#     def __init__(self):
+#         self.reset()
 
-    def reset(self):
-        self.sum_x_v = 0
+#     def reset(self):
+#         self.sum_x_v = 0
 
-    def inter_call(self,observation):
-        pass
+#     def inter_call(self,observation):
+#         pass
     
-    def transform(self,behavior, n):
-        pass
+#     def transform(self,behavior, n):
+#         pass
 
         
 class LunarLanderEvaluator(ai.Evaluator):

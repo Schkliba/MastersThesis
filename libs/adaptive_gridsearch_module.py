@@ -1,15 +1,12 @@
-from evaluation_utils_module import task_job, rename, select_minimal_examples
+from libs.evaluation_utils_module import task_job, rename, select_minimal_examples
 import itertools
 import concurrent.futures
-import constants as Cs
 import os
 import json
 import datetime
-import pickle
 import optuna
 import numpy as np
 from scipy.spatial.distance import pdist
-import logging
 from concurrent.futures import Future
 
 
@@ -306,7 +303,7 @@ def adaptive_diff_grid_search(
     return selected, visited
 
 def adaptive_grid_search(en, alg, run_name, container, hops = 3, out_path="./Data/grid_search"):
-    with open("relevant_studies.json", "r") as f:
+    with open("../relevant_studies.json", "r") as f:
         relevant_study_names = json.load(f)
     storage = f"sqlite:///Data/optuna/{en}/{container}/{alg}.db"
     study_name = relevant_study_names[container][alg][en]

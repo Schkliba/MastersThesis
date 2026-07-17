@@ -1,6 +1,4 @@
-import cartpole
-import lunarlander
-import containers
+from libs import cartpole, lunarlander, containers
 import diff_cont
 import lambda_cont
 import numpy as np
@@ -18,7 +16,7 @@ LAMBDA_CONTS = {
     "add_novelty": containers.LambdaAddNoveltyContainer,
     "sub_novelty": containers.LambdaSubNoveltyContainer,
     "fit_archiving": containers.LambdaArchivingContainer,
-    "elite_archiving":containers.LambdaArchivingEliteContainer,
+    "elite_archiving": containers.LambdaArchivingEliteContainer,
     #"archiving": containers.LambdaArchivingNoveltyContainer,
     "novelty_archiving": containers.LambdaArchivingNoveltyContainer,
     "novelty_limit": containers.LambdaArchivingLimitNoveltyContainer
@@ -29,9 +27,9 @@ DIFF_CONTS = {
     "fitness": containers.DiffAlgContainer,
     "novelty": containers.DiffNoveltyContainer,
     "add_novelty": containers.DiffAdditionNoveltyContainer,
-    "sub_novelty":containers.DiffSubNoveltyContainer,
+    "sub_novelty": containers.DiffSubNoveltyContainer,
     "fit_archiving": containers.DiffArchivingContainer,
-    "elite_archiving":containers.DiffArchivingEliteContainer,
+    "elite_archiving": containers.DiffArchivingEliteContainer,
     #"archiving": containers.DiffArchivingNoveltyContainer,
     "novelty_archiving": containers.DiffArchivingNoveltyContainer,
     "novelty_limit": containers.DiffArchivingLimitNoveltyContainer,

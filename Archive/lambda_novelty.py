@@ -1,8 +1,6 @@
-import containers as con
-import cartpole
+from libs import cartpole, containers as con
 import visualisation
 import datetime
-import statconf
 import argparse
 import numpy as np
 
@@ -33,7 +31,7 @@ creator.create("FitnessNovelty", base.Fitness, weights=(1.0, ))
 #creator.create("Behavior", base.Fitness, weights=(1.0, 1.0)) #end position & angle
 creator.create("FitnessTrue", base.Fitness, weights=(1.0, )) 
 
-creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessNovelty , fitness2=creator.FitnessTrue)#, behaviour=creator.Behavior)
+creator.create("Individual", cartpole.CartpolePlayer, fitness=creator.FitnessNovelty, fitness2=creator.FitnessTrue)#, behaviour=creator.Behavior)
 
 toolbox = base.Toolbox()
 toolbox.register("evaluate", cartpole.evalutation_b, seed=seed, episodes=EVAL_EPISODES)
